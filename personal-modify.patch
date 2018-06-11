@@ -1145,8 +1145,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  		if (res !== null && typeof(res) === 'object' && res.length > 0) {
  			trafficPeriods = res;
---- feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-06-11 19:39:45.979026236 +0800
-+++ feeds/luci/modules/luci-base/po/zh-cn/base.po.new	2018-06-11 19:42:13.061850226 +0800
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-06-11 19:39:45.979026236 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-06-11 19:42:13.061850226 +0800
 @@ -3502,7 +3502,7 @@
  msgstr ""
  "使用“添加”按钮来增加新的租约条目。“IPv4 地址”和“主机名”字段的值将被固定分配"
