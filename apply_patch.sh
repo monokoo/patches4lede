@@ -33,4 +33,4 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 
 echo "Everything is done!"
 cd /home/lede/lede-source
-patch -p1 -i /home/lede/personal-modify.patch
+patch -p1 -i /home/lede/patches4lede/personal-modify.patch
