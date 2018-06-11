@@ -1,0 +1,1158 @@
+--- a/feeds/packages/net/aria2/files/aria2.conf	2018-01-18 17:47:24.220368073 +0800
++++ b/feeds/packages/net/aria2/files/aria2.conf	2018-05-29 14:19:17.631214708 +0800
+@@ -8,15 +8,30 @@
+ # You can also add new config sections to define multi instance.
+ #
+ config aria2 'main'
+-	option enabled '0'
+ 	option user 'aria2'
+-	option dir '/mnt/sda1/aria2'
+-	option config_dir '/var/etc/aria2'
++	option rpc_auth_method 'none'
++	option enable_log 'false'
++	list extra_settings 'seed-ratio=0'
++	list extra_settings 'force-save=true'
++	list extra_settings 'bt-hash-check-seed=true'
++	list extra_settings 'bt-seed-unverified=true'
++	list extra_settings 'bt-save-metadata=true'
++	list extra_settings 'enable-peer-exchange=false'
++	option disk_cache '64M'
++	option user_agent 'uTorrent/3420(32126)'
++	option bt_max_peers '96'
++	option peer_id_prefix '-UT3420-'
++	option enable_dht 'true'
+ 	option bt_enable_lpd 'true'
+-	option enable_dht 'true'
+-	option follow_torrent 'true'
++	option save_session_interval '30'
++	option enabled '0'
++	option min_split_size '20M'
++	option max_concurrent_downloads '5'
++	option max_connection_per_server '16'
++	option split '5'
++	option config_dir '/etc/aria2'
++	option listen_port '36279'
+ 	option file_allocation 'none'
+-	option save_session_interval '30'
+ 
+ 	# Add addition Headers here.
+ 	# eg. list header 'Content-Encoding: gzip'
+--- a/feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua	2018-05-14 16:33:04.495992860 +0800
+--- b/feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua 2018-05-29 14:33:52.519290194 +0800
+@@ -18,6 +18,10 @@
+ 		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
+ 	end
+ 
++	if fs.access("/usr/sbin/shellinaboxd")then
++		entry({"admin","system","WebShell"},template("admin_system/webshell"),_("WebShell"),11)
++	end
++
+ 	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
+ 	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
+ 
+@@ -32,6 +36,7 @@
+ 		entry({"admin", "system", "leds"}, cbi("admin_system/leds"), _("<abbr title=\"Light Emitting Diode\">LED</abbr> Configuration"), 60)
+ 	end
+ 
++	entry({"admin", "system", "Free_Memory"},call("Free_Memory"),_("Free Memory"),65)
+ 	entry({"admin", "system", "flashops"}, call("action_flashops"), _("Backup / Flash Firmware"), 70)
+ 	entry({"admin", "system", "flashops", "reset"}, post("action_reset"))
+ 	entry({"admin", "system", "flashops", "backup"}, post("action_backup"))
+@@ -45,6 +50,11 @@
+ 	entry({"admin", "system", "reboot", "call"}, post("action_reboot"))
+ end
+ 
++function Free_Memory()
++	luci.util.exec("echo 3 > /proc/sys/vm/drop_caches")
++	luci.http.redirect(luci.dispatcher.build_url("admin","status","overview"))
++end
++
+ function action_clock_status()
+ 	local set = tonumber(luci.http.formvalue("set"))
+ 	if set ~= nil and set > 0 then
+--- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-05-29 14:43:21.042652545 +0800
+--- b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua 2018-05-29 14:41:40.615037357 +0800
+@@ -71,7 +71,7 @@
+ 			local iface = luci.http.formvalue("cbid.wol.1.iface")
+ 			local broadcast = luci.http.formvalue("cbid.wol.1.broadcast")
+ 			cmd = "%s -D%s %s %q 2>&1" %{
+-				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or ""),
++				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or " -i br-lan"),
+ 				(broadcast == "1" and " -b" or ""), mac
+ 			}
+ 		else
+diff --git a/package/base-files/files/etc/rc.button/reset b/package/base-files/files/etc/rc.button/reset
+index 2403122ad2..5746ea237a 100755
+--- a/package/base-files/files/etc/rc.button/reset
++++ b/package/base-files/files/etc/rc.button/reset
+@@ -15,16 +15,8 @@ timeout)
+ 	set_state failsafe
+ ;;
+ released)
+-	if [ "$SEEN" -lt 1 ]
+-	then
+-		echo "REBOOT" > /dev/console
+-		sync
+-		reboot
+-	elif [ "$SEEN" -ge 5 -a -n "$OVERLAY" ]
+-	then
+ 		echo "FACTORY RESET" > /dev/console
+ 		jffs2reset -y && reboot &
+-	fi
+ ;;
+ esac
+ 
+diff --git a/package/kernel/mac80211/patches/970-0001-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets.patch b/package/kernel/mac80211/patches/970-0001-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets.patch
+new file mode 100644
+index 0000000000..bf82d219f0
+--- /dev/null
++++ b/package/kernel/mac80211/patches/970-0001-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets.patch
+@@ -0,0 +1,610 @@
++From:   Kalle Valo <kvalo@codeaurora.org>
++Subject: [PATCH v13] ath10k: add LED and GPIO controlling support for various chipsets
++Date:   Fri,  6 Apr 2018 18:17:55 +0300
++Message-Id: <1523027875-5143-1-git-send-email-kvalo@codeaurora.org>
++
++From: Sebastian Gottschall <s.gottschall@newmedia-net.de>
++
++Adds LED and GPIO Control support for 988x, 9887, 9888, 99x0, 9984 based
++chipsets with on chipset connected led's using WMI Firmware API.  The LED
++device will get available named as "ath10k-phyX" at sysfs and can be controlled
++with various triggers.  adds also debugfs interface for gpio control.
++
++Signed-off-by: Sebastian Gottschall <s.gottschall@dd-wrt.com>
++Reviewed-by: Steve deRosier <derosier@cal-sierra.com>
++[kvalo: major reorg and cleanup]
++Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
++---
++
++v13:
++
++* only compile tested!
++
++* fix all checkpatch warnings
++
++* fix commit log
++
++* sizeof(struct ath10k_gpiocontrol) -> sizeof(*gpio)
++
++* unsigned -> unsigned int
++
++* remove GPIOLIB code, that should be added in a separate patch
++
++* rename gpio.c to leds.c
++
++* add leds.h
++
++* rename some functions:
++
++  ath10k_attach_led() -> ath10k_leds_register()
++  ath10k_unregister_led() -> ath10k_leds_unregister()
++  ath10k_reset_led_pin() -> ath10k_leds_start()
++
++* call ath10k_leds_unregister() before ath10k_thermal_unregister() to preserve ordering
++
++* call ath10k_leds_start() only from ath10k_core_start() and not from mac.c
++
++* rename struct ath10k_gpiocontrol as anonymous function under struct
++  ath10k::leds, no need for memory allocation
++
++* merge ath10k_add_led() to ath10k_attach_led(), which is it's only caller
++
++* remove #if IS_ENABLED() checks from most of places, memory savings from those were not worth it
++
++* Kconfig help text improvement and move it lower in the menu, also don't enable it by default
++
++* switch to set_brightness_blocking() so that the callback can sleep,
++  then no need to use ath10k_wmi_cmd_send_nowait() and can take mutex
++  to access ar->state
++
++* don't touch ath10k_wmi_pdev_get_temperature()
++
++* as QCA6174/QCA9377 are not (yet) supported don't add the command to WMI-TLV interface
++
++* remove debugfs interface, that should be added in another patch
++
++* cleanup includes
++
++
++ drivers/net/wireless/ath/ath10k/Kconfig   |  10 +++
++ drivers/net/wireless/ath/ath10k/Makefile  |   1 +
++ drivers/net/wireless/ath/ath10k/core.c    |  22 +++++++
++ drivers/net/wireless/ath/ath10k/core.h    |   9 ++-
++ drivers/net/wireless/ath/ath10k/hw.h      |   1 +
++ drivers/net/wireless/ath/ath10k/leds.c    | 103 ++++++++++++++++++++++++++++++
++ drivers/net/wireless/ath/ath10k/leds.h    |  45 +++++++++++++
++ drivers/net/wireless/ath/ath10k/mac.c     |   1 +
++ drivers/net/wireless/ath/ath10k/wmi-ops.h |  32 ++++++++++
++ drivers/net/wireless/ath/ath10k/wmi-tlv.c |   2 +
++ drivers/net/wireless/ath/ath10k/wmi.c     |  54 ++++++++++++++++
++ drivers/net/wireless/ath/ath10k/wmi.h     |  35 ++++++++++
++ 12 files changed, 314 insertions(+), 1 deletion(-)
++ create mode 100644 drivers/net/wireless/ath/ath10k/leds.c
++ create mode 100644 drivers/net/wireless/ath/ath10k/leds.h
++
++--- a/drivers/net/wireless/ath/ath10k/Kconfig
+++++ b/drivers/net/wireless/ath/ath10k/Kconfig
++@@ -56,6 +56,16 @@ config ATH10K_DEBUGFS
++ 
++ 	  If unsure, say Y to make it easier to debug problems.
++ 
+++config ATH10K_LEDS
+++	bool "Atheros ath10k LED support"
+++	depends on ATH10K
+++	select MAC80211_LEDS
+++	select LEDS_CLASS
+++	select NEW_LEDS
+++	default y
+++	help
+++	  This option is necessary, if you want LED support for chipset connected led pins. If unsure, say N.
+++
++ config ATH10K_SPECTRAL
++ 	bool "Atheros ath10k spectral scan support"
++ 	depends on ATH10K_DEBUGFS
++--- a/drivers/net/wireless/ath/ath10k/Makefile
+++++ b/drivers/net/wireless/ath/ath10k/Makefile
++@@ -19,6 +19,7 @@ ath10k_core-$(CPTCFG_NL80211_TESTMODE) +
++ ath10k_core-$(CPTCFG_ATH10K_TRACING) += trace.o
++ ath10k_core-$(CPTCFG_ATH10K_THERMAL) += thermal.o
++ ath10k_core-$(CPTCFG_MAC80211_DEBUGFS) += debugfs_sta.o
+++ath10k_core-$(CPTCFG_ATH10K_LEDS) += leds.o
++ ath10k_core-$(CONFIG_PM) += wow.o
++ 
++ obj-$(CPTCFG_ATH10K_PCI) += ath10k_pci.o
++--- a/drivers/net/wireless/ath/ath10k/core.c
+++++ b/drivers/net/wireless/ath/ath10k/core.c
++@@ -32,6 +32,7 @@
++ #include "htt.h"
++ #include "testmode.h"
++ #include "wmi-ops.h"
+++#include "leds.h"
++ 
++ unsigned int ath10k_debug_mask;
++ static unsigned int ath10k_cryptmode_param;
++@@ -56,6 +57,7 @@ static const struct ath10k_hw_params ath
++ 		.id = QCA988X_HW_2_0_VERSION,
++ 		.dev_id = QCA988X_2_0_DEVICE_ID,
++ 		.name = "qca988x hw2.0",
+++		.led_pin = 1,
++ 		.patch_load_addr = QCA988X_HW_2_0_PATCH_LOAD_ADDR,
++ 		.uart_pin = 7,
++ 		.cc_wraparound_type = ATH10K_HW_CC_WRAP_SHIFTED_ALL,
++@@ -80,6 +82,7 @@ static const struct ath10k_hw_params ath
++ 		.id = QCA9887_HW_1_0_VERSION,
++ 		.dev_id = QCA9887_1_0_DEVICE_ID,
++ 		.name = "qca9887 hw1.0",
+++		.led_pin = 1,
++ 		.patch_load_addr = QCA9887_HW_1_0_PATCH_LOAD_ADDR,
++ 		.uart_pin = 7,
++ 		.cc_wraparound_type = ATH10K_HW_CC_WRAP_SHIFTED_ALL,
++@@ -199,6 +202,7 @@ static const struct ath10k_hw_params ath
++ 		.id = QCA99X0_HW_2_0_DEV_VERSION,
++ 		.dev_id = QCA99X0_2_0_DEVICE_ID,
++ 		.name = "qca99x0 hw2.0",
+++		.led_pin = 17,
++ 		.patch_load_addr = QCA99X0_HW_2_0_PATCH_LOAD_ADDR,
++ 		.uart_pin = 7,
++ 		.otp_exe_param = 0x00000700,
++@@ -228,6 +232,7 @@ static const struct ath10k_hw_params ath
++ 		.id = QCA9984_HW_1_0_DEV_VERSION,
++ 		.dev_id = QCA9984_1_0_DEVICE_ID,
++ 		.name = "qca9984/qca9994 hw1.0",
+++		.led_pin = 17,
++ 		.patch_load_addr = QCA9984_HW_1_0_PATCH_LOAD_ADDR,
++ 		.uart_pin = 7,
++ 		.cc_wraparound_type = ATH10K_HW_CC_WRAP_SHIFTED_EACH,
++@@ -262,6 +267,7 @@ static const struct ath10k_hw_params ath
++ 		.id = QCA9888_HW_2_0_DEV_VERSION,
++ 		.dev_id = QCA9888_2_0_DEVICE_ID,
++ 		.name = "qca9888 hw2.0",
+++		.led_pin = 17,
++ 		.patch_load_addr = QCA9888_HW_2_0_PATCH_LOAD_ADDR,
++ 		.uart_pin = 7,
++ 		.cc_wraparound_type = ATH10K_HW_CC_WRAP_SHIFTED_EACH,
++@@ -2251,6 +2257,10 @@ int ath10k_core_start(struct ath10k *ar,
++ 	if (status)
++ 		goto err_hif_stop;
++ 
+++	status = ath10k_leds_start(ar);
+++	if (status)
+++		goto err_hif_stop;
+++
++ 	return 0;
++ 
++ err_hif_stop:
++@@ -2468,9 +2478,18 @@ static void ath10k_core_register_work(st
++ 		goto err_spectral_destroy;
++ 	}
++ 
+++	status = ath10k_leds_register(ar);
+++	if (status) {
+++		ath10k_err(ar, "could not register leds: %d\n",
+++			   status);
+++		goto err_thermal_unregister;
+++	}
+++
++ 	set_bit(ATH10K_FLAG_CORE_REGISTERED, &ar->dev_flags);
++ 	return;
++ 
+++err_thermal_unregister:
+++	ath10k_thermal_unregister(ar);
++ err_spectral_destroy:
++ 	ath10k_spectral_destroy(ar);
++ err_debug_destroy:
++@@ -2512,6 +2531,8 @@ void ath10k_core_unregister(struct ath10
++ 	if (!test_bit(ATH10K_FLAG_CORE_REGISTERED, &ar->dev_flags))
++ 		return;
++ 
+++	ath10k_leds_unregister(ar);
+++
++ 	ath10k_thermal_unregister(ar);
++ 	/* Stop spectral before unregistering from mac80211 to remove the
++ 	 * relayfs debugfs file cleanly. Otherwise the parent debugfs tree
++--- a/drivers/net/wireless/ath/ath10k/core.h
+++++ b/drivers/net/wireless/ath/ath10k/core.h
++@@ -24,6 +24,7 @@
++ #include <linux/pci.h>
++ #include <linux/uuid.h>
++ #include <linux/time.h>
+++#include <linux/leds.h>
++ 
++ #include "htt.h"
++ #include "htc.h"
++@@ -789,7 +790,6 @@ struct ath10k {
++ 	u32 low_5ghz_chan;
++ 	u32 high_5ghz_chan;
++ 	bool ani_enabled;
++-
++ 	bool p2p;
++ 
++ 	struct {
++@@ -972,6 +972,13 @@ struct ath10k {
++ 	} testmode;
++ 
++ 	struct {
+++		struct gpio_led wifi_led;
+++		struct led_classdev cdev;
+++		char label[48];
+++		u32 gpio_state_pin;
+++	} leds;
+++
+++	struct {
++ 		/* protected by data_lock */
++ 		u32 fw_crash_counter;
++ 		u32 fw_warm_reset_counter;
++--- a/drivers/net/wireless/ath/ath10k/hw.h
+++++ b/drivers/net/wireless/ath/ath10k/hw.h
++@@ -490,6 +490,7 @@ struct ath10k_hw_params {
++ 	const char *name;
++ 	u32 patch_load_addr;
++ 	int uart_pin;
+++	int led_pin;
++ 	u32 otp_exe_param;
++ 
++ 	/* Type of hw cycle counter wraparound logic, for more info
++--- /dev/null
+++++ b/drivers/net/wireless/ath/ath10k/leds.c
++@@ -0,0 +1,103 @@
+++/*
+++ * Copyright (c) 2005-2011 Atheros Communications Inc.
+++ * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+++ * Copyright (c) 2018 Sebastian Gottschall <s.gottschall@dd-wrt.com>
+++ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+++ *
+++ * Permission to use, copy, modify, and/or distribute this software for any
+++ * purpose with or without fee is hereby granted, provided that the above
+++ * copyright notice and this permission notice appear in all copies.
+++ *
+++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+++ */
+++
+++#include <linux/leds.h>
+++
+++#include "leds.h"
+++
+++#include "core.h"
+++#include "wmi.h"
+++#include "wmi-ops.h"
+++
+++static int ath10k_leds_set_brightness_blocking(struct led_classdev *led_cdev,
+++					       enum led_brightness brightness)
+++{
+++	struct ath10k *ar = container_of(led_cdev, struct ath10k,
+++					 leds.cdev);
+++	struct gpio_led *led = &ar->leds.wifi_led;
+++
+++	mutex_lock(&ar->conf_mutex);
+++
+++	if (ar->state != ATH10K_STATE_ON)
+++		goto out;
+++
+++	ar->leds.gpio_state_pin = (brightness != LED_OFF) ^ led->active_low;
+++	ath10k_wmi_gpio_output(ar, led->gpio, ar->leds.gpio_state_pin);
+++
+++out:
+++	mutex_unlock(&ar->conf_mutex);
+++
+++	return 0;
+++}
+++
+++int ath10k_leds_start(struct ath10k *ar)
+++{
+++	if (ar->hw_params.led_pin == 0)
+++		/* leds not supported */
+++		return 0;
+++
+++	/* under some circumstances, the gpio pin gets reconfigured
+++	 * to default state by the firmware, so we need to
+++	 * reconfigure it this behaviour has only ben seen on
+++	 * QCA9984 and QCA99XX devices so far
+++	 */
+++	ath10k_wmi_gpio_config(ar, ar->hw_params.led_pin, 0,
+++			       WMI_GPIO_PULL_NONE, WMI_GPIO_INTTYPE_DISABLE);
+++	ath10k_wmi_gpio_output(ar, ar->hw_params.led_pin, 1);
+++
+++	return 0;
+++}
+++
+++int ath10k_leds_register(struct ath10k *ar)
+++{
+++	int ret;
+++
+++	if (ar->hw_params.led_pin == 0)
+++		/* leds not supported */
+++		return 0;
+++
+++	snprintf(ar->leds.label, sizeof(ar->leds.label), "ath10k-%s",
+++		 wiphy_name(ar->hw->wiphy));
+++	ar->leds.wifi_led.active_low = 1;
+++	ar->leds.wifi_led.gpio = ar->hw_params.led_pin;
+++	ar->leds.wifi_led.name = ar->leds.label;
+++	ar->leds.wifi_led.default_state = LEDS_GPIO_DEFSTATE_KEEP;
+++
+++	ar->leds.cdev.name = ar->leds.label;
+++	ar->leds.cdev.brightness_set_blocking = ath10k_leds_set_brightness_blocking;
+++
+++	/* FIXME: this assignment doesn't make sense as it's NULL, remove it? */
+++	ar->leds.cdev.default_trigger = ar->leds.wifi_led.default_trigger;
+++
+++	ret = led_classdev_register(wiphy_dev(ar->hw->wiphy), &ar->leds.cdev);
+++	if (ret)
+++		return ret;
+++
+++	return 0;
+++}
+++
+++void ath10k_leds_unregister(struct ath10k *ar)
+++{
+++	if (ar->hw_params.led_pin == 0)
+++		/* leds not supported */
+++		return;
+++
+++	led_classdev_unregister(&ar->leds.cdev);
+++}
+++
++--- /dev/null
+++++ b/drivers/net/wireless/ath/ath10k/leds.h
++@@ -0,0 +1,45 @@
+++/*
+++ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+++ *
+++ * Permission to use, copy, modify, and/or distribute this software for any
+++ * purpose with or without fee is hereby granted, provided that the above
+++ * copyright notice and this permission notice appear in all copies.
+++ *
+++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+++ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+++ */
+++#ifndef _LEDS_H_
+++#define _LEDS_H_
+++
+++#include "core.h"
+++
+++#if IS_ENABLED(CONFIG_ATH10K_LEDS)
+++
+++void ath10k_leds_unregister(struct ath10k *ar);
+++int ath10k_leds_start(struct ath10k *ar);
+++int ath10k_leds_register(struct ath10k *ar);
+++
+++#else
+++
+++static inline void ath10k_leds_unregister(struct ath10k *ar)
+++{
+++}
+++
+++static inline int ath10k_leds_start(struct ath10k *ar)
+++{
+++	return 0;
+++}
+++
+++static inline int ath10k_leds_register(struct ath10k *ar)
+++{
+++	return 0;
+++}
+++
+++#endif
+++
+++#endif /* _LEDS_H_ */
++--- a/drivers/net/wireless/ath/ath10k/mac.c
+++++ b/drivers/net/wireless/ath/ath10k/mac.c
++@@ -32,6 +32,7 @@
++ #include "wmi-tlv.h"
++ #include "wmi-ops.h"
++ #include "wow.h"
+++#include "leds.h"
++ 
++ /*********/
++ /* Rates */
++--- a/drivers/net/wireless/ath/ath10k/wmi-ops.h
+++++ b/drivers/net/wireless/ath/ath10k/wmi-ops.h
++@@ -197,6 +197,10 @@ struct wmi_ops {
++ 					(struct ath10k *ar,
++ 					 enum wmi_bss_survey_req_type type);
++ 	struct sk_buff *(*gen_echo)(struct ath10k *ar, u32 value);
+++	struct sk_buff *(*gen_gpio_config)(struct ath10k *ar, u32 gpio_num,
+++					   u32 input, u32 pull_type, u32 intr_mode);
+++
+++	struct sk_buff *(*gen_gpio_output)(struct ath10k *ar, u32 gpio_num, u32 set);
++ };
++ 
++ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id);
++@@ -951,6 +955,35 @@ ath10k_wmi_force_fw_hang(struct ath10k *
++ 	return ath10k_wmi_cmd_send(ar, skb, ar->wmi.cmd->force_fw_hang_cmdid);
++ }
++ 
+++static inline int ath10k_wmi_gpio_config(struct ath10k *ar, u32 gpio_num,
+++					 u32 input, u32 pull_type, u32 intr_mode)
+++{
+++	struct sk_buff *skb;
+++
+++	if (!ar->wmi.ops->gen_gpio_config)
+++		return -EOPNOTSUPP;
+++
+++	skb = ar->wmi.ops->gen_gpio_config(ar, gpio_num, input, pull_type, intr_mode);
+++	if (IS_ERR(skb))
+++		return PTR_ERR(skb);
+++
+++	return ath10k_wmi_cmd_send(ar, skb, ar->wmi.cmd->gpio_config_cmdid);
+++}
+++
+++static inline int ath10k_wmi_gpio_output(struct ath10k *ar, u32 gpio_num, u32 set)
+++{
+++	struct sk_buff *skb;
+++
+++	if (!ar->wmi.ops->gen_gpio_config)
+++		return -EOPNOTSUPP;
+++
+++	skb = ar->wmi.ops->gen_gpio_output(ar, gpio_num, set);
+++	if (IS_ERR(skb))
+++		return PTR_ERR(skb);
+++
+++	return ath10k_wmi_cmd_send(ar, skb, ar->wmi.cmd->gpio_output_cmdid);
+++}
+++
++ static inline int
++ ath10k_wmi_dbglog_cfg(struct ath10k *ar, u64 module_enable, u32 log_level)
++ {
++--- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+++++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
++@@ -3619,6 +3619,8 @@ static const struct wmi_ops wmi_tlv_ops
++ 	.gen_echo = ath10k_wmi_tlv_op_gen_echo,
++ 	.gen_vdev_spectral_conf = ath10k_wmi_tlv_op_gen_vdev_spectral_conf,
++ 	.gen_vdev_spectral_enable = ath10k_wmi_tlv_op_gen_vdev_spectral_enable,
+++	/* .gen_gpio_config not implemented */
+++	/* .gen_gpio_output not implemented */
++ };
++ 
++ static const struct wmi_peer_flags_map wmi_tlv_peer_flags_map = {
++--- a/drivers/net/wireless/ath/ath10k/wmi.c
+++++ b/drivers/net/wireless/ath/ath10k/wmi.c
++@@ -6574,6 +6574,49 @@ ath10k_wmi_op_gen_peer_set_param(struct
++ 	return skb;
++ }
++ 
+++static struct sk_buff *ath10k_wmi_op_gen_gpio_config(struct ath10k *ar,
+++						     u32 gpio_num, u32 input,
+++						     u32 pull_type, u32 intr_mode)
+++{
+++	struct wmi_gpio_config_cmd *cmd;
+++	struct sk_buff *skb;
+++
+++	skb = ath10k_wmi_alloc_skb(ar, sizeof(*cmd));
+++	if (!skb)
+++		return ERR_PTR(-ENOMEM);
+++
+++	cmd = (struct wmi_gpio_config_cmd *)skb->data;
+++	cmd->pull_type = __cpu_to_le32(pull_type);
+++	cmd->gpio_num = __cpu_to_le32(gpio_num);
+++	cmd->input = __cpu_to_le32(input);
+++	cmd->intr_mode = __cpu_to_le32(intr_mode);
+++
+++	ath10k_dbg(ar, ATH10K_DBG_WMI, "wmi gpio_config gpio_num 0x%08x input 0x%08x pull_type 0x%08x intr_mode 0x%08x\n",
+++		   gpio_num, input, pull_type, intr_mode);
+++
+++	return skb;
+++}
+++
+++static struct sk_buff *ath10k_wmi_op_gen_gpio_output(struct ath10k *ar,
+++						     u32 gpio_num, u32 set)
+++{
+++	struct wmi_gpio_output_cmd *cmd;
+++	struct sk_buff *skb;
+++
+++	skb = ath10k_wmi_alloc_skb(ar, sizeof(*cmd));
+++	if (!skb)
+++		return ERR_PTR(-ENOMEM);
+++
+++	cmd = (struct wmi_gpio_output_cmd *)skb->data;
+++	cmd->gpio_num = __cpu_to_le32(gpio_num);
+++	cmd->set = __cpu_to_le32(set);
+++
+++	ath10k_dbg(ar, ATH10K_DBG_WMI, "wmi gpio_output gpio_num 0x%08x set 0x%08x\n",
+++		   gpio_num, set);
+++
+++	return skb;
+++}
+++
++ static struct sk_buff *
++ ath10k_wmi_op_gen_set_psmode(struct ath10k *ar, u32 vdev_id,
++ 			     enum wmi_sta_ps_mode psmode)
++@@ -8080,6 +8123,9 @@ static const struct wmi_ops wmi_ops = {
++ 	.fw_stats_fill = ath10k_wmi_main_op_fw_stats_fill,
++ 	.get_vdev_subtype = ath10k_wmi_op_get_vdev_subtype,
++ 	.gen_echo = ath10k_wmi_op_gen_echo,
+++	.gen_gpio_config = ath10k_wmi_op_gen_gpio_config,
+++	.gen_gpio_output = ath10k_wmi_op_gen_gpio_output,
+++
++ 	/* .gen_bcn_tmpl not implemented */
++ 	/* .gen_prb_tmpl not implemented */
++ 	/* .gen_p2p_go_bcn_ie not implemented */
++@@ -8150,6 +8196,8 @@ static const struct wmi_ops wmi_10_1_ops
++ 	.fw_stats_fill = ath10k_wmi_10x_op_fw_stats_fill,
++ 	.get_vdev_subtype = ath10k_wmi_op_get_vdev_subtype,
++ 	.gen_echo = ath10k_wmi_op_gen_echo,
+++	.gen_gpio_config = ath10k_wmi_op_gen_gpio_config,
+++	.gen_gpio_output = ath10k_wmi_op_gen_gpio_output,
++ 	/* .gen_bcn_tmpl not implemented */
++ 	/* .gen_prb_tmpl not implemented */
++ 	/* .gen_p2p_go_bcn_ie not implemented */
++@@ -8221,6 +8269,8 @@ static const struct wmi_ops wmi_10_2_ops
++ 	.gen_delba_send = ath10k_wmi_op_gen_delba_send,
++ 	.fw_stats_fill = ath10k_wmi_10x_op_fw_stats_fill,
++ 	.get_vdev_subtype = ath10k_wmi_op_get_vdev_subtype,
+++	.gen_gpio_config = ath10k_wmi_op_gen_gpio_config,
+++	.gen_gpio_output = ath10k_wmi_op_gen_gpio_output,
++ 	/* .gen_pdev_enable_adaptive_cca not implemented */
++ };
++ 
++@@ -8291,6 +8341,8 @@ static const struct wmi_ops wmi_10_2_4_o
++ 	.gen_pdev_enable_adaptive_cca =
++ 		ath10k_wmi_op_gen_pdev_enable_adaptive_cca,
++ 	.get_vdev_subtype = ath10k_wmi_10_2_4_op_get_vdev_subtype,
+++	.gen_gpio_config = ath10k_wmi_op_gen_gpio_config,
+++	.gen_gpio_output = ath10k_wmi_op_gen_gpio_output,
++ 	/* .gen_bcn_tmpl not implemented */
++ 	/* .gen_prb_tmpl not implemented */
++ 	/* .gen_p2p_go_bcn_ie not implemented */
++@@ -8366,6 +8418,8 @@ static const struct wmi_ops wmi_10_4_ops
++ 	.gen_pdev_bss_chan_info_req = ath10k_wmi_10_2_op_gen_pdev_bss_chan_info,
++ 	.gen_echo = ath10k_wmi_op_gen_echo,
++ 	.gen_pdev_get_tpc_config = ath10k_wmi_10_2_4_op_gen_pdev_get_tpc_config,
+++	.gen_gpio_config = ath10k_wmi_op_gen_gpio_config,
+++	.gen_gpio_output = ath10k_wmi_op_gen_gpio_output,
++ };
++ 
++ int ath10k_wmi_attach(struct ath10k *ar)
++--- a/drivers/net/wireless/ath/ath10k/wmi.h
+++++ b/drivers/net/wireless/ath/ath10k/wmi.h
++@@ -2899,6 +2899,41 @@ enum wmi_10_4_feature_mask {
++ 
++ };
++ 
+++/* WMI_GPIO_CONFIG_CMDID */
+++enum {
+++	WMI_GPIO_PULL_NONE,
+++	WMI_GPIO_PULL_UP,
+++	WMI_GPIO_PULL_DOWN,
+++};
+++
+++enum {
+++	WMI_GPIO_INTTYPE_DISABLE,
+++	WMI_GPIO_INTTYPE_RISING_EDGE,
+++	WMI_GPIO_INTTYPE_FALLING_EDGE,
+++	WMI_GPIO_INTTYPE_BOTH_EDGE,
+++	WMI_GPIO_INTTYPE_LEVEL_LOW,
+++	WMI_GPIO_INTTYPE_LEVEL_HIGH
+++};
+++
+++/* WMI_GPIO_CONFIG_CMDID */
+++struct wmi_gpio_config_cmd {
+++	__le32 gpio_num;             /* GPIO number to be setup */
+++	__le32 input;                /* 0 - Output/ 1 - Input */
+++	__le32 pull_type;            /* Pull type defined above */
+++	__le32 intr_mode;            /* Interrupt mode defined above (Input) */
+++} __packed;
+++
+++/* WMI_GPIO_OUTPUT_CMDID */
+++struct wmi_gpio_output_cmd {
+++	__le32 gpio_num;    /* GPIO number to be setup */
+++	__le32 set;         /* Set the GPIO pin*/
+++} __packed;
+++
+++/* WMI_GPIO_INPUT_EVENTID */
+++struct wmi_gpio_input_event {
+++	__le32 gpio_num;    /* GPIO number which changed state */
+++} __packed;
+++
++ struct wmi_ext_resource_config_10_4_cmd {
++ 	/* contains enum wmi_host_platform_type */
++ 	__le32 host_platform_config;
+diff --git a/package/kernel/mac80211/patches/970-0002-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch b/package/kernel/mac80211/patches/970-0002-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch
+new file mode 100644
+index 0000000000..568c3b9147
+--- /dev/null
++++ b/package/kernel/mac80211/patches/970-0002-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch
+@@ -0,0 +1,91 @@
++--- a/drivers/net/wireless/ath/ath10k/Makefile
+++++ b/drivers/net/wireless/ath/ath10k/Makefile
++@@ -19,7 +19,7 @@ ath10k_core-$(CPTCFG_NL80211_TESTMODE) +
++ ath10k_core-$(CPTCFG_ATH10K_TRACING) += trace.o
++ ath10k_core-$(CPTCFG_ATH10K_THERMAL) += thermal.o
++ ath10k_core-$(CPTCFG_MAC80211_DEBUGFS) += debugfs_sta.o
++-ath10k_core-$(CPTCFG_ATH10K_LEDS) += leds.o
+++ath10k_core-y += leds.o
++ ath10k_core-$(CONFIG_PM) += wow.o
++ 
++ obj-$(CPTCFG_ATH10K_PCI) += ath10k_pci.o
++--- a/drivers/net/wireless/ath/ath10k/leds.h
+++++ b/drivers/net/wireless/ath/ath10k/leds.h
++@@ -18,28 +18,7 @@
++ 
++ #include "core.h"
++ 
++-#if IS_ENABLED(CONFIG_ATH10K_LEDS)
++-
++ void ath10k_leds_unregister(struct ath10k *ar);
++-int ath10k_leds_start(struct ath10k *ar);
++ int ath10k_leds_register(struct ath10k *ar);
++ 
++-#else
++-
++-static inline void ath10k_leds_unregister(struct ath10k *ar)
++-{
++-}
++-
++-static inline int ath10k_leds_start(struct ath10k *ar)
++-{
++-	return 0;
++-}
++-
++-static inline int ath10k_leds_register(struct ath10k *ar)
++-{
++-	return 0;
++-}
++-
++-#endif
++-
++ #endif /* _LEDS_H_ */
++--- a/drivers/net/wireless/ath/ath10k/core.c
+++++ b/drivers/net/wireless/ath/ath10k/core.c
++@@ -2257,10 +2257,6 @@ int ath10k_core_start(struct ath10k *ar,
++ 	if (status)
++ 		goto err_hif_stop;
++ 
++-	status = ath10k_leds_start(ar);
++-	if (status)
++-		goto err_hif_stop;
++-
++ 	return 0;
++ 
++ err_hif_stop:
++--- a/drivers/net/wireless/ath/ath10k/leds.c
+++++ b/drivers/net/wireless/ath/ath10k/leds.c
++@@ -38,6 +38,8 @@ static int ath10k_leds_set_brightness_bl
++ 		goto out;
++ 
++ 	ar->leds.gpio_state_pin = (brightness != LED_OFF) ^ led->active_low;
+++	ath10k_wmi_gpio_config(ar, ar->hw_params.led_pin, 0,
+++			       WMI_GPIO_PULL_NONE, WMI_GPIO_INTTYPE_DISABLE);
++ 	ath10k_wmi_gpio_output(ar, led->gpio, ar->leds.gpio_state_pin);
++ 
++ out:
++@@ -45,24 +47,6 @@ out:
++ 
++ 	return 0;
++ }
++-
++-int ath10k_leds_start(struct ath10k *ar)
++-{
++-	if (ar->hw_params.led_pin == 0)
++-		/* leds not supported */
++-		return 0;
++-
++-	/* under some circumstances, the gpio pin gets reconfigured
++-	 * to default state by the firmware, so we need to
++-	 * reconfigure it this behaviour has only ben seen on
++-	 * QCA9984 and QCA99XX devices so far
++-	 */
++-	ath10k_wmi_gpio_config(ar, ar->hw_params.led_pin, 0,
++-			       WMI_GPIO_PULL_NONE, WMI_GPIO_INTTYPE_DISABLE);
++-	ath10k_wmi_gpio_output(ar, ar->hw_params.led_pin, 1);
++-
++-	return 0;
++-}
++ 
++ int ath10k_leds_register(struct ath10k *ar)
++ {
+diff --git a/package/network/ipv6/6in4/files/6in4.sh b/package/network/ipv6/6in4/files/6in4.sh
+index 941dc43d68..ba65dfe979 100755
+--- a/package/network/ipv6/6in4/files/6in4.sh
++++ b/package/network/ipv6/6in4/files/6in4.sh
+@@ -11,7 +11,7 @@
+ 
+ proto_6in4_update() {
+ 	sh -c '
+-		timeout=5
++		timeout=8
+ 
+ 		(while [ $((timeout--)) -gt 0 ]; do
+ 			sleep 1
+diff --git a/package/network/services/dnsmasq/files/dhcp.conf b/package/network/services/dnsmasq/files/dhcp.conf
+index 360c7d79ee..098df63c25 100644
+--- a/package/network/services/dnsmasq/files/dhcp.conf
++++ b/package/network/services/dnsmasq/files/dhcp.conf
+@@ -10,6 +10,7 @@ config dnsmasq
+ 	option domain	'lan'
+ 	option expandhosts	1
+ 	option nonegcache	0
++	option cachesize	1000
+ 	option authoritative	1
+ 	option readethers	1
+ 	option leasefile	'/tmp/dhcp.leases'
+diff --git a/package/network/services/hostapd/files/hostapd.sh b/package/network/services/hostapd/files/hostapd.sh
+index 7ffff4e7e1..c55f05c9b3 100644
+--- a/package/network/services/hostapd/files/hostapd.sh
++++ b/package/network/services/hostapd/files/hostapd.sh
+@@ -383,6 +383,11 @@ hostapd_set_bss_options() {
+ 		set_default wps_manufacturer "www.openwrt.org"
+ 		set_default wps_independent 1
+ 
++		# Set WPS label pin to original Netgear value stored in art partition
++		# Value for wps_pin can be overridden by /etc/config/wireless
++#		local PINdefault="$(dd if=/dev/mtdblock3 bs=1 skip=18 count=8 2>/dev/null)"
++#		set_default wps_pin "$PINdefault"
++
+ 		wps_state=2
+ 		[ -n "$wps_configured" ] && wps_state=1
+ 
+diff --git a/package/network/services/hostapd/files/wps-hotplug.sh b/package/network/services/hostapd/files/wps-hotplug.sh
+index 24af80e55b..1b7eda42c8 100644
+--- a/package/network/services/hostapd/files/wps-hotplug.sh
++++ b/package/network/services/hostapd/files/wps-hotplug.sh
+@@ -1,11 +1,16 @@
+ #!/bin/sh
+ 
+ if [ "$ACTION" = "pressed" -a "$BUTTON" = "wps" ]; then
++	logger "WPS button pressed, looking for active radios"
++	echo "timer" > /sys/class/leds/r7800:white:wps/trigger
+ 	cd /var/run/hostapd
+ 	for socket in *; do
+ 		[ -S "$socket" ] || continue
++		logger "WPS activated for: $socket"
+ 		hostapd_cli -i "$socket" wps_pbc
+ 	done
++	sleep 120
++	echo "none" > /sys/class/leds/r7800:white:wps/trigger
+ fi
+ 
+ return 0
+diff --git a/package/network/services/odhcpd/files/odhcpd-update b/package/network/services/odhcpd/files/odhcpd-update
+index 9bc7abcc1c..d11771755d 100755
+--- a/package/network/services/odhcpd/files/odhcpd-update
++++ b/package/network/services/odhcpd/files/odhcpd-update
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ # Make dnsmasq reread hostfile by sending SIGHUP signal
+ 
++logger -t odhcpd "*** ODHCPD triggers DNSMASQ reload ***"
++
+ . $IPKG_INSTROOT/lib/functions/procd.sh
+ 
+ procd_send_signal dnsmasq
+diff --git a/feeds/packages/net/nlbwmon/files/nlbwmon.init b/feeds/packages/net/nlbwmon/files/nlbwmon.init
+index 3f01d0f5..993e9d6c 100755
+--- a/feeds/packages/net/nlbwmon/files/nlbwmon.init
++++ b/feeds/packages/net/nlbwmon/files/nlbwmon.init
+@@ -1,6 +1,6 @@
+ #!/bin/sh /etc/rc.common
+ 
+-START=60
++START=85
+ 
+ USE_PROCD=1
+ NAME=nlbwmon
+diff --git a/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch b/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch
+deleted file mode 100644
+index a64678cb..00000000
+--- a/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch
++++ /dev/null
+@@ -1,11 +0,0 @@
+---- a/src/usbipd.c
+-+++ b/src/usbipd.c
+-@@ -453,7 +453,7 @@ static void set_signal(void)
+- 	sigaction(SIGTERM, &act, NULL);
+- 	sigaction(SIGINT, &act, NULL);
+- 	act.sa_handler = SIG_IGN;
+--	sigaction(SIGCLD, &act, NULL);
+-+	sigaction(SIGCHLD, &act, NULL);
+- }
+- 
+- static const char *pid_file;
+--- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-05-29 20:35:31.578206766 +0800
++++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2017-09-19 21:37:28.000000000 +0800
+@@ -23,7 +23,7 @@
+ s2.addremove = false
+ 
+ freq = s2:option(Value, "freq", translate("Offset frequency"))
+-freq.datatype = "integer"
++freq.datatype = "uinteger"
+ freq.rmempty = true
+ 
+ s3 = m:section(TypedSection, "ntpserver", translate("Time Servers"))
+--- a/feeds/luci/applications/luci-app-minidlna/Makefile	2018-05-29 21:35:26.704957690 +0800
++++ b/feeds/luci/applications/luci-app-minidlna/Makefile	2017-08-20 20:35:50.000000000 +0800
+@@ -7,7 +7,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ LUCI_TITLE:=LuCI Support for miniDLNA
+-LUCI_DEPENDS:=+minidlna
++LUCI_DEPENDS:=+minidlna-dsd
+ 
+ include ../../luci.mk
+ 
+--- a/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-05-29 20:35:31.582208947 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2017-08-20 20:35:50.000000000 +0800
+@@ -6,7 +6,7 @@
+ 
+ <%+header%>
+ 
+-<form method="post" action="<%=pcdata(FULL_REQUEST_URI)%>">
++<form method="post" action="<%=pcdata(luci.http.getenv("REQUEST_URI"))%>">
+ 	<%- if fuser then %>
+ 	<div class="errorbox"><%:Invalid username and/or password! Please try again.%></div>
+ 	<% end -%>
+@@ -48,6 +48,7 @@
+ local fs  = require "nixio.fs"
+ local https_key = uci:get("uhttpd", "main", "key")
+ local https_port = uci:get("uhttpd", "main", "listen_https")
++local https_redirect = uci:get("uhttpd", "main", "redirect_https") or '0'	
+ if type(https_port) == "table" then
+ 	https_port = https_port[1]
+ end
+@@ -57,7 +58,7 @@
+ %>
+ 
+ <script type="text/javascript">//<![CDATA[
+-	if (document.location.protocol != 'https:') {
++	if (document.location.protocol != 'https:' && '<%=https_redirect%>' == '1') {
+ 		var url = 'https://' + window.location.hostname + ':' + '<%=https_port%>' + window.location.pathname;
+ 		var img=new Image;
+ 		img.onload=function(){window.location = url};
+--- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-05-29 20:35:31.778315847 +0800
++++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-05-29 21:42:33.672669069 +0800
+@@ -1,6 +1,6 @@
+ config core main
+-	option lang auto
+-	option mediaurlbase /luci-static/bootstrap
++	option lang zh_cn
++	option mediaurlbase /luci-static/atmaterial
+ 	option resourcebase /luci-static/resources
+ 	
+ config extern flash_keep
+@@ -22,6 +22,10 @@
+ 	option enable 1
+ 		
+ config internal themes
++	option Bootstrap '/luci-static/bootstrap'
++	option Material '/luci-static/material'
++	option ADVancedtomato '/luci-static/advancedtomato'
++	option ATMaterial '/luci-static/atmaterial'
+ 
+ config internal apply
+ 	option rollback 30
+--- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-05-29 20:35:31.826342026 +0800
++++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2017-09-05 10:27:10.000000000 +0800
+@@ -121,6 +121,8 @@
+ demand.placeholder = "0"
+ demand.datatype    = "uinteger"
+ 
++local u=net:get_interface()
++luci.tools.proto.opt_macaddr(section,u,translate("Override MAC address"))
+ 
+ mtu = section:taboption("advanced", Value, "mtu", translate("Override MTU"))
+ mtu.placeholder = "1500"
+diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-05-29 20:35:31.574204584 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-05-29 22:01:30.112122373 +0800
+@@ -4,16 +4,16 @@
+ module("luci.controller.nlbw", package.seeall)
+ 
+ function index()
+-	entry({"admin", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
+-	entry({"admin", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
+-	entry({"admin", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
+-	entry({"admin", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
+-	entry({"admin", "nlbw", "data"}, call("action_data"), nil, 4)
+-	entry({"admin", "nlbw", "list"}, call("action_list"), nil, 5)
+-	entry({"admin", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
+-	entry({"admin", "nlbw", "download"}, call("action_download"), nil, 7)
+-	entry({"admin", "nlbw", "restore"}, post("action_restore"), nil, 8)
+-	entry({"admin", "nlbw", "commit"}, call("action_commit"), nil, 9)
++	entry({"admin", "status", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
++	entry({"admin", "status", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
++	entry({"admin", "status", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
++	entry({"admin", "status", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
++	entry({"admin", "status", "nlbw", "data"}, call("action_data"), nil, 4)
++	entry({"admin", "status", "nlbw", "list"}, call("action_list"), nil, 5)
++	entry({"admin", "status", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
++	entry({"admin", "status", "nlbw", "download"}, call("action_download"), nil, 7)
++	entry({"admin", "status", "nlbw", "restore"}, post("action_restore"), nil, 8)
++	entry({"admin", "status", "nlbw", "commit"}, call("action_commit"), nil, 9)
+ end
+ 
+ local function exec(cmd, args, writer)
+@@ -221,6 +221,6 @@
+ 	local http = require "luci.http"
+ 	local disp = require "luci.dispatcher"
+ 
+-	http.redirect(disp.build_url("admin/nlbw/display"))
++	http.redirect(disp.build_url("admin/status/nlbw/display"))
+ 	exec("/usr/sbin/nlbw", { "-c", "commit" })
+ end
+diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-05-29 20:35:31.574204584 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-05-29 22:06:38.770029539 +0800
+@@ -49,7 +49,7 @@
+ 
+ 
+ warning = s:taboption("general", DummyValue, "_warning", translate("Warning"))
+-warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/nlbw/backup"))
++warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/status/nlbw/backup"))
+ warning.rawhtml = true
+ 
+ if (m.uci:get_first("nlbwmon", "nlbwmon", "database_interval") or ""):match("^%d%d%d%d-%d%d-%d%d/%d+$") then
+diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-05-29 20:35:31.574204584 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-05-29 22:03:24.521129138 +0800
+@@ -12,7 +12,7 @@
+ <fieldset class="cbi-section">
+ 	<legend><%:Restore Database Backup%></legend>
+ 	<p>
+-		<form method="POST" action="<%=url("admin/nlbw/restore")%>" enctype="multipart/form-data">
++		<form method="POST" action="<%=url("admin/status/nlbw/restore")%>" enctype="multipart/form-data">
+ 			<input type="hidden" name="token" value="<%=token%>" />
+ 			<input type="file" name="archive" accept="application/gzip,.gz" />
+ 			<input type="submit" value="<%:Restore%>" class="cbi-button cbi-button-apply" />
+@@ -25,7 +25,7 @@
+ 
+ 	<legend><%:Download Database Backup%></legend>
+ 	<p>
+-		<form method="GET" action="<%=url("admin/nlbw/download")%>">
++		<form method="GET" action="<%=url("admin/status/nlbw/download")%>">
+ 			<input type="submit" value="<%:Generate Backup%>" class="cbi-button cbi-button-link" />
+ 		</form>
+ 	</p>
+diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-05-29 20:35:31.574204584 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-05-29 22:05:11.127803790 +0800
+@@ -395,7 +395,7 @@
+ 
+ function fetchData(period)
+ {
+-	XHR.get('<%=url("admin/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
++	XHR.get('<%=url("admin/status/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
+ 		if (res !== null && typeof(res) === 'object' && typeof(res.columns) === 'object' && typeof(res.data) === 'object')
+ 			trafficData = res;
+ 
+@@ -410,7 +410,7 @@
+ 		renderLayer7Data();
+ 		renderIPv6Data();
+ 
+-		XHR.get('<%=url("admin/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
++		XHR.get('<%=url("admin/status/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
+ 			if (res !== null && typeof(res) === 'object')
+ 				hostNames = res;
+ 		});
+@@ -634,7 +634,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 6);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	pie('traf-pie', trafData);
+@@ -694,7 +694,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 6);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	pie('layer7-rx-pie', rxData);
+@@ -812,7 +812,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 7);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	var shareData = [], hostsData = [];
+@@ -1013,10 +1013,10 @@
+ 
+ <div class="cbi-section" id="container.nlbw.export" style="display:none">
+ 	<ul>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
+ 	</ul>
+ </div>
+ 
+@@ -1026,7 +1026,7 @@
+ 	cbi_t_add('nlbw', 'ipv6');
+ 	cbi_t_add('nlbw', 'export');
+ 
+-	XHR.get('<%=url("admin/nlbw/list")%>', null, function(xhr, res) {
++	XHR.get('<%=url("admin/status/nlbw/list")%>', null, function(xhr, res) {
+ 
+ 		if (res !== null && typeof(res) === 'object' && res.length > 0) {
+ 			trafficPeriods = res;
+--- feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-06-11 19:39:45.979026236 +0800
++++ feeds/luci/modules/luci-base/po/zh-cn/base.po.new	2018-06-11 19:42:13.061850226 +0800
+@@ -3502,7 +3502,7 @@
+ msgstr ""
+ "使用“添加”按钮来增加新的租约条目。“IPv4 地址”和“主机名”字段的值将被固定分配"
+ "给“MAC 地址”字段标识的主机，“租期”是一个可选字段，可为每个主机单独设定 DHCP "
+-"租期的时长，例如：12h、3d、inifinite，分别表示 12 小时、3 天、永久。"
++"租期的时长，例如：12h、3d、infinite，分别表示 12 小时、3 天、永久。"
+ 
+ msgid "Used"
+ msgstr "已用"
