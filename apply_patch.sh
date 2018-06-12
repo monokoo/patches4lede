@@ -29,6 +29,7 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
+git checkout -- modules/luci-base/po/zh-cn/base.po
 
 
 echo "Everything is done!"
