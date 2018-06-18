@@ -16,7 +16,6 @@ git checkout -- net/aria2/files/aria2.conf
 git checkout -- net/nlbwmon/files/nlbwmon.init
 git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
 git checkout -- net/haproxy/Makefile
-git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 git checkout -- net/nginx/files-luci-support/luci_nginx_ssl.conf
 
 cd ../luci/
@@ -33,8 +32,13 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 git checkout -- modules/luci-base/po/zh-cn/base.po
+git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
 
 
 echo "Everything is done!"
 cd /home/lede/lede-source
 patch -p1 -i /home/lede/patches4lede/personal-modify.patch
+[ -n "$(cat /home/lede/lede-source/.config | grep phicomm-k3)" ] && {
+	patch -p1 -i /home/lede/patches4lede/just_for_k3.patch
+}
+

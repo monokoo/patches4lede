@@ -1272,14 +1272,3 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +	}
  }
 \ No newline at end of file
---- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-18 13:52:14.092603171 +0800
-+++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-18 13:52:02.455786906 +0800
-@@ -18,7 +18,7 @@
- post-buffering=8192
- socket-timeout=120
- thunder-lock = True
--logger = syslog:uwsgi
-+#logger = syslog:uwsgi
- daemonize = True
- disable-logging = True
- log-format = %(addr) %(method) %(uri) => generated %(rsize) bytes in %(msecs) msecs
