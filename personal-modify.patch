@@ -1272,3 +1272,35 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +	}
  }
 \ No newline at end of file
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 23:49:32.175654650 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-19 00:00:47.821688284 +0800
+@@ -52,6 +52,13 @@
+ 			
+ 		}
+ 		
++                location /web {
++                	index  index.html;
++                }
++
++                location /webui-aria2 {
++                	index  index.html;
++                }
+ 		#return 301 https://$host$request_uri;
+ 		
+ 	}
+@@ -81,5 +88,13 @@
+ 		location /luci-static {
+ 			
+ 		}
++
++		location /web {
++			index  index.html;
++		}
++
++		location /webui-aria2 {
++			index  index.html;
++		}
+ 	}
+-}
+\ No newline at end of file
++}
