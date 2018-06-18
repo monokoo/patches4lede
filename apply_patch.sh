@@ -3,7 +3,6 @@ cd /home/lede/lede-source
 git checkout -- package/network/services/odhcpd/files/odhcpd-update
 git checkout -- package/network/services/hostapd/files/wps-hotplug.sh
 git checkout -- package/network/services/hostapd/files/hostapd.sh
-git checkout -- package/network/services/dnsmasq/files/dhcp.conf
 git checkout -- package/network/ipv6/6in4/files/6in4.sh
 git checkout -- package/base-files/files/etc/rc.button/reset
 
