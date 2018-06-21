@@ -1316,3 +1316,32 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
+--- a/package/network/config/firewall/files/firewall.init	2017-08-20 20:36:14.000000000 +0800
++++ b/package/network/config/firewall/files/firewall.init	2018-06-21 00:23:47.534486778 +0800
+@@ -57,5 +57,5 @@
+ 	# Be silent on boot, firewall might be started by hotplug already,
+ 	# so don't complain in syslog.
+ 	QUIET=-q
+-	start
++	#start
+ }
+--- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-01-18 17:47:36.740460886 +0800
++++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-06-21 22:02:41.485876698 +0800
+@@ -21,7 +21,7 @@
+ 	var tries = 0;
+ 
+ 	function ok() {
+-		window.location = '<%=controller%>/admin';
++		window.location = '<%=controller%>admin';
+ 	}
+ 
+ 	function check() {
+@@ -45,7 +45,7 @@
+ 		button.style.display = 'none';
+ 		document.getElementById('reboot-message').parentNode.style.display = '';
+ 
+-		(new XHR()).post('<%=controller%>/admin/system/reboot/call', { token: '<%=token%>' }, check);
++		(new XHR()).post('<%=controller%>admin/system/reboot/call', { token: '<%=token%>' }, check);
+ 	}
+ //]]></script>
+ 
