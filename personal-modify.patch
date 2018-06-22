@@ -102,11 +102,11 @@ index 2403122ad2..5746ea237a 100755
  ;;
  esac
  
-diff --git a/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsetst.patch b/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsetst.patch
+diff --git a/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsett.patch b/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsett.patch
 new file mode 100644
 index 0000000000..568c3b9147
 --- /dev/null
-+++ b/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsetst.patch
++++ b/package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsett.patch
 @@ -0,0 +1,91 @@
 +--- a/drivers/net/wireless/ath/ath10k/Makefile
 ++++ b/drivers/net/wireless/ath/ath10k/Makefile
