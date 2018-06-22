@@ -1,5 +1,5 @@
 #!/bin/sh
-sh clean_patch.sh
+sh /home/lede/patches4lede/clean_patch.sh
 
 patch -p1 -i /home/lede/patches4lede/personal-modify.patch
 [ -n "$(cat /home/lede/lede-source/.config | grep phicomm-k3)" ] && {
