@@ -37,5 +37,4 @@ git checkout -- modules/luci-base/po/zh-cn/base.po
 git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
 
 
-echo "Everything is done!"
-cd /home/lede/lede-source
+echo "Everything has been cleaned!"
