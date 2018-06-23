@@ -603,15 +603,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
---- a/package/network/config/firewall/files/firewall.init	2017-08-20 20:36:14.000000000 +0800
-+++ b/package/network/config/firewall/files/firewall.init	2018-06-21 00:23:47.534486778 +0800
-@@ -57,5 +57,5 @@
- 	# Be silent on boot, firewall might be started by hotplug already,
- 	# so don't complain in syslog.
- 	QUIET=-q
--	start
-+	#start
- }
 --- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-01-18 17:47:36.740460886 +0800
 +++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-06-21 22:02:41.485876698 +0800
 @@ -21,7 +21,7 @@
@@ -632,3 +623,14 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	}
  //]]></script>
  
+--- a/package/system/procd/files/procd.sh	2018-06-18 17:24:32.623016967 +0800
++++ b/package/system/procd/files/procd.sh	2018-06-23 21:48:05.454991747 +0800
+@@ -61,7 +61,7 @@
+ }
+ 
+ _procd_wrapper() {
+-	procd_lock
++	#procd_lock
+ 	while [ -n "$1" ]; do
+ 		eval "$1() { _procd_call _$1 \"\$@\"; }"
+ 		shift
