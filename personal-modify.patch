@@ -454,8 +454,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 11:06:39.932743333 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 13:45:28.000000000 +0800
 @@ -6,65 +6,80 @@
- #error_log  logs/error.log  notice;
- #error_log  logs/error.log  info;
+ #error_log  /tmp/log/nginx/error.log  notice;
+ #error_log  /tmp/log/nginx/error.log  info;
  
 -pid        /var/run/nginx.pid;
 +pid  /var/run/nginx.pid;
