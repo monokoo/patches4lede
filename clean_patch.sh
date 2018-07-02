@@ -6,6 +6,7 @@ git checkout -- package/network/services/hostapd/files/hostapd.sh
 git checkout -- package/network/ipv6/6in4/files/6in4.sh
 git checkout -- package/base-files/files/etc/rc.button/reset
 git checkout -- package/network/config/firewall/files/firewall.init
+git checkout -- package/system/procd/files/procd.sh
 
 rm -f package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch
 
@@ -14,7 +15,7 @@ rm -f package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-su
 cd feeds/packages/
 git checkout -- net/aria2/files/aria2.conf
 git checkout -- net/nlbwmon/files/nlbwmon.init
-git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
+#git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
 git checkout -- net/haproxy/Makefile
 git checkout -- net/nginx/files-luci-support/luci_nginx_ssl.conf
 git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf

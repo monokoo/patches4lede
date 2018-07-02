@@ -177,23 +177,6 @@ index 3f01d0f5..993e9d6c 100755
  
  USE_PROCD=1
  NAME=nlbwmon
-diff --git a/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch b/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch
-deleted file mode 100644
-index a64678cb..00000000
---- a/feeds/packages/net/usbip/patches-2.0/100-musl-compat.patch
-+++ /dev/null
-@@ -1,11 +0,0 @@
----- a/src/usbipd.c
--+++ b/src/usbipd.c
--@@ -453,7 +453,7 @@ static void set_signal(void)
-- 	sigaction(SIGTERM, &act, NULL);
-- 	sigaction(SIGINT, &act, NULL);
-- 	act.sa_handler = SIG_IGN;
---	sigaction(SIGCLD, &act, NULL);
--+	sigaction(SIGCHLD, &act, NULL);
-- }
-- 
-- static const char *pid_file;
 --- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-05-29 20:35:31.578206766 +0800
 +++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2017-09-19 21:37:28.000000000 +0800
 @@ -23,7 +23,7 @@
