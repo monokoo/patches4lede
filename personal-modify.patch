@@ -586,26 +586,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-01-18 17:47:36.740460886 +0800
-+++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm	2018-06-21 22:02:41.485876698 +0800
-@@ -21,7 +21,7 @@
- 	var tries = 0;
- 
- 	function ok() {
--		window.location = '<%=controller%>/admin';
-+		window.location = '<%=controller%>admin';
- 	}
- 
- 	function check() {
-@@ -45,7 +45,7 @@
- 		button.style.display = 'none';
- 		document.getElementById('reboot-message').parentNode.style.display = '';
- 
--		(new XHR()).post('<%=controller%>/admin/system/reboot/call', { token: '<%=token%>' }, check);
-+		(new XHR()).post('<%=controller%>admin/system/reboot/call', { token: '<%=token%>' }, check);
- 	}
- //]]></script>
- 
 --- a/package/system/procd/files/procd.sh	2018-06-18 17:24:32.623016967 +0800
 +++ b/package/system/procd/files/procd.sh	2018-06-23 21:48:05.454991747 +0800
 @@ -61,7 +61,7 @@

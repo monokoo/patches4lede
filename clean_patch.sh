@@ -23,7 +23,7 @@ git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 cd ../luci/
 #git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/flashops.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
-git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm
+#git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
 git checkout -- applications/luci-app-minidlna/Makefile
