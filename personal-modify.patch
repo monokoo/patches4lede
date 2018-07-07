@@ -639,3 +639,25 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  			}, 5000);
  		//]]></script>
  	</head>
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-07-07 19:47:59.925397522 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-07-07 19:46:49.604366394 +0800
+@@ -2984,7 +2984,7 @@
+ msgid "Start priority"
+ msgstr "启动优先级"
+ 
+-msgid "Starting configuration apply…"
++msgid "Starting configuration apply..."
+ msgstr "开始应用配置..."
+ 
+ msgid "Startup"
+--- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-06-30 21:40:49.305839500 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-07-07 19:49:15.541205548 +0800
+@@ -164,7 +164,7 @@
+ 	function uci_apply(checked) {
+ 		uci_status_message('notice',
+ 			'<img src="<%=resource%>/icons/loading.gif" alt="" style="vertical-align:middle" /> ' +
+-			'<%:Starting configuration apply…%>');
++			'<%:Starting configuration apply...%>');
+ 
+ 		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r) {
+ 			if (r.status === (checked ? 200 : 204)) {
