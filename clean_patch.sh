@@ -25,6 +25,7 @@ cd ../luci/
 git checkout -- modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
 #git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm
 git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
 git checkout -- applications/luci-app-minidlna/Makefile
 git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
