@@ -624,3 +624,18 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +		}
 +	}
 +}
+--- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm	2018-01-18 17:47:36.736459179 +0800
++++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm	2018-07-07 13:20:04.960205694 +0800
+@@ -15,10 +15,10 @@
+ 
+ 				img.onload = function() {
+ 					window.clearInterval(interval);
+-					location.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + '<%=addr or luci.http.getenv("SERVER_NAME")%>/';
++					location.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + location.hostname + ':' + location.port + '/';
+ 				};
+ 
+-				img.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '<%=addr or luci.http.getenv("SERVER_NAME")%><%=resource%>/icons/loading.gif?' + Math.random();
++				img.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + location.hostname + ':' + location.port + '<%=resource%>/icons/loading.gif?' + Math.random();
+ 			}, 5000);
+ 		//]]></script>
+ 	</head>
