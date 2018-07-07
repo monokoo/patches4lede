@@ -434,146 +434,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  endef
  
  Package/haproxy-nossl/install = $(Package/haproxy/install)
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 11:06:39.932743333 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 13:45:28.000000000 +0800
-@@ -6,65 +6,80 @@
- #error_log  /tmp/log/nginx/error.log  notice;
- #error_log  /tmp/log/nginx/error.log  info;
- 
--pid        /var/run/nginx.pid;
-+pid  /var/run/nginx.pid;
- 
- 
- events {
--    worker_connections  1024;
-+	worker_connections  1024;
- }
- 
- 
- http {
--    include       mime.types;
--    default_type  application/octet-stream;
-+	include       mime.types;
-+	default_type  application/octet-stream;
- 
- 	sendfile on;
--    keepalive_timeout 0;
-+	keepalive_timeout 0;
- 	
- 	client_body_buffer_size 10K;
- 	client_header_buffer_size 1k;
- 	client_max_body_size 1G;
- 	large_client_header_buffers 2 1k;
- 
--    gzip on;
--    gzip_http_version 1.1;
--    gzip_vary on;
--    gzip_comp_level 1;
--    gzip_proxied any;
-+	gzip on;
-+	gzip_http_version 1.1;
-+	gzip_vary on;
-+	gzip_comp_level 1;
-+	gzip_proxied any;
- 	
- 	root /www;
--	
-+
- 	server {
- 		listen 80 default_server;
- 		listen [::]:80 default_server;
--		server_name _;
--		return 301 https://$host$request_uri;
--	}
-+		server_name  localhost;
-+		
-+		location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
-+			expires 365d;
-+		}
- 
--    server {
--        listen 443 ssl default_server;
-+		location / {
-+			index  index.html;
-+			include luci_uwsgi.conf;
-+		}
-+		
-+		location /luci-static {
-+			
-+		}
-+		
-+		#return 301 https://$host$request_uri;
-+		
-+	}
-+	
-+	server {
-+		listen 443 ssl default_server;
- 		listen [::]:443 ssl default_server;
--        server_name  localhost;
-+		server_name  localhost;
- 		
- 		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
--        ssl_prefer_server_ciphers on;
-+		ssl_prefer_server_ciphers on;
- 		ssl_ciphers "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:DHE+AESGCM:DHE:!RSA!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!CAMELLIA:!SEED";
--        ssl_session_tickets off;
-+		ssl_session_tickets off;
- 
- 		ssl_certificate /etc/nginx/nginx.cer;
--        ssl_certificate_key /etc/nginx/nginx.key;
-+		ssl_certificate_key /etc/nginx/nginx.key;
- 		
- 		location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
- 			expires 365d;
- 		}
- 
--        location / {
--            index  index.html;
-+		location / {
-+			index  index.html;
- 			include luci_uwsgi.conf;
--        }
-+		}
- 		
- 		location /luci-static {
- 			
- 		}
--    }
-+	}
- }
-\ No newline at end of file
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-18 23:49:32.175654650 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-06-19 00:00:47.821688284 +0800
-@@ -52,6 +52,13 @@
- 			
- 		}
- 		
-+                location /web {
-+                	index  index.html;
-+                }
-+
-+                location /webui-aria2 {
-+                	index  index.html;
-+                }
- 		#return 301 https://$host$request_uri;
- 		
- 	}
-@@ -81,5 +88,13 @@
- 		location /luci-static {
- 			
- 		}
-+
-+		location /web {
-+			index  index.html;
-+		}
-+
-+		location /webui-aria2 {
-+			index  index.html;
-+		}
- 	}
--}
-\ No newline at end of file
-+}
 --- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-18 14:59:02.000313468 +0800
 +++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-19 09:23:46.953006873 +0800
 @@ -25,4 +25,7 @@
@@ -625,3 +485,142 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-07-07 11:24:17.780546352 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-07-07 12:04:51.576381861 +0800
+@@ -2,69 +2,107 @@
+ user  root;
+ worker_processes  1;
+ 
+-#error_log  logs/error.log;
+-#error_log  logs/error.log  notice;
+-#error_log  logs/error.log  info;
++#error_log  /tmp/log/nginx/error.log;
++#error_log  /tmp/log/nginx/error.log  notice;
++#error_log  /tmp/log/nginx/error.log  info;
+ 
+-pid        /var/run/nginx.pid;
++pid  /var/run/nginx.pid;
+ 
+ 
+ events {
+-    worker_connections  1024;
++	worker_connections  1024;
+ }
+ 
+ 
+ http {
+-    include       mime.types;
+-    default_type  application/octet-stream;
++	include       mime.types;
++	default_type  application/octet-stream;
+ 
+ 	sendfile on;
+-    keepalive_timeout 0;
++	keepalive_timeout 0;
+ 	
+ 	client_body_buffer_size 10K;
+ 	client_header_buffer_size 1k;
+ 	client_max_body_size 1G;
+ 	large_client_header_buffers 2 1k;
+ 
+-    gzip on;
+-    gzip_http_version 1.1;
+-    gzip_vary on;
+-    gzip_comp_level 1;
+-    gzip_proxied any;
++	gzip on;
++	gzip_http_version 1.1;
++	gzip_vary on;
++	gzip_comp_level 1;
++	gzip_proxied any;
+ 	
+ 	root /www;
+-	
++
+ 	server {
+ 		listen 80 default_server;
+ 		listen [::]:80 default_server;
+-		server_name _;
+-		return 301 https://$host$request_uri;
+-	}
++		server_name  localhost;
++		
++		location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
++			expires 365d;
++		}
++
++		location / {
++			index  index.html;
++			include luci_uwsgi.conf;
++		}
++		
++		location /luci-static {
++			
++		}
+ 
+-    server {
+-        listen 443 ssl default_server;
++                location /cgi-bin/luci {
++                        rewrite ".*" http://$host/admin;
++                }
++		
++                location /web {
++                	index  index.html;
++                }
++
++                location /webui-aria2 {
++                	index  index.html;
++                }
++		#return 301 https://$host$request_uri;
++		
++	}
++	
++	server {
++		listen 443 ssl default_server;
+ 		listen [::]:443 ssl default_server;
+-        server_name  localhost;
++		server_name  localhost;
+ 		
+ 		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+-        ssl_prefer_server_ciphers on;
++		ssl_prefer_server_ciphers on;
+ 		ssl_ciphers "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:DHE+AESGCM:DHE:!RSA!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!CAMELLIA:!SEED";
+-        ssl_session_tickets off;
++		ssl_session_tickets off;
+ 
+ 		ssl_certificate /etc/nginx/nginx.cer;
+-        ssl_certificate_key /etc/nginx/nginx.key;
++		ssl_certificate_key /etc/nginx/nginx.key;
+ 		
+ 		location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
+ 			expires 365d;
+ 		}
+ 
+-        location / {
+-            index  index.html;
++		location / {
++			index  index.html;
+ 			include luci_uwsgi.conf;
+-        }
++		}
+ 		
+ 		location /luci-static {
+ 			
+ 		}
+-    }
+-}
+\ No newline at end of file
++
++                location /cgi-bin/luci {
++                        rewrite ".*" https://$host/admin;
++                }
++
++		location /web {
++			index  index.html;
++		}
++
++		location /webui-aria2 {
++			index  index.html;
++		}
++	}
++}
