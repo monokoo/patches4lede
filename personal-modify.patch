@@ -422,18 +422,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  endef
  
  Package/haproxy-nossl/install = $(Package/haproxy/install)
---- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-18 14:59:02.000313468 +0800
-+++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-06-19 09:23:46.953006873 +0800
-@@ -25,4 +25,7 @@
- pidfile=/var/run/uwsgi.pid
- die-on-term=True
- fork-socket=True
--pcre-jit=True
-\ No newline at end of file
-+pcre-jit=True
-+ignore-sigpipe=True
-+ignore-write-errors=True
-+disable-write-exception=True
 --- a/package/system/procd/files/procd.sh	2018-06-18 17:24:32.623016967 +0800
 +++ b/package/system/procd/files/procd.sh	2018-06-23 21:48:05.454991747 +0800
 @@ -61,7 +61,7 @@
