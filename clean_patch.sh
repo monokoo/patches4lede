@@ -18,14 +18,15 @@ git checkout -- net/nlbwmon/files/nlbwmon.init
 #git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
 git checkout -- net/haproxy/Makefile
 git checkout -- net/nginx/files-luci-support/luci_nginx_ssl.conf
-git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
+git checkout -- net/nginx/files-luci-support/luci_nginx.conf
+#git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 
 cd ../luci/
 #git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/flashops.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
 #git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
-git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm
+#git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm
 git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
 git checkout -- applications/luci-app-minidlna/Makefile
 git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
@@ -37,7 +38,7 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
-git checkout -- modules/luci-base/po/zh-cn/base.po
+#git checkout -- modules/luci-base/po/zh-cn/base.po
 git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
 
 
