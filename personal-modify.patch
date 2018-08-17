@@ -661,3 +661,25 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r) {
  			if (r.status === (checked ? 200 : 204)) {
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-08-17 22:54:26.301096031 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-08-17 22:58:50.691792725 +0800
+@@ -2,9 +2,9 @@
+ user nobody nogroup;
+ worker_processes  1;
+ 
+-#error_log  logs/error.log;
+-#error_log  logs/error.log  notice;
+-#error_log  logs/error.log  info;
++#error_log  /tmp/log/nginx/error.log
++#error_log  /tmp/log/nginx/error.log  notice;
++#error_log  /tmp/log/nginx/error.log  info;
+ 
+ pid        /var/run/nginx.pid;
+ 
+@@ -52,4 +52,4 @@
+ 			
+ 		}
+     }
+-}
+\ No newline at end of file
++}
