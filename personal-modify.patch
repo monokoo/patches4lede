@@ -532,8 +532,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 -}
 \ No newline at end of file
 +}
---- feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-17 23:08:54.709330965 +0800
-+++ feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf-new	2018-08-17 23:10:05.328298959 +0800
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-17 23:08:54.709330965 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-17 23:10:05.328298959 +0800
 @@ -1,70 +1,108 @@
  
 -user  root;
