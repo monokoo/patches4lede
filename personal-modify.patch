@@ -461,21 +461,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm	2018-01-18 17:47:36.736459179 +0800
-+++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm	2018-07-07 13:20:04.960205694 +0800
-@@ -15,10 +15,10 @@
- 
- 				img.onload = function() {
- 					window.clearInterval(interval);
--					location.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + '<%=addr or luci.http.getenv("SERVER_NAME")%>/';
-+					location.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + location.hostname + ':' + location.port + '/';
- 				};
- 
--				img.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '<%=addr or luci.http.getenv("SERVER_NAME")%><%=resource%>/icons/loading.gif?' + Math.random();
-+				img.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + location.hostname + ':' + location.port + '<%=resource%>/icons/loading.gif?' + Math.random();
- 			}, 5000);
- 		//]]></script>
- 	</head>
 --- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-07-07 19:47:59.925397522 +0800
 +++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-07-07 19:46:49.604366394 +0800
 @@ -2984,7 +2984,7 @@
