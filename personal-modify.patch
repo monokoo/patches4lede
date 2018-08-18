@@ -728,3 +728,14 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  ro = s:option(Flag, "read_only", translate("Read-only"))
  ro.rmempty = false
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-08-17 22:49:10.461151048 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-08-18 15:03:06.963222190 +0800
+@@ -3071,7 +3071,7 @@
+ msgid "Start priority"
+ msgstr "启动优先级"
+ 
+-msgid "Starting configuration apply…"
++msgid "Starting configuration apply..."
+ msgstr "开始应用配置…"
+ 
+ msgid "Starting wireless scan..."
