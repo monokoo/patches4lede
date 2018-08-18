@@ -710,11 +710,10 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  reload_service() {
 --- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-17 22:54:26.317105702 +0800
 +++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-18 13:17:17.158146420 +0800
-@@ -25,3 +25,7 @@
+@@ -25,3 +25,6 @@
  threads		= 3
  processes	= 3
  chmod-socket	= 666
-+pcre-jit=True
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
