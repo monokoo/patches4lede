@@ -654,3 +654,77 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
  	beacon_int.optional = true
  	beacon_int.placeholder = 100
+--- a/feeds/packages/net/samba4/files/samba.init	2018-08-17 22:54:26.301096031 +0800
++++ b/feeds/packages/net/samba4/files/samba.init	2018-08-18 02:17:50.890287990 +0800
+@@ -93,6 +93,7 @@
+ 	config_get guest_only $1 guest_only
+ 	config_get inherit_owner $1 inherit_owner
+ 	config_get vfs_objects $1 vfs_objects
++	config_get sharepasswd $1 sharepasswd
+ 
+ 
+ 	[ -z "$name" -o -z "$path" ] && return
+@@ -111,6 +112,29 @@
+ 	[ -n "$guest_only" ] && echo -e "\tguest only = $guest_only" >> /var/etc/smb.conf
+ 	[ -n "$inherit_owner" ] && echo -e "\tinherit owner = $inherit_owner" >> /var/etc/smb.conf
+ 	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
++
++        if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
++		let sharepw_num+=1
++ 		sharepw=$sharepasswd
++        fi
++
++}
++
++set_sharepw() {	
++
++	if [ "$sharepw_num" -gt 0 ]; then
++		[ -z "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
++			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf
++		[ -z "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf.template
++		(echo $sharepw;echo $sharepw) | smbpasswd -as root
++	else
++		[ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
++			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
++		[ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++		sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
++		[ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
++	fi
+ }
+ 
+ init_config() {
+@@ -124,9 +148,13 @@
+ 		chmod 0755 /var/lock
+ 	}
+ 
++	local sharepw_num=0
++	local sharepw
++
+ 	config_load samba4
+ 	config_foreach smb_header samba
+ 	config_foreach smb_add_share sambashare
++	set_sharepw
+ }
+ 
+ reload_service() {
+--- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-17 22:54:26.317105702 +0800
++++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-18 13:17:17.158146420 +0800
+@@ -25,3 +25,7 @@
+ threads		= 3
+ processes	= 3
+ chmod-socket	= 666
++pcre-jit=True
++ignore-sigpipe=True
++ignore-write-errors=True
++disable-write-exception=True
+--- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
++++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
+@@ -48,6 +48,7 @@ if nixio.fs.access("/etc/config/fstab")
+ end
+ 
+ s:option(Value, "users", translate("Allowed users")).rmempty = true
++s:option(Value, "sharepasswd", translate("Share Password")).rmempty = true
+ 
+ ro = s:option(Flag, "read_only", translate("Read-only"))
+ ro.rmempty = false
