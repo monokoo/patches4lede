@@ -7,6 +7,7 @@ git checkout -- package/network/ipv6/6in4/files/6in4.sh
 git checkout -- package/base-files/files/etc/rc.button/reset
 git checkout -- package/network/config/firewall/files/firewall.init
 git checkout -- package/system/procd/files/procd.sh
+git checkout -- package/kernel/mac80211/patches/
 
 rm -f package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch
 
