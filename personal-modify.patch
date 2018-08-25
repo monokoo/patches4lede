@@ -569,6 +569,15 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  reload_service() {
 --- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-17 22:54:26.317105702 +0800
 +++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-18 13:17:17.158146420 +0800
+@@ -8,7 +8,7 @@
+ buffer-size	= 10000
+ reload-mercy	= 8
+ max-requests	= 2000
+-limit-as	= 200
++limit-as	= 1000
+ reload-on-as	= 256
+ reload-on-rss	= 192
+ no-orphans	= true
 @@ -25,3 +25,6 @@
  threads		= 3
  processes	= 3
