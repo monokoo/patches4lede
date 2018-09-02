@@ -513,60 +513,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
  	beacon_int.optional = true
  	beacon_int.placeholder = 100
---- a/feeds/packages/net/samba4/files/samba.init	2018-08-17 22:54:26.301096031 +0800
-+++ b/feeds/packages/net/samba4/files/samba.init	2018-08-18 02:17:50.890287990 +0800
-@@ -93,6 +93,7 @@
- 	config_get guest_only $1 guest_only
- 	config_get inherit_owner $1 inherit_owner
- 	config_get vfs_objects $1 vfs_objects
-+	config_get sharepasswd $1 sharepasswd
- 
- 
- 	[ -z "$name" -o -z "$path" ] && return
-@@ -111,6 +112,29 @@
- 	[ -n "$guest_only" ] && echo -e "\tguest only = $guest_only" >> /var/etc/smb.conf
- 	[ -n "$inherit_owner" ] && echo -e "\tinherit owner = $inherit_owner" >> /var/etc/smb.conf
- 	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
-+
-+        if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
-+		let sharepw_num+=1
-+ 		sharepw=$sharepasswd
-+        fi
-+
-+}
-+
-+set_sharepw() {	
-+
-+	if [ "$sharepw_num" -gt 0 ]; then
-+		[ -z "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
-+			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf
-+		[ -z "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
-+			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf.template
-+		(echo $sharepw;echo $sharepw) | smbpasswd -as root
-+	else
-+		[ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
-+			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
-+		[ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
-+		sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
-+		[ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
-+	fi
- }
- 
- init_config() {
-@@ -124,9 +148,13 @@
- 		chmod 0755 /var/lock
- 	}
- 
-+	local sharepw_num=0
-+	local sharepw
-+
- 	config_load samba4
- 	config_foreach smb_header samba
- 	config_foreach smb_add_share sambashare
-+	set_sharepw
- }
- 
- reload_service() {
 --- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-17 22:54:26.317105702 +0800
 +++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-08-18 13:17:17.158146420 +0800
 @@ -8,7 +8,7 @@
@@ -724,3 +670,99 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 \ No newline at end of file
 +	}
 +}
+--- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-05-14 16:33:04.467974565 +0800
++++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-08-29 22:52:19.840332831 +0800
+@@ -37,7 +37,8 @@
+ 
+ -- BEGIN Map
+ m = Map("wifi_schedule", translate("Wifi Schedule"), translate("Defines a schedule when to turn on and off wifi."))
+-function m.on_commit(self)
++m.apply_on_parse=true
++function m.on_apply(self)
+     sys.exec("/usr/bin/wifi_schedule.sh cron")
+ end
+ -- END Map
+--- a/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-01-18 17:47:24.308449537 +0800
++++ b/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-08-29 22:53:39.324147677 +0800
+@@ -305,7 +305,7 @@
+ ###############################################################################
+ LOGGING=$(_get_uci_value ${GLOBAL}.logging) || _exit 1
+ _log ${SCRIPT} $1 $2
+-lock ${LOCKFILE}
++#lock ${LOCKFILE}
+ 
+ case "$1" in
+     cron) check_cron_status ;;
+--- a/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:08:58.906441151 +0800
++++ b/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:10:26.925264828 +0800
+@@ -19,6 +19,9 @@
+ 		done
+ 	)
+ 
++        local lan_ip=$(uci -q get network.lan.ipaddr)
++        [ -z "$lan_ip" ] && lan_ip=`ifconfig br-lan 2>/dev/null | grep "inet addr:" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"|head -1`
++
+ 	local name workgroup description charset
+ 	local hostname="$(uci_get system.@system[0].hostname)"
+ 
+@@ -35,7 +38,7 @@
+ 	sed -e "s#|NAME|#$name#g" \
+ 	    -e "s#|WORKGROUP|#$workgroup#g" \
+ 	    -e "s#|DESCRIPTION|#$description#g" \
+-	    -e "s#|INTERFACES|#$interfaces#g" \
++	    -e "s#|INTERFACES|#$interfaces $lan_ip#g" \
+ 	    -e "s#|CHARSET|#$charset#g" \
+ 	    /etc/samba/smb.conf.template > /var/etc/smb.conf
+ 
+@@ -93,6 +96,7 @@
+ 	config_get guest_only $1 guest_only
+ 	config_get inherit_owner $1 inherit_owner
+ 	config_get vfs_objects $1 vfs_objects
++	config_get sharepasswd $1 sharepasswd
+ 
+ 
+ 	[ -z "$name" -o -z "$path" ] && return
+@@ -111,6 +115,29 @@
+ 	[ -n "$guest_only" ] && echo -e "\tguest only = $guest_only" >> /var/etc/smb.conf
+ 	[ -n "$inherit_owner" ] && echo -e "\tinherit owner = $inherit_owner" >> /var/etc/smb.conf
+ 	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
++
++        if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
++		let sharepw_num+=1
++ 		sharepw=$sharepasswd
++        fi
++
++}
++
++set_sharepw() {	
++
++	if [ "$sharepw_num" -gt 0 ]; then
++		[ -z "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
++			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf
++		[ -z "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf.template
++		(echo $sharepw;echo $sharepw) | smbpasswd -as root
++	else
++		[ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
++			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
++		[ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++		sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
++		[ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
++	fi
+ }
+ 
+ init_config() {
+@@ -124,9 +151,13 @@
+ 		chmod 0755 /var/lock
+ 	}
+ 
++	local sharepw_num=0
++	local sharepw
++
+ 	config_load samba4
+ 	config_foreach smb_header samba
+ 	config_foreach smb_add_share sambashare
++	set_sharepw
+ }
+ 
+ reload_service() {
