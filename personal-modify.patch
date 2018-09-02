@@ -541,17 +541,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  ro = s:option(Flag, "read_only", translate("Read-only"))
  ro.rmempty = false
---- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-08-17 22:49:10.461151048 +0800
-+++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-08-18 15:03:06.963222190 +0800
-@@ -3071,7 +3071,7 @@
- msgid "Start priority"
- msgstr "启动优先级"
- 
--msgid "Starting configuration apply…"
-+msgid "Starting configuration apply..."
- msgstr "开始应用配置…"
- 
- msgid "Starting wireless scan..."
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 22:28:37.624512047 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 21:46:18.106683414 +0800
 @@ -1,64 +1,88 @@
@@ -766,3 +755,38 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  }
  
  reload_service() {
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-09-02 18:20:47.209950947 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-09-02 18:26:51.090088001 +0800
+@@ -584,10 +584,10 @@
+ msgstr "分类"
+ 
+ msgid "Caution: Configuration files will be erased"
+-msgstr ""
++msgstr "注意：配置文件将被删除。"
+ 
+ msgid "Caution: System upgrade will be forced"
+-msgstr ""
++msgstr "注意：系统将会强制升级。"
+ 
+ msgid "Chain"
+ msgstr "链"
+@@ -688,8 +688,8 @@
+ msgid "Configuration failed"
+ msgstr "配置失败"
+ 
+-msgid "Configuration files will be kept"
+-msgstr ""
++msgid "Configuration files will be kept."
++msgstr "配置文件将被保留。"
+ 
+ msgid "Configuration has been applied."
+ msgstr "配置已应用。"
+@@ -1462,7 +1462,7 @@
+ msgstr "IP 地址"
+ 
+ msgid "IP Protocol"
+-msgstr ""
++msgstr "IP 协议"
+ 
+ msgid "IP address"
+ msgstr "IP 地址"
