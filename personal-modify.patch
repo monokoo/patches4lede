@@ -699,7 +699,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	    -e "s#|WORKGROUP|#$workgroup#g" \
  	    -e "s#|DESCRIPTION|#$description#g" \
 -	    -e "s#|INTERFACES|#$interfaces#g" \
-+	    -e "s#|INTERFACES|#$interfaces $lan_ip#g" \
++	    -e "s#|INTERFACES|#$lan_ip#g" \
  	    -e "s#|CHARSET|#$charset#g" \
  	    /etc/samba/smb.conf.template > /var/etc/smb.conf
  
