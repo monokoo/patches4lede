@@ -290,7 +290,29 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua 
  end
  
  local function exec(cmd, args, writer)
-@@ -221,6 +221,6 @@
+@@ -56,10 +56,12 @@
+ 		csv = "text/csv",
+ 		json = "application/json"
+ 	}
++	
++	local filename = "data." .. mtype
+ 	
+ 	local args = { }
+ 	local mtype = http.formvalue("type") or "json"
+-	local delim = http.formvalue("delim") or ";"
++	local delim = http.formvalue("delim") or ","
+ 	local period = http.formvalue("period")
+ 	local group_by = http.formvalue("group_by")
+ 	local order_by = http.formvalue("order_by")
+@@ -92,6 +94,7 @@
+ 	end
+ 	
+ 	http.prepare_content(types[mtype])
++	http.header("Content-Disposition", "attachment; filename=\"%s\"" % filename)
+ 	exec("/usr/sbin/nlbw", args, http.write)
+ end
+ 
+@@ -221,6 +224,6 @@
  	local http = require "luci.http"
  	local disp = require "luci.dispatcher"
  
@@ -790,3 +812,154 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  msgid "IP address"
  msgstr "IP 地址"
+diff --git a/feeds/luci/modules/luci-base/luasrc/sys.lua b/feeds/luci/modules/luci-base/luasrc/sys.lua
+index 823e20770c..49d8b6d256 100644
+--- a/feeds/luci/modules/luci-base/luasrc/sys.lua
++++ b/feeds/luci/modules/luci-base/luasrc/sys.lua
+@@ -340,6 +340,32 @@ function net.conntrack(callback)
+ 					if entry[key] == nil then
+ 						entry[key] = val
+ 					end
++					if entry["ptype"] == nil then
++						val = tonumber(val)
++						if key == "sport" then
++							if (val == 443) then
++								entry["ptype"] = "Https / SSL"
++							elseif val == 80 then
++								entry["ptype"] = "Http"
++							elseif val == 53 then
++								entry["ptype"] = "Dns"
++							elseif val == 22 then
++								entry["ptype"] = "SSH"
++							elseif val == 1900 then
++								entry["ptype"] = "UPnP"
++							elseif val == 123 then
++								entry["ptype"] = "NTP"
++							elseif val == 137 then
++								entry["ptype"] = "NetBIOS"
++							elseif val == 139 or val == 445 then
++								entry["ptype"] = "Samba"	
++							elseif val == 993 then
++								entry["ptype"] = "IMAP-SSL"
++							end
++						elseif (val >= 6902) and (val <= 6968) then
++								entry["ptype"] = "Torrent"
++						end
++					end
+ 				elseif val then
+ 					entry[key] = val
+ 				end
+diff --git a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
+index 0a0db3be78..abda40bbc3 100644
+--- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
++++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
+@@ -131,15 +131,21 @@
+ 				}
+ 
+ 				label_scale.innerHTML = String.format('<%:(%d minute window, %d second interval)%>', data_wanted / 60, 3);
++				
++				var recheck_lookup_queue = {};
+ 
+ 				/* render datasets, start update interval */
+ 				XHR.poll(3, '<%=build_url("admin/status/realtime/connections_status")%>', null,
+ 					function(x, json)
+ 					{
+-						var rows = [];
++
++						if (!json.connections)
++							return;
++
+ 						var conn = json.connections;
+ 
+ 						var lookup_queue = [ ];
++						var rows = [];
+ 
+ 						conn.sort(function(a, b) {
+ 							return b.bytes - a.bytes;
+@@ -153,10 +159,10 @@
+ 							    (c.src == '::1'       && c.dst == '::1'))
+ 								continue;
+ 
+-							if (!dns_cache[c.src])
++							if (!dns_cache[c.src] && lookup_queue.indexOf(c.src) == -1)
+ 								lookup_queue.push(c.src);
+ 
+-							if (!dns_cache[c.dst])
++							if (!dns_cache[c.dst] && lookup_queue.indexOf(c.dst) == -1)
+ 								lookup_queue.push(c.dst);
+ 
+ 							var src = dns_cache[c.src] || (c.layer3 == 'ipv6' ? '[' + c.src + ']' : c.src);
+@@ -165,22 +171,49 @@
+ 							rows.push([
+ 								c.layer3.toUpperCase(),
+ 								c.layer4.toUpperCase(),
+-								src + ':' + c.sport,
+-								dst + ':' + c.dport,
++								c.ptype,
++								[ src, c.sport ? ':' + c.sport : '' ],
++								[ dst, c.dport ? ':' + c.dport : '' ],
+ 								'%1024.2mB (%d <%:Pkts.%>)'.format(c.bytes, c.packets)
+ 							]);
+ 						}
+ 
+ 						cbi_update_table(conn_table, rows, '<em><%:No information available%></em>');
+ 
+-						if (lookup_queue.length > 0)
+-							XHR.get('<%=build_url("admin/status/nameinfo")%>/' + lookup_queue.slice(0, 100).join('/'), null,
+-								function(x, json)
+-								{
+-									for (var addr in json)
+-										dns_cache[addr] = json[addr];
++						if (lookup_queue.length > 0) {
++						  var reduced_lookup_queue = lookup_queue;
++						
++						  if (lookup_queue.length > 100)
++						  	reduced_lookup_queue = lookup_queue.slice(0, 100);							
++
++						  XHR.get('<%=build_url("admin/status/nameinfo")%>/' + reduced_lookup_queue.join('/'), null,
++						  	function(x, json)
++						  	{
++							  if (!json)
++								return;
++							
++							  for (var index in reduced_lookup_queue) {
++								var address = reduced_lookup_queue[index];
++								
++								if (!address)
++								  continue;
++								
++						  	    if (json[address]) {
++						  	      dns_cache[address] = json[address];
++						  	      lookup_queue.splice(reduced_lookup_queue.indexOf(address),1);
++								  continue;
+ 								}
+-							);
++
++						  	    if(recheck_lookup_queue[address] > 2) {
++						  	      dns_cache[address] = (address.match(/:/)) ? '[' + address + ']' : address;
++						  	      lookup_queue.splice(index,1);
++						  	    } else {
++						  	      recheck_lookup_queue[address] != null ? recheck_lookup_queue[address]++ : recheck_lookup_queue[address] = 0;
++								}
++						  	  }
++						  	}
++						  );
++						}
+ 
+ 
+ 						var data = json.statistics;
+@@ -359,6 +392,7 @@ <h2 name="content"><%:Realtime Connections%></h2>
+ 			<div class="tr table-titles">
+ 				<div class="th col-2 hide-xs"><%:Network%></div>
+ 				<div class="th col-2"><%:Protocol%></div>
++				<div class="th col-2"><%:Type%></div>
+ 				<div class="th col-7"><%:Source%></div>
+ 				<div class="th col-7"><%:Destination%></div>
+ 				<div class="th col-4"><%:Transfer%></div>
+@@ -373,4 +407,4 @@ <h2 name="content"><%:Realtime Connections%></h2>
+ 	</div>
+ </fieldset>
+ 
+-<%+footer%>
++<%+footer%>
+\ No newline at end of file
