@@ -1,6 +1,6 @@
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch b/package/kernel/mac80211/patches//325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch b/package/kernel/mac80211/patches/325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0001-brcmfmac-move-brcmf_bus_preinit-call-just-after-chan.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,45 +0,0 @@
 -From da472385a29f1fddcac7cfa0499482704310bd16 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -47,9 +47,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0001-brcmfmac-move-brcmf_b
 - 	/* Bus is ready, do any initialization */
 - 	ret = brcmf_c_preinit_dcmds(ifp);
 - 	if (ret < 0)
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch b/package/kernel/mac80211/patches//325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch b/package/kernel/mac80211/patches/325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0002-brcmfmac-move-allocation-of-control-rx-buffer-to-brc.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,69 +0,0 @@
 -From 4b5adc736828dc25ca33e263ad8c0b9dcd3bf325 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -120,9 +120,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0002-brcmfmac-move-allocat
 - 	sdio_claim_host(bus->sdiodev->func1);
 - 
 - 	/* Disable F2 to clear any intermediate frame state on the dongle */
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch b/package/kernel/mac80211/patches//325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch b/package/kernel/mac80211/patches/325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0003-brcmfmac-call-brcmf_attach-just-before-calling-brcmf.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,106 +0,0 @@
 -From 262f2b53f67936b59cc8dfc6f3899ab8905bf1ed Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -230,9 +230,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0003-brcmfmac-call-brcmf_a
 - 	brcmf_dbg(INFO, "completed!!\n");
 - 
 - 	ret = brcmf_fw_map_chip_to_name(bus->ci->chip, bus->ci->chiprev,
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch b/package/kernel/mac80211/patches//325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch b/package/kernel/mac80211/patches/325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0004-brcmfmac-usb-call-brcmf_usb_up-during-brcmf_bus_prei.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,41 +0,0 @@
 -From a7f4a80c0070b673d4a4ce94b99979ea6d0c6296 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -275,9 +275,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0004-brcmfmac-usb-call-brc
 - 	ret = brcmf_bus_started(devinfo->dev);
 - 	if (ret)
 - 		goto fail;
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch b/package/kernel/mac80211/patches//325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch b/package/kernel/mac80211/patches/325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0005-brcmfmac-move-brcmf_attach-function-in-core.c.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,130 +0,0 @@
 -From 0542503c4c164c65cd1567b0f2b3f887af6c81eb Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -409,9 +409,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0005-brcmfmac-move-brcmf_a
 - 
 - void brcmf_bus_add_txhdrlen(struct device *dev, uint len)
 - {
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch b/package/kernel/mac80211/patches//325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch b/package/kernel/mac80211/patches/325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0006-brcmfmac-remove-brcmf_bus_started-from-bus-api.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,190 +0,0 @@
 -From de2a3027f6f15e2f6558dc4d178282ccc1f054db Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -603,9 +603,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0006-brcmfmac-remove-brcmf
 - 
 - 	devinfo->bus_pub.state = BRCMFMAC_USB_STATE_UP;
 - 	brcmf_usb_rx_fill_all(devinfo);
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch b/package/kernel/mac80211/patches//325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch b/package/kernel/mac80211/patches/325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0007-brcmfmac-change-log-level-for-some-low-level-sdio-fu.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,64 +0,0 @@
 -From d678296bfb9a630d0000222fc21f4ed0d0d65332 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -671,9 +671,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0007-brcmfmac-change-log-l
 - 		intstatus &= ~I_CHIPACTIVE;
 - 	}
 - 
-diff -uN a/package/kernel/mac80211/patches//325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch b/package/kernel/mac80211/patches//325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch
---- a/package/kernel/mac80211/patches//325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch b/package/kernel/mac80211/patches/325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch
+--- a/package/kernel/mac80211/patches/325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/325-v4.17-0008-brcmfmac-remove-duplicate-pointer-variable-from-brcm.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,126 +0,0 @@
 -From 2d6edad4b2da1991f74e7b02053eeb4a043b887f Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -801,9 +801,9 @@ diff -uN a/package/kernel/mac80211/patches//325-v4.17-0008-brcmfmac-remove-dupli
 - 	device_release_driver(dev);
 - }
 - 
-diff -uN a/package/kernel/mac80211/patches//326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch b/package/kernel/mac80211/patches//326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch
---- a/package/kernel/mac80211/patches//326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch b/package/kernel/mac80211/patches/326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch
+--- a/package/kernel/mac80211/patches/326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/326-v4.17-0001-brcmfmac-reject-too-long-PSK.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,27 +0,0 @@
 -From 64d1519edc959f5b8f86a66a51c40971c215e4ec Mon Sep 17 00:00:00 2001
 -From: Johannes Berg <johannes.berg@intel.com>
@@ -832,9 +832,9 @@ diff -uN a/package/kernel/mac80211/patches//326-v4.17-0001-brcmfmac-reject-too-l
 - 	return brcmf_set_pmk(ifp, conf->pmk, conf->pmk_len);
 - }
 - 
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch b/package/kernel/mac80211/patches//327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch b/package/kernel/mac80211/patches/327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0001-brcmfmac-do-not-convert-linux-error-to-firmware-erro.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,31 +0,0 @@
 -From 1170f6d1be6a39e1a115a2c0f50923eb4ce2a7ec Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -867,9 +867,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0001-brcmfmac-do-not-conve
 - 	} else if (fwerr < 0) {
 - 		brcmf_dbg(FIL, "Firmware error: %s (%d)\n",
 - 			  brcmf_fil_get_errstr((u32)(-fwerr)), fwerr);
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch b/package/kernel/mac80211/patches//327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch b/package/kernel/mac80211/patches/327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0002-brcmfmac-use-brcmf_chip_name-to-store-name-in-revinf.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,203 +0,0 @@
 -From 756a2b390874d274f2f615921318ef0856ff9313 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -1074,9 +1074,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0002-brcmfmac-use-brcmf_ch
 - 	u32 phytype;
 - 	u32 phyrev;
 - 	u32 anarev;
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch b/package/kernel/mac80211/patches//327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch b/package/kernel/mac80211/patches/327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0003-brcmfmac-use-brcmf_chip_name-for-consistency.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,69 +0,0 @@
 -From c88cfa075de356ddf40c668896b2126340f19ba4 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -1147,9 +1147,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0003-brcmfmac-use-brcmf_ch
 - 
 - 	return 0;
 - }
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch b/package/kernel/mac80211/patches//327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch b/package/kernel/mac80211/patches/327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0004-brcmfmac-allocate-struct-brcmf_pub-instance-using-wi.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,452 +0,0 @@
 -From 856d5a011c86b59f6564be4508912fb1d866adfc Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -1603,9 +1603,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0004-brcmfmac-allocate-str
 - 	struct brcmf_p2p_info *p2p = &cfg->p2p;
 - 	struct brcmf_cfg80211_vif *vif;
 - 	enum nl80211_iftype iftype;
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch b/package/kernel/mac80211/patches//327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch b/package/kernel/mac80211/patches/327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0005-brcmfmac-use-wiphy-debugfs-dir-entry.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,349 +0,0 @@
 -From 34789d0cf682c643862792750a06c31ccf016cbc Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -1956,9 +1956,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0005-brcmfmac-use-wiphy-de
 -+}
 -+
 - #endif /* BRCMFMAC_PROTO_H */
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch b/package/kernel/mac80211/patches//327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch b/package/kernel/mac80211/patches/327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0006-brcmfmac-derive-firmware-filenames-from-basename-map.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,286 +0,0 @@
 -From 41f573dbb534f14e62a4a5411f602c970cad1d77 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -2246,9 +2246,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0006-brcmfmac-derive-firmw
 - 
 - static struct brcmf_firmware_mapping brcmf_usb_fwnames[] = {
 - 	BRCMF_FW_ENTRY(BRCM_CC_43143_CHIP_ID, 0xFFFFFFFF, 43143),
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch b/package/kernel/mac80211/patches//327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch b/package/kernel/mac80211/patches/327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0007-brcmfmac-pass-struct-in-brcmf_fw_get_firmwares.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,574 +0,0 @@
 -From d09ae51a4b676151edaf572bcd5f272b5532639f Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -2824,9 +2824,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0007-brcmfmac-pass-struct-
 - }
 - 
 - #define BRCMF_USB_DEVICE(dev_id)	\
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch b/package/kernel/mac80211/patches//327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch b/package/kernel/mac80211/patches/327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0008-brcmfmac-introduce-brcmf_fw_alloc_request-function.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,328 +0,0 @@
 -From 2baa3aaee27f137b8db9a9224d0fe9b281d28e34 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3156,9 +3156,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0008-brcmfmac-introduce-br
 - 	ret = brcmf_fw_get_firmwares(&usb->dev, fwreq, brcmf_usb_probe_phase2);
 - 	if (ret < 0)
 - 		kfree(fwreq);
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch b/package/kernel/mac80211/patches//327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch b/package/kernel/mac80211/patches/327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0009-brcmfmac-add-extension-to-.get_fwname-callbacks.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,231 +0,0 @@
 -From bf7a7b37f6ef5090a2bae7e7ae23cd26b741cca4 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3391,9 +3391,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0009-brcmfmac-add-extensio
 - }
 - 
 - static const struct brcmf_bus_ops brcmf_usb_bus_ops = {
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch b/package/kernel/mac80211/patches//327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch b/package/kernel/mac80211/patches/327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0010-brcmfmac-get-rid-of-brcmf_fw_map_chip_to_name.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,92 +0,0 @@
 -From 18c2b20e276e04476a3350b4a92c1dfad725d45d Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3487,9 +3487,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0010-brcmfmac-get-rid-of-b
 - void brcmf_fw_nvram_free(void *nvram);
 - 
 - enum brcmf_fw_type {
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch b/package/kernel/mac80211/patches//327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch b/package/kernel/mac80211/patches/327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0011-brcmfmac-get-rid-of-brcmf_fw_get_full_name.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,44 +0,0 @@
 -From bf291b7247e53f52a4236c0b55a5df046d6177df Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3535,9 +3535,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0011-brcmfmac-get-rid-of-b
 - 		fwreq->items[j].path = fwnames[j].path;
 - 	}
 - 
-diff -uN a/package/kernel/mac80211/patches//327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch b/package/kernel/mac80211/patches//327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch
---- a/package/kernel/mac80211/patches//327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch b/package/kernel/mac80211/patches/327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch
+--- a/package/kernel/mac80211/patches/327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/327-v4.17-0012-brcmfmac-add-kerneldoc-for-struct-brcmf_bus-msgbuf.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,23 +0,0 @@
 -From 48eaee3f272a5bfe6986d07c51f6975d3c2f74d1 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3562,9 +3562,9 @@ diff -uN a/package/kernel/mac80211/patches//327-v4.17-0012-brcmfmac-add-kerneldo
 -  */
 - struct brcmf_bus {
 - 	union {
-diff -uN a/package/kernel/mac80211/patches//328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch b/package/kernel/mac80211/patches//328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch
---- a/package/kernel/mac80211/patches//328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch b/package/kernel/mac80211/patches/328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch
+--- a/package/kernel/mac80211/patches/328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/328-v4.17-0001-brcmfmac-fix-firmware-request-processing-if-nvram-lo.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,81 +0,0 @@
 -From 0b5c0305e57ca940713bcb2b202fd2b412c62f31 Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3647,9 +3647,9 @@ diff -uN a/package/kernel/mac80211/patches//328-v4.17-0001-brcmfmac-fix-firmware
 - 	do {
 - 		if (++fwctx->curpos == fwctx->req->n_items) {
 - 			ret = 0;
-diff -uN a/package/kernel/mac80211/patches//329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch b/package/kernel/mac80211/patches//329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch
---- a/package/kernel/mac80211/patches//329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch b/package/kernel/mac80211/patches/329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch
+--- a/package/kernel/mac80211/patches/329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/329-v4.18-0001-brcmfmac-add-support-for-BCM4366E-chipset.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,48 +0,0 @@
 -From 1f589e2510d5df1192dca7c089103a2cbd028101 Mon Sep 17 00:00:00 2001
 -From: Dan Haab <dhaab@luxul.com>
@@ -3699,9 +3699,9 @@ diff -uN a/package/kernel/mac80211/patches//329-v4.18-0001-brcmfmac-add-support-
 - #define BRCM_CC_4371_CHIP_ID		0x4371
 - #define CY_CC_4373_CHIP_ID		0x4373
 - 
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch b/package/kernel/mac80211/patches//330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch b/package/kernel/mac80211/patches/330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0001-brcmfmac-check-p2pdev-mac-address-uniqueness.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,34 +0,0 @@
 -From cb746e47837ad0f35c8ae28e9aacc8eb07916d2a Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3737,9 +3737,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0001-brcmfmac-check-p2pdev
 - 	brcmf_p2p_generate_bss_mac(p2p, addr);
 - 	brcmf_p2p_set_firmware(pri_ifp, p2p->dev_addr);
 - 
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch b/package/kernel/mac80211/patches//330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch b/package/kernel/mac80211/patches/330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0002-brcmfmac-reports-boottime_ns-while-informing-bss.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,76 +0,0 @@
 -From 7742fce4c007141617dab9bcb90034b3c0fe2347 Mon Sep 17 00:00:00 2001
 -From: Franky Lin <franky.lin@broadcom.com>
@@ -3817,9 +3817,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0002-brcmfmac-reports-boot
 - 
 - 	if (!bss)
 - 		return -ENOMEM;
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch b/package/kernel/mac80211/patches//330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch b/package/kernel/mac80211/patches/330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0003-brcmfmac-use-nl80211_band-directly-to-get-ieee80211-.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,43 +0,0 @@
 -From aed14219067ab96e5eeb7730e9bceed10d9be989 Mon Sep 17 00:00:00 2001
 -From: Franky Lin <franky.lin@broadcom.com>
@@ -3864,9 +3864,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0003-brcmfmac-use-nl80211_
 - 	bss_data.chan = ieee80211_get_channel(wiphy, freq);
 - 	bss_data.scan_width = NL80211_BSS_CHAN_WIDTH_20;
 - 	bss_data.boottime_ns = ktime_to_ns(ktime_get_boottime());
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch b/package/kernel/mac80211/patches//330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch b/package/kernel/mac80211/patches/330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0004-brcmfmac-constify-firmware-mapping-tables.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,76 +0,0 @@
 -From ff68c9f9c06d1fd437c8f90fc05ca28c47f7d85e Mon Sep 17 00:00:00 2001
 -From: Arend Van Spriel <arend.vanspriel@broadcom.com>
@@ -3944,9 +3944,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0004-brcmfmac-constify-fir
 - 	BRCMF_FW_ENTRY(BRCM_CC_43143_CHIP_ID, 0xFFFFFFFF, 43143),
 - 	BRCMF_FW_ENTRY(BRCM_CC_43235_CHIP_ID, 0x00000008, 43236B),
 - 	BRCMF_FW_ENTRY(BRCM_CC_43236_CHIP_ID, 0x00000008, 43236B),
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0005-brcmfmac-add-hostready-indication.patch b/package/kernel/mac80211/patches//330-v4.18-0005-brcmfmac-add-hostready-indication.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0005-brcmfmac-add-hostready-indication.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0005-brcmfmac-add-hostready-indication.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0005-brcmfmac-add-hostready-indication.patch b/package/kernel/mac80211/patches/330-v4.18-0005-brcmfmac-add-hostready-indication.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0005-brcmfmac-add-hostready-indication.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0005-brcmfmac-add-hostready-indication.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,74 +0,0 @@
 -From 84ad327d18debe19b8d509059b61db445d048b02 Mon Sep 17 00:00:00 2001
 -From: Franky Lin <franky.lin@broadcom.com>
@@ -4022,9 +4022,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0005-brcmfmac-add-hostread
 - 		return 0;
 - 	}
 - 
-diff -uN a/package/kernel/mac80211/patches//330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch b/package/kernel/mac80211/patches//330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch
---- a/package/kernel/mac80211/patches//330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch b/package/kernel/mac80211/patches/330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch
+--- a/package/kernel/mac80211/patches/330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/330-v4.18-0006-brcmfmac-coarse-support-for-PCIe-shared-structure-re.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,97 +0,0 @@
 -From f56324baf329bc9362a52ad77a4a1a0f3356d1bc Mon Sep 17 00:00:00 2001
 -From: Franky Lin <franky.lin@broadcom.com>
@@ -4123,9 +4123,9 @@ diff -uN a/package/kernel/mac80211/patches//330-v4.18-0006-brcmfmac-coarse-suppo
 - 	ring->dma_handle = dma_handle;
 - 	ring->devinfo = devinfo;
 - 	brcmf_commonring_register_cb(&ring->commonring,
-diff -uN a/package/kernel/mac80211/patches//331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch b/package/kernel/mac80211/patches//331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch
---- a/package/kernel/mac80211/patches//331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch b/package/kernel/mac80211/patches/331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch
+--- a/package/kernel/mac80211/patches/331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/331-v4.18-0001-brcmfmac-Add-support-for-bcm43364-wireless-chipset.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,45 +0,0 @@
 -From 9c4a121e82634aa000a702c98cd6f05b27d6e186 Mon Sep 17 00:00:00 2001
 -From: Sean Lanigan <sean@lano.id.au>
@@ -4172,9 +4172,9 @@ diff -uN a/package/kernel/mac80211/patches//331-v4.18-0001-brcmfmac-Add-support-
 - #define SDIO_DEVICE_ID_BROADCOM_43430		0xa9a6
 - #define SDIO_DEVICE_ID_BROADCOM_4345		0x4345
 - #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
-diff -uN a/package/kernel/mac80211/patches//332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch b/package/kernel/mac80211/patches//332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch
---- a/package/kernel/mac80211/patches//332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch b/package/kernel/mac80211/patches/332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch
+--- a/package/kernel/mac80211/patches/332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/332-v4.18-0001-brcmfmac-set-WIPHY_FLAG_HAVE_AP_SME-flag.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,34 +0,0 @@
 -From 1204aa17f3b4f63e67ac9b7c9afa9496485969c5 Mon Sep 17 00:00:00 2001
 -From: =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>
@@ -4210,9 +4210,9 @@ diff -uN a/package/kernel/mac80211/patches//332-v4.18-0001-brcmfmac-set-WIPHY_FL
 - 			WIPHY_FLAG_OFFCHAN_TX |
 - 			WIPHY_FLAG_HAS_REMAIN_ON_CHANNEL;
 - 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_TDLS))
-diff -uN a/package/kernel/mac80211/patches//333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch b/package/kernel/mac80211/patches//333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch
---- a/package/kernel/mac80211/patches//333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch b/package/kernel/mac80211/patches/333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch
+--- a/package/kernel/mac80211/patches/333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/333-v4.18-0001-brcmfmac-fix-initialization-of-struct-cfg80211_infor.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,29 +0,0 @@
 -From 763ece85f45a6b93268e25a0abf02922f911dab4 Mon Sep 17 00:00:00 2001
 -From: Franky Lin <franky.lin@broadcom.com>
@@ -4243,9 +4243,9 @@ diff -uN a/package/kernel/mac80211/patches//333-v4.18-0001-brcmfmac-fix-initiali
 - 
 - 	if (le32_to_cpu(bi->length) > WL_BSS_INFO_MAX) {
 - 		brcmf_err("Bss info is larger than buffer. Discarding\n");
-diff -uN a/package/kernel/mac80211/patches//334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch b/package/kernel/mac80211/patches//334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch
---- a/package/kernel/mac80211/patches//334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch b/package/kernel/mac80211/patches/334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch
+--- a/package/kernel/mac80211/patches/334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/334-v4.18-0001-brcmfmac-add-debugfs-entry-for-reading-firmware-capa.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,75 +0,0 @@
 -From 88001968245c42c26416476bf0ef960442371605 Mon Sep 17 00:00:00 2001
 -From: =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>
@@ -4322,9 +4322,9 @@ diff -uN a/package/kernel/mac80211/patches//334-v4.18-0001-brcmfmac-add-debugfs-
 - }
 - 
 - bool brcmf_feat_is_enabled(struct brcmf_if *ifp, enum brcmf_feat_id id)
-diff -uN a/package/kernel/mac80211/patches//337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch b/package/kernel/mac80211/patches//337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch
---- a/package/kernel/mac80211/patches//337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch b/package/kernel/mac80211/patches/337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch
+--- a/package/kernel/mac80211/patches/337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/337-v4.18-brcmfmac-fix-regression-in-parsing-NVRAM-for-multipl.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,41 +0,0 @@
 -From 299b6365a3b7cf7f5ea1c945a420e9ee4841d6f7 Mon Sep 17 00:00:00 2001
 -From: =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>
@@ -4367,9 +4367,9 @@ diff -uN a/package/kernel/mac80211/patches//337-v4.18-brcmfmac-fix-regression-in
 - 	fwreq->bus_nr = devinfo->pdev->bus->number;
 - 
 - 	return fwreq;
-diff -uN a/package/kernel/mac80211/patches//860-brcmfmac-register-wiphy-s-during-module_init.patch b/package/kernel/mac80211/patches//860-brcmfmac-register-wiphy-s-during-module_init.patch
---- a/package/kernel/mac80211/patches//860-brcmfmac-register-wiphy-s-during-module_init.patch	2018-08-22 19:54:31.155168654 +0800
-+++ b/package/kernel/mac80211/patches//860-brcmfmac-register-wiphy-s-during-module_init.patch	1970-01-01 08:00:00.000000000 +0800
+diff -uN a/package/kernel/mac80211/patches/860-brcmfmac-register-wiphy-s-during-module_init.patch b/package/kernel/mac80211/patches/860-brcmfmac-register-wiphy-s-during-module_init.patch
+--- a/package/kernel/mac80211/patches/860-brcmfmac-register-wiphy-s-during-module_init.patch	2018-08-22 19:54:31.155168654 +0800
++++ b/package/kernel/mac80211/patches/860-brcmfmac-register-wiphy-s-during-module_init.patch	1970-01-01 08:00:00.000000000 +0800
 @@ -1,66 +0,0 @@
 -From: =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>
 -Date: Mon, 8 Jun 2015 16:11:40 +0200
