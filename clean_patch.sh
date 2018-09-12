@@ -35,6 +35,7 @@ git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
 git checkout -- applications/luci-app-minidlna/Makefile
 git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
 git checkout -- modules/luci-base/luasrc/view/sysauth.htm
+git checkout -- modules/luci-base/luasrc/model/network.lua
 git checkout -- modules/luci-base/luasrc/view/cbi/apply_widget.htm
 git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
 git checkout -- modules/luci-base/luasrc/sys.lua
