@@ -291,12 +291,11 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua 
  
  local function exec(cmd, args, writer)
 @@ -57,9 +57,11 @@
- 		csv = "text/csv",
  		json = "application/json"
  	}
-+	
+ 
 +	local filename = "data." .. mtype
- 	
++
  	local args = { }
  	local mtype = http.formvalue("type") or "json"
 -	local delim = http.formvalue("delim") or ";"
@@ -306,7 +305,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua 
  	local order_by = http.formvalue("order_by")
 @@ -92,6 +94,7 @@
  	end
- 	
+ 
  	http.prepare_content(types[mtype])
 +	http.header("Content-Disposition", "attachment; filename=\"%s\"" % filename)
  	exec("/usr/sbin/nlbw", args, http.write)
