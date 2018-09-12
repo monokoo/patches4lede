@@ -555,14 +555,16 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +disable-write-exception=True
 --- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 +++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
-@@ -48,6 +48,7 @@ if nixio.fs.access("/etc/config/fstab")
- end
+@@ -75,6 +75,9 @@
+ au = s:option(Value, "users", translate("Allowed users"))
+ au.rmempty = true
  
- s:option(Value, "users", translate("Allowed users")).rmempty = true
-+s:option(Value, "sharepasswd", translate("Share Password")).rmempty = true
- 
- ro = s:option(Flag, "read_only", translate("Read-only"))
- ro.rmempty = false
++sp = s:option(Value, "sharepasswd", translate("Share Password"))
++sp.rmempty = true
++
+ go = s:option(Flag, "guest_ok", translate("Allow guests"))
+ go.enabled = "yes"
+ go.disabled = "no"
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 22:28:37.624512047 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 21:46:18.106683414 +0800
 @@ -1,64 +1,88 @@
@@ -706,17 +708,16 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
      cron) check_cron_status ;;
 --- a/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:08:58.906441151 +0800
 +++ b/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:10:26.925264828 +0800
-@@ -19,6 +19,9 @@
+@@ -19,6 +19,8 @@
  		done
  	)
  
-+        local lan_ip=$(uci -q get network.lan.ipaddr)
-+        [ -z "$lan_ip" ] && lan_ip=`ifconfig br-lan 2>/dev/null | grep "inet addr:" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"|head -1`
-+
++	local lan_ip=$(uci -q get network.lan.ipaddr)
++	[ -z "$lan_ip" ] && lan_ip=`ifconfig br-lan 2>/dev/null | grep "inet addr:" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"|head -1`
  	local name workgroup description charset
  	local hostname="$(uci_get system.@system[0].hostname)"
  
-@@ -35,7 +38,7 @@
+@@ -36,7 +38,7 @@
  	sed -e "s#|NAME|#$name#g" \
  	    -e "s#|WORKGROUP|#$workgroup#g" \
  	    -e "s#|DESCRIPTION|#$description#g" \
@@ -725,28 +726,25 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	    -e "s#|CHARSET|#$charset#g" \
  	    /etc/samba/smb.conf.template > /var/etc/smb.conf
  
-@@ -93,6 +96,7 @@
- 	config_get guest_only $1 guest_only
- 	config_get inherit_owner $1 inherit_owner
- 	config_get vfs_objects $1 vfs_objects
+@@ -92,6 +94,7 @@
+ 	config_get_bool timemachine	$1 timemachine	0
+ 	config_get timemachine_maxsize $1 timemachine_maxsize
+ 	config_get_bool force_root	$1 force_root	0
 +	config_get sharepasswd $1 sharepasswd
  
- 
  	[ -z "$name" -o -z "$path" ] && return
-@@ -111,6 +115,29 @@
- 	[ -n "$guest_only" ] && echo -e "\tguest only = $guest_only" >> /var/etc/smb.conf
- 	[ -n "$inherit_owner" ] && echo -e "\tinherit owner = $inherit_owner" >> /var/etc/smb.conf
+ 
+@@ -126,6 +129,26 @@
+ 	fi
+ 	
  	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
-+
-+        if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
++	if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
 +		let sharepw_num+=1
-+ 		sharepw=$sharepasswd
-+        fi
-+
++		sharepw=$sharepasswd
++	fi
 +}
 +
-+set_sharepw() {	
-+
++set_sharepw() {
 +	if [ "$sharepw_num" -gt 0 ]; then
 +		[ -z "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
 +			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf
@@ -757,13 +755,13 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +		[ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
 +			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
 +		[ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
-+		sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
++			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
 +		[ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
 +	fi
  }
  
  init_config() {
-@@ -124,9 +151,13 @@
+@@ -139,9 +162,13 @@
  		chmod 0755 /var/lock
  	}
  
