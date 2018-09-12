@@ -760,7 +760,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  go.disabled = "no"
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 22:28:37.624512047 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 21:46:18.106683414 +0800
-@@ -1,64 +1,88 @@
+@@ -1,64 +1,91 @@
  
 -user  root;
 +user nobody nogroup;
@@ -820,17 +820,20 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 -	}
 +		server_name  localhost;
 +		
-+		location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
++		location ~ .*\.(css|js)?$ {
++			expires 15d;
++		}
++		location ~ .*\.(jpg|jpeg|gif|png|ico|woff|woff2|ttf|otf)?$ {
 +			expires 365d;
 +		}
 +
-+                location /web {
-+                	index  index.html;
-+                }
++		location /web {
++			index  index.html;
++		}
 +
-+                location /webui-aria2 {
-+                	index  index.html;
-+                }
++		location /webui-aria2 {
++			index  index.html;
++		}
 +
 +		include luci_uwsgi.conf;
  
