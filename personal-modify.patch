@@ -290,7 +290,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua 
  end
  
  local function exec(cmd, args, writer)
-@@ -56,10 +56,12 @@
+@@ -57,9 +57,11 @@
  		csv = "text/csv",
  		json = "application/json"
  	}
