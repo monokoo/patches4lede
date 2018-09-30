@@ -25,19 +25,22 @@ git checkout -- net/samba4/files/samba.init
 git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh
 
 cd ../luci/
-#git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/flashops.htm
-git checkout -- modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
-git checkout -- modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/wifi.lua
-#git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/reboot.htm
-git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
-#git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_system/applyreboot.htm
+#git checkout -- modules/luci-mod-system/luasrc/view/admin_system/flashops.htm
+git checkout -- modules/luci-mod-system/luasrc/controller/admin/system.lua
+git checkout -- modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
+#git checkout -- modules/luci-mod-system/luasrc/view/admin_system/reboot.htm
+git checkout -- modules/luci-mod-status/luasrc/view/admin_status/index.htm
+git checkout -- modules/luci-mod-system/luasrc/model/cbi/admin_system/admin.lua
+git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
+#git checkout -- modules/luci-mod-system/luasrc/view/admin_system/applyreboot.htm
 git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
 git checkout -- applications/luci-app-minidlna/Makefile
 git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
 git checkout -- modules/luci-base/luasrc/view/sysauth.htm
 git checkout -- modules/luci-base/luasrc/model/network.lua
 git checkout -- modules/luci-base/luasrc/view/cbi/apply_widget.htm
-git checkout -- modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
+git checkout -- modules/luci-mod-status/luasrc/view/admin_status/connections.htm
+git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
 git checkout -- modules/luci-base/luasrc/sys.lua
 git checkout -- modules/luci-base/root/etc/config/luci
 git checkout -- protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua
@@ -47,8 +50,8 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 git checkout -- applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
 git checkout -- modules/luci-base/po/zh-cn/base.po
-git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
 git checkout -- applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
+
 
 
 echo "Everything has been cleaned!"

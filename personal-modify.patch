@@ -37,8 +37,8 @@
  
  	# Add addition Headers here.
  	# eg. list header 'Content-Encoding: gzip'
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua	2018-05-14 16:33:04.495992860 +0800
---- b/feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua 2018-05-29 14:33:52.519290194 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-05-14 16:33:04.495992860 +0800
+--- b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua 2018-05-29 14:33:52.519290194 +0800
 @@ -18,6 +18,10 @@
  		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
  	end
@@ -454,8 +454,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	while [ -n "$1" ]; do
  		eval "$1() { _procd_call _$1 \"\$@\"; }"
  		shift
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
-+++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
 @@ -35,8 +35,8 @@
  
  	if luci.http.formvalue("status") == "1" then
@@ -709,8 +709,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 -}
 \ No newline at end of file
 +}
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/wifi.lua	2018-08-17 22:49:10.465155312 +0800
-+++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/wifi.lua	2018-08-18 01:38:46.034778760 +0800
+--- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-17 22:49:10.465155312 +0800
++++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-18 01:38:46.034778760 +0800
 @@ -254,6 +254,16 @@
  	s:taboption("advanced", Flag, "noscan", translate("Force 40MHz mode"),
  		translate("Always use 40MHz channels even if the secondary channel overlaps. Using this option does not comply with IEEE 802.11n-2009!")).optional = true
@@ -1042,10 +1042,10 @@ index 823e20770c..49d8b6d256 100644
  				elseif val then
  					entry[key] = val
  				end
-diff --git a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
+diff --git a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm
 index 0a0db3be78..abda40bbc3 100644
---- a/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
-+++ b/feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/connections.htm
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm
 @@ -131,15 +131,21 @@
  				}
  
@@ -1220,3 +1220,40 @@ index 0a0db3be78..abda40bbc3 100644
  end
  
  function get_switch_topologies(self)
+--- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-01 00:06:34.669216800 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-01 00:05:18.129189021 +0800
+@@ -39,13 +39,13 @@
+ 			end
+ 		%></li>
+ 		<li><% if keep then %>
+-			<%:Configuration files will be kept%>
++			<%:Configuration files will be kept.%>
+ 		<% else %>
+-			<%:Caution: Configuration files will be erased%>
++			<%:Caution: Configuration files will be erased.%>
+ 		<% end %></li>
+ 		<% if force then %>
+ 		<li>
+-			<%:Caution: System upgrade will be forced%>
++			<%:Caution: System upgrade will be forced.%>
+ 		</li>
+ 		<% end %>
+ 	</ul>
+--- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/admin.lua	2018-10-01 00:05:50.972932489 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/admin.lua	2018-10-01 00:05:00.101474102 +0800
+@@ -6,6 +6,7 @@
+ 
+ m = Map("system", translate("Router Password"),
+ 	translate("Changes the administrator password for accessing the device"))
++m.apply_on_parse = true
+ 
+ s = m:section(TypedSection, "_dummy", "")
+ s.addremove = false
+@@ -45,6 +46,7 @@
+ 
+ m2 = Map("dropbear", translate("SSH Access"),
+ 	translate("Dropbear offers <abbr title=\"Secure Shell\">SSH</abbr> network shell access and an integrated <abbr title=\"Secure Copy\">SCP</abbr> server"))
++m2.apply_on_parse = true
+ 
+ s = m2:section(TypedSection, "dropbear", translate("Dropbear Instance"))
+ s.anonymous = true
