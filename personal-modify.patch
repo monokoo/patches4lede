@@ -960,21 +960,3 @@ index 0a0db3be78..abda40bbc3 100644
  		</li>
  		<% end %>
  	</ul>
---- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/admin.lua	2018-10-01 00:05:50.972932489 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/admin.lua	2018-10-01 00:05:00.101474102 +0800
-@@ -6,6 +6,7 @@
- 
- m = Map("system", translate("Router Password"),
- 	translate("Changes the administrator password for accessing the device"))
-+m.apply_on_parse = true
- 
- s = m:section(TypedSection, "_dummy", "")
- s.addremove = false
-@@ -45,6 +46,7 @@
- 
- m2 = Map("dropbear", translate("SSH Access"),
- 	translate("Dropbear offers <abbr title=\"Secure Shell\">SSH</abbr> network shell access and an integrated <abbr title=\"Secure Copy\">SCP</abbr> server"))
-+m2.apply_on_parse = true
- 
- s = m2:section(TypedSection, "dropbear", translate("Dropbear Instance"))
- s.anonymous = true
