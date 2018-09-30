@@ -486,6 +486,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +#error_log  /tmp/log/nginx/error.log  info;
  
  pid        /var/run/nginx.pid;
+ 
 @@ -46,4 +46,5 @@
  		include luci_uwsgi.conf;
  
