@@ -490,8 +490,10 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  		include luci_uwsgi.conf;
  
      }
-+	include vhost/*.conf;
- }
+-}
+\ No newline at end of file
++    include vhost/*.conf;
++}
 --- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-17 22:49:10.465155312 +0800
 +++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-18 01:38:46.034778760 +0800
 @@ -254,6 +254,16 @@
