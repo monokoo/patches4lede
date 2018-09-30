@@ -40,7 +40,7 @@ git checkout -- modules/luci-base/luasrc/view/sysauth.htm
 git checkout -- modules/luci-base/luasrc/model/network.lua
 git checkout -- modules/luci-base/luasrc/view/cbi/apply_widget.htm
 git checkout -- modules/luci-mod-status/luasrc/view/admin_status/connections.htm
-git checkout -- modules/luci-mod-admin-full/luasrc/view/cbi/wireless_modefreq.htm
+git checkout -- modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm
 git checkout -- modules/luci-base/luasrc/sys.lua
 git checkout -- modules/luci-base/root/etc/config/luci
 git checkout -- protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua
