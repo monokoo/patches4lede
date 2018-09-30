@@ -904,17 +904,16 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
      cron) check_cron_status ;;
 --- a/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:08:58.906441151 +0800
 +++ b/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:10:26.925264828 +0800
-@@ -19,6 +19,8 @@
- 		done
- 	)
- 
+@@ -33,12 +33,15 @@
+ 	config_get_bool DISABLE_NETBIOS	$1 disable_netbios	0
+ 	config_get_bool DISABLE_AD_DC	$1 disable_ad_dc	0
+ 	config_get_bool DISABLE_WINBIND	$1 disable_winbind	0
 +	local lan_ip=$(uci -q get network.lan.ipaddr)
 +	[ -z "$lan_ip" ] && lan_ip=`ifconfig br-lan 2>/dev/null | grep "inet addr:" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"|head -1`
- 	local name workgroup description charset
- 	local hostname="$(uci_get system.@system[0].hostname)"
++
  
-@@ -36,7 +38,7 @@
- 	sed -e "s#|NAME|#$name#g" \
+ 	mkdir -p /var/etc
+ 	sed -e "s#|NAME|#$hostname#g" \
  	    -e "s#|WORKGROUP|#$workgroup#g" \
  	    -e "s#|DESCRIPTION|#$description#g" \
 -	    -e "s#|INTERFACES|#$interfaces#g" \
@@ -922,7 +921,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	    -e "s#|CHARSET|#$charset#g" \
  	    /etc/samba/smb.conf.template > /var/etc/smb.conf
  
-@@ -92,6 +94,7 @@
+@@ -94,6 +97,7 @@
  	config_get_bool timemachine	$1 timemachine	0
  	config_get timemachine_maxsize $1 timemachine_maxsize
  	config_get_bool force_root	$1 force_root	0
@@ -930,34 +929,34 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  	[ -z "$name" -o -z "$path" ] && return
  
-@@ -126,6 +129,26 @@
+@@ -128,6 +132,26 @@
  	fi
  	
  	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
-+	if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
-+		let sharepw_num+=1
-+		sharepw=$sharepasswd
-+	fi
++        if [ -n "$sharepasswd" ] && [ -n "$users" ] && [ "$users" = "root" ]; then
++                let sharepw_num+=1
++                sharepw=$sharepasswd
++        fi
 +}
 +
 +set_sharepw() {
 +	if [ "$sharepw_num" -gt 0 ]; then
 +		[ -z "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
 +			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf
-+		[ -z "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
-+			sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf.template
-+		(echo $sharepw;echo $sharepw) | smbpasswd -as root
-+	else
-+		[ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
-+			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
-+		[ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
-+			sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
-+		[ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
-+	fi
++                [ -z "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++                        sed -i 's/invalid users = root/#invalid users = root/' /etc/samba/smb.conf.template
++                (echo $sharepw;echo $sharepw) | smbpasswd -as root
++        else
++                [ -n "$(cat /etc/samba/smb.conf |grep "#invalid users = root")" ] && \
++                        sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf
++                [ -n "$(cat /etc/samba/smb.conf.template |grep "#invalid users = root")" ] && \
++                        sed -i 's/#invalid users = root/invalid users = root/' /etc/samba/smb.conf.template
++                [ -n "$(cat /etc/samba/smbpasswd | grep root)" ] && smbpasswd -x root
++        fi
  }
  
  init_config() {
-@@ -139,9 +162,13 @@
+@@ -141,9 +165,13 @@
  		chmod 0755 /var/lock
  	}
  
@@ -970,7 +969,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +	set_sharepw
  }
  
- reload_service() {
+ service_triggers() {
 --- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-09-02 18:20:47.209950947 +0800
 +++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-09-02 18:26:51.090088001 +0800
 @@ -584,10 +584,10 @@
