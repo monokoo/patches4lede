@@ -486,14 +486,12 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +#error_log  /tmp/log/nginx/error.log  info;
  
  pid        /var/run/nginx.pid;
+@@ -46,4 +46,5 @@
+ 		include luci_uwsgi.conf;
  
-@@ -52,4 +52,4 @@
- 			
- 		}
      }
--}
-\ No newline at end of file
-+}
++	include vhost/*.conf;
+ }
 --- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-17 22:49:10.465155312 +0800
 +++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-08-18 01:38:46.034778760 +0800
 @@ -254,6 +254,16 @@
@@ -545,7 +543,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  go.disabled = "no"
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 22:28:37.624512047 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 21:46:18.106683414 +0800
-@@ -1,64 +1,91 @@
+@@ -1,64 +1,92 @@
  
 -user  root;
 +user nobody nogroup;
@@ -663,6 +661,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 -}
 \ No newline at end of file
 +	}
++	include vhost/*.conf;
 +}
 --- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-05-14 16:33:04.467974565 +0800
 +++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-08-29 22:52:19.840332831 +0800
