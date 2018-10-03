@@ -535,7 +535,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  go.disabled = "no"
 --- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 22:28:37.624512047 +0800
 +++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-08-21 21:46:18.106683414 +0800
-@@ -1,64 +1,92 @@
+@@ -1,64 +1,94 @@
  
 -user  root;
 +user nobody nogroup;
@@ -583,6 +583,8 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
 +	gzip_vary on;
 +	gzip_comp_level 1;
 +	gzip_proxied any;
++	access_log /tmp/log/nginx/access.log;
++	access_log off;
  	
  	root /www;
 -	
