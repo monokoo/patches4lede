@@ -955,7 +955,15 @@ index 0a0db3be78..abda40bbc3 100644
  	</ul>
 --- a/feeds/packages/net/nginx/Makefile	2018-10-02 22:45:04.631640269 +0800
 +++ b/feeds/packages/net/nginx/Makefile	2018-10-03 11:53:45.247421261 +0800
-@@ -348,7 +348,7 @@
+@@ -126,6 +126,7 @@
+ config_files=nginx.conf mime.types
+ 
+ define Package/nginx/conffiles
++/etc/nginx/vhost/
+ /etc/nginx/
+ endef
+ 
+@@ -348,7 +349,7 @@
  			--without-http_upstream_zone_module
  
  define Package/nginx-mod-luci/install
@@ -964,7 +972,7 @@ index 0a0db3be78..abda40bbc3 100644
  	$(INSTALL_BIN) ./files-luci-support/luci_uwsgi.conf $(1)/etc/nginx/luci_uwsgi.conf
  	$(INSTALL_BIN) ./files-luci-support/luci_nginx.conf $(1)/etc/nginx/luci_nginx.conf
  	$(INSTALL_DIR) $(1)/etc/uci-defaults
-@@ -357,7 +357,7 @@
+@@ -357,7 +358,7 @@
  
  define Package/nginx-mod-luci-ssl/install
  	$(Package/nginx-mod-luci/install)
