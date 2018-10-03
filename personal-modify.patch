@@ -422,17 +422,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  endef
  
  Package/haproxy-nossl/install = $(Package/haproxy/install)
---- a/package/system/procd/files/procd.sh	2018-06-18 17:24:32.623016967 +0800
-+++ b/package/system/procd/files/procd.sh	2018-06-23 21:48:05.454991747 +0800
-@@ -61,7 +61,7 @@
- }
- 
- _procd_wrapper() {
--	procd_lock
-+	#procd_lock
- 	while [ -n "$1" ]; do
- 		eval "$1() { _procd_call _$1 \"\$@\"; }"
- 		shift
 --- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
 +++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
 @@ -53,6 +53,7 @@
