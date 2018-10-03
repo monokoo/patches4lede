@@ -981,3 +981,30 @@ index 0a0db3be78..abda40bbc3 100644
  	$(INSTALL_BIN) ./files-luci-support/luci_nginx_ssl.conf $(1)/etc/nginx/luci_nginx_ssl.conf
  	$(INSTALL_DIR) $(1)/etc/uci-defaults
  	$(INSTALL_BIN) ./files-luci-support/70_nginx-luci-support-ssl $(1)/etc/uci-defaults/70_nginx-luci-support-ssl
+--- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
++++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
+@@ -57,6 +57,24 @@
+ 	page.index = true
+ 	toplevel_page(page, false, false)
+ 
++        page = node("admin", "qos")
++        page.title = _("QOS")
++        page.order = 41
++        page.index = true
++        toplevel_page(page, false, false)
++        
++        page = node("admin", "vpn")
++        page.title = _("VPN")
++        page.order = 42
++        page.index = true
++        toplevel_page(page, false, false)
++        
++        page = node("admin", "control")
++        page.title = _("Control")
++        page.order = 43
++        page.index = true
++        toplevel_page(page, false, false)
++
+ 	-- Even for mod-admin-full network just uses first submenu item as landing
+ 	page = node("admin", "network")
+ 	page.title = _("Network")

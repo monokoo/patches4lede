@@ -33,23 +33,25 @@ git checkout -- modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
 git checkout -- modules/luci-mod-status/luasrc/view/admin_status/index.htm
 git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/applyreboot.htm
-git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
-git checkout -- applications/luci-app-minidlna/Makefile
-git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
+
 git checkout -- modules/luci-base/luasrc/view/sysauth.htm
 #git checkout -- modules/luci-base/luasrc/model/network.lua
+git checkout -- modules/luci-base/luasrc/controller/admin/index.lua
 git checkout -- modules/luci-base/luasrc/view/cbi/apply_widget.htm
 git checkout -- modules/luci-mod-status/luasrc/view/admin_status/connections.htm
 git checkout -- modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm
 git checkout -- modules/luci-base/luasrc/sys.lua
+git checkout -- modules/luci-base/po/zh-cn/base.po
 git checkout -- modules/luci-base/root/etc/config/luci
 git checkout -- protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua
+git checkout -- applications/luci-app-wol/luasrc/model/cbi/wol.lua
+git checkout -- applications/luci-app-minidlna/Makefile
+git checkout -- applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 git checkout -- applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
-git checkout -- modules/luci-base/po/zh-cn/base.po
 git checkout -- applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 
 
