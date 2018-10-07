@@ -240,6 +240,17 @@ index 3f01d0f5..993e9d6c 100755
  
  USE_PROCD=1
  NAME=nlbwmon
+@@ -58,6 +58,9 @@
+ 	local cfg="$1"
+ 	local dir
+ 
++	config_get enable "$cfg" enable 0
++	[ "$enable" -eq 0 ] && exit 0
++
+ 	config_get dir "$cfg" database_directory /var/lib/nlbwmon
+ 
+ 	mkdir -p "$dir"
+
 --- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-05-29 20:35:31.578206766 +0800
 +++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2017-09-19 21:37:28.000000000 +0800
 @@ -23,7 +23,7 @@
@@ -364,7 +375,29 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua 
 diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 --- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-05-29 20:35:31.574204584 +0800
 +++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-05-29 22:06:38.770029539 +0800
-@@ -49,7 +49,7 @@
+@@ -12,6 +12,11 @@
+ m = Map("nlbwmon", translate("Netlink Bandwidth Monitor - Configuration"),
+ 	translate("The Netlink Bandwidth Monitor (nlbwmon) is a lightweight, efficient traffic accounting program keeping track of bandwidth usage per host and protocol."))
+ 
++m.apply_on_parse=true
++function m.on_apply(self)
++luci.sys.call("/etc/init.d/nlbwmon restart> /dev/null 2>&1")
++end
++
+ nw.init(luci.model.uci.cursor_state())
+ 
+ s = m:section(TypedSection, "nlbwmon")
+@@ -22,6 +27,9 @@
+ s:tab("protocol", translate("Protocol Mapping"),
+ 	translate("Protocol mappings to distinguish traffic types per host, one mapping per line. The first value specifies the IP protocol, the second value the port number and the third column is the name of the mapped protocol."))
+ 
++enable=s:taboption("general",Flag,"enable",translate("启用"))
++enable.default=0
++enable.rmempty=false
+ period = s:taboption("general", ListValue, "_period", translate("Accounting period"),
+ 	translate("Choose \"Day of month\" to restart the accounting period monthly on a specific date, e.g. every 3rd. Choose \"Fixed interval\" to restart the accounting period exactly every N days, beginning at a given date."))
+ 
+@@ -49,7 +57,7 @@
  
  
  warning = s:taboption("general", DummyValue, "_warning", translate("Warning"))
@@ -373,6 +406,15 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/confi
  warning.rawhtml = true
  
  if (m.uci:get_first("nlbwmon", "nlbwmon", "database_interval") or ""):match("^%d%d%d%d-%d%d-%d%d/%d+$") then
+@@ -127,7 +135,7 @@
+ 	for item in utl.imatch(ifaces:formvalue(cfg)) do
+ 		items[#items+1] = item
+ 	end
+-	m:set(cfg, "local_network", items)
++	--m:set(cfg, "local_network", items)
+ end
+ 
+ 
 diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 --- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-05-29 20:35:31.574204584 +0800
 +++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-05-29 22:03:24.521129138 +0800
@@ -1071,31 +1113,3 @@ index 0a0db3be78..abda40bbc3 100644
  	-- Even for mod-admin-full network just uses first submenu item as landing
  	page = node("admin", "network")
  	page.title = _("Network")
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-10-07 14:15:12.305263346 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-10-07 16:23:14.000000000 +0800
-@@ -21,7 +21,24 @@
- s:tab("advanced", translate("Advanced Settings"))
- s:tab("protocol", translate("Protocol Mapping"),
- 	translate("Protocol mappings to distinguish traffic types per host, one mapping per line. The first value specifies the IP protocol, the second value the port number and the third column is the name of the mapped protocol."))
--
-+local nlbwmon_running=sys.exec("pgrep -l /usr/sbin/nlbwmon")
-+if nlbwmon_running ~= "" then
-+nwstop=s:taboption("general",Button,"nwstop",translate("关闭"))
-+nwstop.inputtitle=translate("关闭带宽监控")
-+nwstop.inputstyle="reload"
-+nwstop.write=function()
-+sys.call("/etc/init.d/nlbwmon stop && /etc/init.d/nlbwmon disable")
-+luci.http.redirect(luci.dispatcher.build_url("admin","status","nlbw","config"))
-+end
-+else
-+nwstart=s:taboption("general",Button,"nwstart",translate("开启"))
-+nwstart.inputtitle=translate("开启带宽监控")
-+nwstart.inputstyle="reload"
-+nwstart.write=function()
-+sys.call("/etc/init.d/nlbwmon start && /etc/init.d/nlbwmon enable")
-+luci.http.redirect(luci.dispatcher.build_url("admin","status","nlbw","config"))
-+end
-+end
- period = s:taboption("general", ListValue, "_period", translate("Accounting period"),
- 	translate("Choose \"Day of month\" to restart the accounting period monthly on a specific date, e.g. every 3rd. Choose \"Fixed interval\" to restart the accounting period exactly every N days, beginning at a given date."))
- 
