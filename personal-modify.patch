@@ -37,6 +37,69 @@
  
  	# Add addition Headers here.
  	# eg. list header 'Content-Encoding: gzip'
+--- a/feeds/packages/net/aria2/files/aria2.init	2018-09-30 23:41:24.452937257 +0800
++++ b/feeds/packages/net/aria2/files/aria2.init	2018-10-07 13:38:21.000000000 +0800
+@@ -152,13 +152,38 @@
+ 		'user_agent:string'
+ }
+ 
++add_bttracker() {
++        gettracker=$(cat $config_file |grep "bt-tracker=")
++        if [ -z "$gettracker" ]; then
++                echo "bt-tracker=http://195.88.220.21:80/announce" >> $config_file
++        fi
++        [ ! -s "/tmp/trackers_best.txt" ] && {
++                wget -q --no-check-certificate https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt -O /tmp/trackers_best.txt
++                wget -q --no-check-certificate https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https.txt -O /tmp/trackers_all_https.txt
++                [ -f "/tmp/trackers_all_https.txt" ] && cat /tmp/trackers_all_https.txt >>/tmp/trackers_best.txt && rm -f /tmp/trackers_all_https.txt
++                echo "http://tracker.skyts.net:6969/announce" >> /tmp/trackers_best.txt
++                echo "http://tracker2.itzmx.com:6961/announce" >> /tmp/trackers_best.txt
++                echo "http://tracker.skyts.cn:6969/announce" >> /tmp/trackers_best.txt
++                echo "http://tr.cili001.com:6666/announce" >> /tmp/trackers_best.txt
++        }
++        cat /tmp/trackers_best.txt |while read tracker
++        do
++                if [ -n "$tracker" ]; then
++                        newtracker=$(echo $tracker | sed 's/\//\\\//g')
++                        sed -i "s/bt-tracker=/bt-tracker=$newtracker,/" $config_file
++                fi
++        done
++	rm -f /tmp/trackers_best.txt
++}
++
+ aria2_start() {
+ 	local section="$1"
+ 	aria2_validate "$section" || { _err "Validation failed."; return 1; }
+ 
+ 	[ "$enabled" = "1" ] || { _info "Instance \"${section}\" disabled."; return 1; }
+-	[ -n "$dir" ] || { _err "Please set downlod dir."; return 1; }
+-	[ -d "$dir" ] || { _err "Please create downlod dir first."; return 1; }
++	[ -n "$dir" ] || { _err "Please set download dir."; return 1; }
++	[ ! -d "$dir" ] && _make_dir "$dir"
++	[ -d "$dir" ] || { _err "Please create download dir first."; return 1; }
+ 
+ 	config_file="${config_dir}/${NAME}.conf.${section}"
+ 	config_file_tmp="${config_dir}/${NAME}.conf.tmp"
+@@ -306,15 +331,17 @@
+ 
+ 	sed '/^$/d' "$config_file_tmp" >"$config_file"
+ 	rm -f "$config_file_tmp"
++	
++	add_bttracker
+ 
+ 	_reset_dir_mode "$config_dir"
+ 	_change_file_mode 600 "$config_file"
+ 
+ 	if [ -n "$user" ]; then
+ 		if ( user_exists "$user" && _change_owner "$user" "$config_dir" "$log" ); then
+-				_info "Aria2 will run with uer '${user}'."
++				_info "Aria2 will run with user '${user}'."
+ 				if [ "$user" != "root" ]; then
+-					_info "Please make sure user '${user}' has write access to downlod dir: ${dir}"
++					_info "Please make sure user '${user}' has write access to download dir: ${dir}"
+ 				fi
+ 		else
+ 			_info "Set run user to '${user}' failed, default user will be used."
 --- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-05-14 16:33:04.495992860 +0800
 --- b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua 2018-05-29 14:33:52.519290194 +0800
 @@ -18,6 +18,10 @@

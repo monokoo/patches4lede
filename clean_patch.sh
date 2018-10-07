@@ -15,6 +15,7 @@ rm -f package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-su
 #clean aria2
 cd feeds/packages/
 git checkout -- net/aria2/files/aria2.conf
+git checkout -- net/aria2/files/aria2.init
 git checkout -- net/nlbwmon/files/nlbwmon.init
 #git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
 git checkout -- net/haproxy/Makefile
