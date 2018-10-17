@@ -787,7 +787,28 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
      cron) check_cron_status ;;
 --- a/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:08:58.906441151 +0800
 +++ b/feeds/packages/net/samba4/files/samba.init	2018-09-02 16:10:26.925264828 +0800
-@@ -33,12 +33,15 @@
+@@ -18,11 +18,19 @@
+ 			echo -n "${device:-$net} "
+ 		done
+ 	)
++	local name
++	config_get name                 $1 name
+ 
+ 	local workgroup description charset
+ 	# we dont use netbios anymore as default and wsd/avahi is dns based
+ 	local hostname="$(cat /proc/sys/kernel/hostname)"
+-
++	
++	if [ -z "$name" ]; then
++		uci set samba4.@samba[0].name="$hostname"
++		uci commit samba4
++	else
++		hostname="$name"
++	fi
+ 	config_get workgroup		$1 workgroup	"WORKGROUP"
+ 	config_get description		$1 description	"Samba on OpenWrt"
+ 	config_get charset			$1 charset		"UTF-8"
+@@ -31,12 +39,15 @@
  	config_get_bool DISABLE_NETBIOS	$1 disable_netbios	0
  	config_get_bool DISABLE_AD_DC	$1 disable_ad_dc	0
  	config_get_bool DISABLE_WINBIND	$1 disable_winbind	0
@@ -804,7 +825,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  	    -e "s#|CHARSET|#$charset#g" \
  	    /etc/samba/smb.conf.template > /var/etc/smb.conf
  
-@@ -94,6 +97,7 @@
+@@ -92,6 +103,7 @@
  	config_get_bool timemachine	$1 timemachine	0
  	config_get timemachine_maxsize $1 timemachine_maxsize
  	config_get_bool force_root	$1 force_root	0
@@ -812,7 +833,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  
  	[ -z "$name" -o -z "$path" ] && return
  
-@@ -128,6 +132,26 @@
+@@ -126,6 +138,26 @@
  	fi
  	
  	[ -n "$vfs_objects" ] && echo -e "\tvfs objects = $vfs_objects" >> /var/etc/smb.conf
@@ -839,7 +860,7 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.ht
  }
  
  init_config() {
-@@ -141,9 +165,13 @@
+@@ -139,9 +171,13 @@
  		chmod 0755 /var/lock
  	}
  
