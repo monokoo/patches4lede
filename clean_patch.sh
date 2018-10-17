@@ -25,6 +25,7 @@ git checkout -- net/nginx/files-luci-support/luci_nginx.conf
 git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 git checkout -- net/samba4/files/samba.init
 git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh
+git checkout -- net/miniupnpd/files/miniupnpd.init
 
 cd ../luci/
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/flashops.htm
@@ -54,6 +55,8 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 git checkout -- applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
 git checkout -- applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
+git checkout -- applications/luci-app-upnp/po/zh-cn/upnp.po
+git checkout -- applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua
 
 
 
