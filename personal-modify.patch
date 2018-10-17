@@ -1134,3 +1134,62 @@ index 0a0db3be78..abda40bbc3 100644
  	-- Even for mod-admin-full network just uses first submenu item as landing
  	page = node("admin", "network")
  	page.title = _("Network")
+--- a/feeds/packages/net/miniupnpd/files/miniupnpd.init	2018-05-14 15:57:51.356620311 +0800
++++ b/feeds/packages/net/miniupnpd/files/miniupnpd.init	2018-10-17 22:09:15.509969745 +0800
+@@ -66,7 +66,7 @@
+ 	local extip port usesysuptime conffile serial_number model_number
+ 	local uuid notify_interval presentation_url enable_upnp
+ 	local upnp_lease_file clean_ruleset_threshold clean_ruleset_interval
+-	local ipv6_listening_ip enabled
++	local ipv6_listening_ip enabled ext_perform_stun ext_stun_host
+ 
+ 	config_get_bool enabled config enabled 1
+ 
+@@ -90,6 +90,7 @@
+ 	config_get clean_ruleset_threshold config clean_ruleset_threshold
+ 	config_get clean_ruleset_interval config clean_ruleset_interval
+ 	config_get ipv6_listening_ip config ipv6_listening_ip
++	config_get ext_stun_host config ext_stun_host "stun.onesuite.com"
+ 
+ 	local args ifname
+ 
+@@ -138,6 +139,9 @@
+ 		upnpd_write_bool pcp_allow_thirdparty 0
+ 		upnpd_write_bool system_uptime 1
+ 		upnpd_write_bool igdv1 0 force_igd_desc_v1
++		upnpd_write_bool ext_perform_stun 1
++
++		[ -n "$ext_stun_host" ] && echo "ext_stun_host=$ext_stun_host" >>$tmpconf
+ 
+ 		[ -n "$upnp_lease_file" ] && \
+ 			echo "lease_file=$upnp_lease_file" >>$tmpconf
+--- a/feeds/luci/applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua	2018-05-14 16:33:04.455966724 +0800
++++ b/feeds/luci/applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua	2018-10-17 22:25:07.559899255 +0800
+@@ -38,6 +38,12 @@
+ s:taboption("general", Flag, "igdv1", translate("Enable IGDv1 mode"),
+ 	translate("Advertise as IGDv1 device instead of IGDv2")).default = "0"
+ 
++s:taboption("general", Flag, "ext_perform_stun", translate("Enable STUN discovery")).default = "1"
++
++stun_host = s:taboption("general", Value, "ext_stun_host", translate("Public STUN Server"))
++stun_host.default = "stun.onesuite.com"
++stun_host:depends("ext_perform_stun",1)
++
+ s:taboption("general", Flag, "log_output", translate("Enable additional logging"),
+ 	translate("Puts extra debugging information into the system log"))
+ 
+--- a/feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po	2018-10-17 22:28:05.924452585 +0800
++++ b/feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po	2018-10-17 22:27:56.564812506 +0800
+@@ -158,6 +158,12 @@
+ msgid "Value in KByte/s, informational only"
+ msgstr "值为 KByte/s，仅供参考"
+ 
++msgid "Enable STUN discovery"
++msgstr "启用 STUN 发现"
++
++msgid "Public STUN Server"
++msgstr "公共 STUN 服务器"
++
+ #~ msgid "Delete Redirect"
+ #~ msgstr "删除转发规则"
+ 
