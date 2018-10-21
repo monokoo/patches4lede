@@ -1,0 +1,28 @@
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
+@@ -53,6 +53,7 @@
+ 			swap       = swapinfo,
+ 			connmax    = conn_max,
+ 			conncount  = conn_count,
++			temperature= luci.sys.exec("cat /sys/class/thermal/thermal_zone0/temp"),
+ 			wifinets   = stat.wifi_networks()
+ 		}
+ 
+@@ -350,6 +351,9 @@
+ 					info.loadavg[2] / 65535.0
+ 				);
+ 
++			if (e = document.getElementById('temperature'))
++				e.innerHTML = String.format('%.2f\℃' ,info.temperature / 1000);
++			
+ 			if (e = document.getElementById('memtotal'))
+ 				e.innerHTML = progressbar(
+ 					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
+@@ -401,6 +404,7 @@
+ 			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
+ 		</div></div>
+ 		<div class="tr"><div class="td left" width="33%"><%:Kernel Version%></div><div class="td left"><%=unameinfo.release or "?"%></div></div>
++		<div class="tr"><div class="td left" width="33%"><%:CPU Temperature%></div><div class="td left" id="temperature">-</div></div>
+ 		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
+ 		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
+ 		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
