@@ -1,0 +1,45 @@
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
+@@ -352,32 +352,32 @@
+ 
+ 			if (e = document.getElementById('memtotal'))
+ 				e.innerHTML = progressbar(
+-					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
+-					(info.memory.total / 1024) + " <%:kB%>"
++					Math.floor((info.memory.free + info.memory.buffered) / 1048576) + " <%:MB%>",
++					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
+ 				);
+ 
+ 			if (e = document.getElementById('memfree'))
+ 				e.innerHTML = progressbar(
+-					(info.memory.free / 1024) + " <%:kB%>",
+-					(info.memory.total / 1024) + " <%:kB%>"
++					Math.floor(info.memory.free / 1048576) + " <%:MB%>",
++					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
+ 				);
+ 
+ 			if (e = document.getElementById('membuff'))
+ 				e.innerHTML = progressbar(
+-					(info.memory.buffered / 1024) + " <%:kB%>",
+-					(info.memory.total / 1024) + " <%:kB%>"
++					Math.floor(info.memory.buffered / 1048576) + " <%:MB%>",
++					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
+ 				);
+ 
+ 			if (e = document.getElementById('swaptotal'))
+ 				e.innerHTML = progressbar(
+-					(info.swap.free / 1024) + " <%:kB%>",
+-					(info.swap.total / 1024) + " <%:kB%>"
++					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
++					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
+ 				);
+ 
+ 			if (e = document.getElementById('swapfree'))
+ 				e.innerHTML = progressbar(
+-					(info.swap.free / 1024) + " <%:kB%>",
+-					(info.swap.total / 1024) + " <%:kB%>"
++					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
++					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
+ 				);
+ 
+ 			if (e = document.getElementById('conns'))
