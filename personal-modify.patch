@@ -139,8 +139,8 @@
  function action_clock_status()
  	local set = tonumber(luci.http.formvalue("set"))
  	if set ~= nil and set > 0 then
---- fstab.lua	2018-10-01 00:06:53.335175441 +0800
-+++ fstab.lua-new	2018-10-26 21:43:59.549245633 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-10-01 00:06:53.335175441 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-10-26 21:43:59.549245633 +0800
 @@ -33,7 +33,7 @@
  
  block:close()
