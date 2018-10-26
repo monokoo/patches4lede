@@ -35,6 +35,7 @@ git checkout -- modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/reboot.htm
 git checkout -- modules/luci-mod-status/luasrc/view/admin_status/index.htm
 git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
+git checkout -- modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/applyreboot.htm
 
 git checkout -- modules/luci-base/luasrc/view/sysauth.htm

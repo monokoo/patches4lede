@@ -102,7 +102,7 @@
  			_info "Set run user to '${user}' failed, default user will be used."
 --- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-05-14 16:33:04.495992860 +0800
 --- b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua 2018-05-29 14:33:52.519290194 +0800
-@@ -18,6 +18,10 @@
+@@ -17,11 +17,15 @@
  		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
  	end
  
@@ -113,7 +113,13 @@
  	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
  	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
  
-@@ -32,6 +36,7 @@
+ 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
+-		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points"), 50)
++		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points / SCSI Devices"), 50)
+ 		entry({"admin", "system", "fstab", "mount"}, cbi("admin_system/fstab/mount"), nil).leaf = true
+ 		entry({"admin", "system", "fstab", "swap"},  cbi("admin_system/fstab/swap"),  nil).leaf = true
+ 	end
+@@ -31,6 +35,7 @@
  		entry({"admin", "system", "leds"}, cbi("admin_system/leds"), _("<abbr title=\"Light Emitting Diode\">LED</abbr> Configuration"), 60)
  	end
  
@@ -133,6 +139,71 @@
  function action_clock_status()
  	local set = tonumber(luci.http.formvalue("set"))
  	if set ~= nil and set > 0 then
+--- fstab.lua	2018-10-01 00:06:53.335175441 +0800
++++ fstab.lua-new	2018-10-26 21:43:59.549245633 +0800
+@@ -33,7 +33,7 @@
+ 
+ block:close()
+ 
+-m = Map("fstab", translate("Mount Points"))
++m = Map("fstab", translate("Mount Points / SCSI Devices"))
+ s = m:section(TypedSection, "global", translate("Global Settings"))
+ s.addremove = false
+ s.anonymous = true
+@@ -95,7 +95,7 @@
+ 
+ v = m:section(Table, non_system_mounts, translate("Mounted file systems"))
+ 
+-fs = v:option(DummyValue, "fs", translate("Filesystem"))
++f = v:option(DummyValue, "fs", translate("Filesystem"))
+ 
+ mp = v:option(DummyValue, "mountpoint", translate("Mount Point"))
+ 
+@@ -196,8 +196,8 @@
+ 	end
+ end
+ 
+-fs = mount:option(DummyValue, "fstype", translate("Filesystem"))
+-fs.cfgvalue = function(self, section)
++f = mount:option(DummyValue, "fstype", translate("Filesystem"))
++f.cfgvalue = function(self, section)
+ 	local v, e
+ 
+ 	v = m.uci:get("fstab", section, "uuid")
+@@ -269,4 +269,33 @@
+ 	end
+ end
+ 
++if fs.access("/usr/bin/lsblk") and fs.access("/usr/bin/eject") then
++
++	local scsis = luci.sys.scsis()
++
++	if #scsis > 0 then
++		v = m:section(Table, scsis, translate("SCSI Devices"))
++
++		n = v:option(DummyValue, "name", translate("Name"))
++		t = v:option(DummyValue, "type", translate("Type"))
++		vr = v:option(DummyValue, "vendor", translate("Vendor"))
++		mo = v:option(DummyValue, "model", translate("Model"))
++		r = v:option(DummyValue, "rev", translate("Rev"))
++		tr = v:option(DummyValue, "tran", translate("Tran"))
++		s = v:option(DummyValue, "size", translate("Size"))
++
++		eject = v:option(Button, "eject", translate("Eject"))
++		eject.render = function(self, section, scope)
++			self.title = translate("Eject")
++			self.inputstyle = "remove"
++			Button.render(self, section, scope)
++		end
++
++		eject.write = function(self, section)
++			luci.sys.call("/usr/bin/eject -p -s /dev/'%s'" % luci.util.shellstartsqescape(scsis[section].name))
++			return luci.http.redirect(luci.dispatcher.build_url("admin/system", "fstab"))
++		end
++	end
++end
++
+ return m
 --- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-05-29 14:43:21.042652545 +0800
 --- b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua 2018-05-29 14:41:40.615037357 +0800
 @@ -71,7 +71,7 @@
