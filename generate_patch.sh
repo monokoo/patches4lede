@@ -2,12 +2,12 @@
 
 date=$(date +%Y%m%d%H%M%S)
 new_generate_patch=/home/lede/patches4lede/generate-patch-$date.patch
+echo "$date : now generate new patch..."
 
 sh /home/lede/patches4lede/apply_patch.sh
 
 get_new_patch(){
-	local files=$1
-	for file in $files
+	for file in $*
 	do
 		cp $file $file-new
 		diff -uN $file $file-new >> $new_generate_patch
@@ -23,7 +23,7 @@ sh /home/lede/patches4lede/clean_patch.sh
 cd /home/lede/lede-source
 
 files_source="
-package/network/services/odhcpd/files/odhcpd-update 
+package/network/services/odhcpd/files/odhcpd-update
 package/network/services/hostapd/files/wps-hotplug.sh
 package/network/services/hostapd/files/hostapd.sh
 package/network/ipv6/6in4/files/6in4.sh
