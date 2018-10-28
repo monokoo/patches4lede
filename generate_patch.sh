@@ -33,7 +33,7 @@ package/system/procd/files/procd.sh
 package/kernel/mac80211/patches/
 target/linux/x86/64/config-default"
 
-get_new_patch files_source
+get_new_patch $files_source
 
 #clean aria2
 cd feeds/packages/
@@ -51,7 +51,7 @@ net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
 net/miniupnpd/files/miniupnpd.init"
 
-get_new_patch files_packages
+get_new_patch $files_packages
 
 cd ../luci/
 
@@ -82,7 +82,7 @@ applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 applications/luci-app-upnp/po/zh-cn/upnp.po
 applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua"
 
-get_new_patch files_luci
+get_new_patch $files_luci
 
 echo "New patch has been generated!"
 
