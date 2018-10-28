@@ -1,7 +1,7 @@
 #!/bin/sh
 
 date=$(date +%Y%m%d%H%M%S)
-new_generate_patch=/home/lede/patches4lede/generate-patch-$date.patch
+new_generate_patch=/home/lede/patches4lede/new_generate_patch_$date.patch
 echo "$date : now generate new patch..."
 
 sh /home/lede/patches4lede/apply_patch.sh
@@ -30,7 +30,6 @@ package/network/ipv6/6in4/files/6in4.sh
 package/base-files/files/etc/rc.button/reset
 package/network/config/firewall/files/firewall.init
 package/system/procd/files/procd.sh
-package/kernel/mac80211/patches/
 target/linux/x86/64/config-default"
 
 get_new_patch $files_source
