@@ -596,51 +596,6 @@
  	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
  	beacon_int.optional = true
  	beacon_int.placeholder = 100
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-10-28 20:31:30.512307923 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-10-28 20:31:30.508307996 +0800
-@@ -352,32 +352,32 @@
- 
- 			if (e = document.getElementById('memtotal'))
- 				e.innerHTML = progressbar(
--					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor((info.memory.free + info.memory.buffered) / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
- 
- 			if (e = document.getElementById('memfree'))
- 				e.innerHTML = progressbar(
--					(info.memory.free / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor(info.memory.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
- 
- 			if (e = document.getElementById('membuff'))
- 				e.innerHTML = progressbar(
--					(info.memory.buffered / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor(info.memory.buffered / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
- 
- 			if (e = document.getElementById('swaptotal'))
- 				e.innerHTML = progressbar(
--					(info.swap.free / 1024) + " <%:kB%>",
--					(info.swap.total / 1024) + " <%:kB%>"
-+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
- 				);
- 
- 			if (e = document.getElementById('swapfree'))
- 				e.innerHTML = progressbar(
--					(info.swap.free / 1024) + " <%:kB%>",
--					(info.swap.total / 1024) + " <%:kB%>"
-+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
- 				);
- 
- 			if (e = document.getElementById('conns'))
 --- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-28 20:31:30.524307704 +0800
 +++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-28 20:31:30.524307704 +0800
 @@ -39,13 +39,13 @@
