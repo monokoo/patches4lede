@@ -1,17 +1,27 @@
 #!/bin/sh
-
 date=$(date +%Y%m%d%H%M%S)
 new_generate_patch=/home/lede/patches4lede/new_generate_patch_$date.patch
+source_file=/tmp/files_source
+source_package=/tmp/files_package
+source_luci=/tmp/files_luci
+
 echo "$date : now generate new patch..."
 
 sh /home/lede/patches4lede/apply_patch.sh
 
 get_new_patch(){
-	for file in $*
+	for file in $(cat $1)
 	do
 		cp -f $file $file-new
 		git checkout $file
 		diff -uN $file $file-new >> $new_generate_patch
+		if [ -n "$2" ]; then
+			sed -i "s#--- $file#--- a/$2/$file#g" $new_generate_patch
+			sed -i "s#+++ $file-new#+++ b/$2/$file#g" $new_generate_patch
+		else
+			sed -i "s#--- $file#--- a/$file#g" $new_generate_patch
+			sed -i "s#+++ $file-new#+++ b/$file#g" $new_generate_patch
+		fi
 		rm -f $file-new
 		rm -f $file.orig
 	done
@@ -30,7 +40,8 @@ package/network/config/firewall/files/firewall.init
 package/system/procd/files/procd.sh
 target/linux/x86/64/config-default"
 
-get_new_patch $files_source
+echo $files_source > $source_file
+get_new_patch $source_file 
 
 #clean aria2
 cd feeds/packages/
@@ -48,7 +59,8 @@ net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
 net/miniupnpd/files/miniupnpd.init"
 
-get_new_patch $files_packages
+echo $files_packages > $source_package
+get_new_patch $source_package  "feeds/packages"
 
 cd ../luci/
 
@@ -79,7 +91,8 @@ applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 applications/luci-app-upnp/po/zh-cn/upnp.po
 applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua"
 
-get_new_patch $files_luci
+echo $files_luci > $source_luci
+get_new_patch $source_luci "feeds/luci"
 
 echo "New patch has been generated!"
 
