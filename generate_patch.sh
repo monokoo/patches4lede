@@ -15,9 +15,6 @@ get_new_patch(){
 		rm -f $file.org
 	done
 }
-	
-sh /home/lede/patches4lede/clean_patch.sh
-
 
 #!/bin/sh
 cd /home/lede/lede-source
