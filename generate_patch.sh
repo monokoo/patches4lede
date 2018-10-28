@@ -9,10 +9,11 @@ sh /home/lede/patches4lede/apply_patch.sh
 get_new_patch(){
 	for file in $*
 	do
-		cp $file $file-new
+		cp -f $file $file-new
+		git checkout $file
 		diff -uN $file $file-new >> $new_generate_patch
 		rm -f $file-new
-		rm -f $file.org
+		rm -f $file.orig
 	done
 }
 
