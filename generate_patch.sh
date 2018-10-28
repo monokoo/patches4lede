@@ -5,7 +5,7 @@ new_generate_patch=/home/lede/patches4lede/generate-patch-$date.patch
 
 sh /home/lede/patches4lede/apply_patch.sh
 
-get_new_patch(){}
+get_new_patch(){
 	local files=$1
 	for file in $files
 	do
