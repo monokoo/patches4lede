@@ -59,7 +59,18 @@ git checkout -- applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule
 git checkout -- applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 git checkout -- applications/luci-app-upnp/po/zh-cn/upnp.po
 git checkout -- applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua
-
+git checkout -- applications/luci-app-mwan3/luasrc/controller/mwan3.lua
+git checkout -- applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua
+git checkout -- applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua
+git checkout -- applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua
+git checkout -- applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua
+git checkout -- applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm
+git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm
+git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm
+git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm
+git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
+git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
+git checkout -- applications/luci-app-mwan3/po/zh-cn/mwan3.po
 
 
 echo "Everything has been cleaned!"
