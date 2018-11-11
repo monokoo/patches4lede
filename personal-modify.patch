@@ -925,48 +925,38 @@
  				end
 --- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-10-28 20:31:30.652305372 +0800
 +++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-10-28 20:31:30.648305444 +0800
-@@ -584,10 +584,10 @@
- msgstr "分类"
+@@ -855,11 +855,11 @@
  
+ #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:44
  msgid "Caution: Configuration files will be erased"
 -msgstr ""
 +msgstr "注意：配置文件将被删除。"
  
+ #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:48
  msgid "Caution: System upgrade will be forced"
 -msgstr ""
 +msgstr "注意：系统将会强制升级。"
  
- msgid "Chain"
- msgstr "链"
-@@ -699,8 +699,8 @@
- msgid "Configuration failed"
- msgstr "配置失败"
+ #: modules/luci-mod-status/luasrc/view/admin_status/iptables.htm:87
+ #: modules/luci-mod-status/luasrc/view/admin_status/iptables.htm:89
+@@ -1037,7 +1037,7 @@
  
--msgid "Configuration files will be kept"
+ #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:42
+ msgid "Configuration files will be kept"
 -msgstr ""
-+msgid "Configuration files will be kept."
 +msgstr "配置文件将被保留。"
  
+ #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:136
  msgid "Configuration has been applied."
- msgstr "配置已应用。"
-@@ -1482,7 +1482,7 @@
- msgstr "IP 地址"
- 
- msgid "IP Protocol"
--msgstr ""
-+msgstr "IP 协议"
- 
- msgid "IP address"
- msgstr "IP 地址"
-@@ -3133,7 +3133,7 @@
- msgid "Start priority"
+@@ -4585,7 +4585,7 @@
  msgstr "启动优先级"
  
+ #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:179
 -msgid "Starting configuration apply…"
 +msgid "Starting configuration apply..."
  msgstr "开始应用配置…"
  
- msgid "Starting wireless scan..."
+ #: modules/luci-mod-network/luasrc/view/admin_network/wifi_join.htm:128
 --- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-10-28 20:31:30.664305153 +0800
 +++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-10-28 20:31:30.664305153 +0800
 @@ -1,6 +1,6 @@
