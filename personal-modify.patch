@@ -1860,3 +1860,15 @@ diff -urN a/feeds/packages/net/mwan3/files/usr/sbin/mwan3 b/feeds/packages/net/m
  	}
  
  	uci_toggle_state mwan3 globals enabled "0"
+diff -urN a/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua b/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua
+--- a/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-11-11 20:54:24.823683900 +0800
++++ b/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-11-11 22:18:11.205760300 +0800
+@@ -12,7 +12,7 @@
+ 		template("nft-qos/rate"), _("Rate"), 5).leaf = true
+ 	entry({"admin", "status", "realtime", "rate_status"},
+ 		call("action_rate")).leaf = true
+-	entry({"admin", "services", "nft-qos"}, cbi("nft-qos/nft-qos"),
++	entry({"admin", "qos", "nft-qos"}, cbi("nft-qos/nft-qos"),
+ 		_("Qos over Nftables"), 60)
+ end
+ 

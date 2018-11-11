@@ -75,6 +75,7 @@ git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.
 git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
 git checkout -- applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
 git checkout -- applications/luci-app-mwan3/po/zh-cn/mwan3.po
+git checkout -- applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua
 
 
 echo "Everything has been cleaned!"
