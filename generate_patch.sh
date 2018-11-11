@@ -73,7 +73,11 @@ net/nginx/files-luci-support/luci_nginx.conf
 net/uwsgi-cgi/files-luci-support/uwsgi.conf
 net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
-net/miniupnpd/files/miniupnpd.init"
+net/miniupnpd/files/miniupnpd.init
+net/mwan3/files/etc/config/mwan3
+net/mwan3/files/etc/hotplug.d/iface/13-mwan3
+net/mwan3/files/lib/mwan3/mwan3.sh
+net/mwan3/files/usr/sbin/mwan3"
 
 echo $files_packages > $source_package
 get_new_patch $source_package  "feeds/packages"
@@ -105,7 +109,20 @@ applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
 applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
 applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 applications/luci-app-upnp/po/zh-cn/upnp.po
-applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua"
+applications/luci-app-upnp/luasrc/model/cbi/upnp/upnp.lua
+applications/luci-app-mwan3/luasrc/controller/mwan3.lua
+applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua
+applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua
+applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua
+applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua
+applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm
+applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm
+applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm
+applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm
+applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
+applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
+applications/luci-app-mwan3/po/zh-cn/mwan3.po
+applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua"
 
 echo $files_luci > $source_luci
 get_new_patch $source_luci "feeds/luci"
