@@ -1522,3 +1522,341 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
  
  #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua:58
  msgid "Rule"
+ diff -urN a/feeds/packages/net/mwan3/files/etc/config/mwan3 b/feeds/packages/net/mwan3/files/etc/config/mwan3
+--- a/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-10-28 11:35:13.346232900 +0800
++++ b/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-09-01 21:22:05.000000000 +0800
+@@ -1,138 +1,53 @@
+ 
+ config globals 'globals'
+ 	option mmx_mask '0x3F00'
+-	option local_source 'none'
++	option local_source 'lan'
+ 	option rtmon_interval '5'
+ 
+-config interface 'wan'
+-	option enabled '1'
+-	list track_ip '8.8.4.4'
+-	list track_ip '8.8.8.8'
+-	list track_ip '208.67.222.222'
+-	list track_ip '208.67.220.220'
+-	option family 'ipv4'
+-	option reliability '2'
+-	option count '1'
+-	option timeout '2'
+-	option failure_latency '1000'
+-	option recovery_latency '500'
+-	option failure_loss '20'
+-	option recovery_loss '5'
+-	option interval '5'
+-	option down '3'
+-	option up '8'
+-
+-config interface 'wan6'
+-	option enabled '0'
+-	list track_ip '2001:4860:4860::8844'
+-	list track_ip '2001:4860:4860::8888'
+-	list track_ip '2620:0:ccd::2'
+-	list track_ip '2620:0:ccc::2'
+-	option family 'ipv6'
+-	option reliability '2'
+-	option count '1'
+-	option timeout '2'
+-	option interval '5'
+-	option down '3'
+-	option up '8'
+-
+-config interface 'wanb'
+-	option enabled '0'
+-	list track_ip '8.8.8.8'
+-	list track_ip '208.67.220.220'
+-	option family 'ipv4'
+-	option reliability '1'
+-	option count '1'
+-	option timeout '2'
+-	option interval '5'
+-	option down '3'
+-	option up '8'
+-
+-config interface 'wanb6'
+-	option enabled '0'
+-	list track_ip '2001:4860:4860::8888'
+-	list track_ip '2620:0:ccc::2'
+-	option family 'ipv6'
+-	option reliability '1'
+-	option count '1'
+-	option timeout '2'
+-	option interval '5'
+-	option down '3'
+-	option up '8'
++config rule 'default_rule'
++	option dest_ip '0.0.0.0/0'
++	option proto 'all'
++	option sticky '0'
++	option use_policy 'balanced'
++	option enable '1'
+ 
+-config member 'wan_m1_w3'
+-	option interface 'wan'
+-	option metric '1'
+-	option weight '3'
++config policy 'balanced'
++	list use_member 'wan_m1_w1'
++	option last_resort 'default'
+ 
+-config member 'wan_m2_w3'
++config member 'wan_m1_w1'
+ 	option interface 'wan'
+-	option metric '2'
+-	option weight '3'
+-
+-config member 'wanb_m1_w2'
+-	option interface 'wanb'
+-	option metric '1'
+-	option weight '2'
+-
+-config member 'wanb_m2_w2'
+-	option interface 'wanb'
+-	option metric '2'
+-	option weight '2'
+-
+-config member 'wan6_m1_w3'
+-	option interface 'wan6'
+ 	option metric '1'
+-	option weight '3'
+-
+-config member 'wan6_m2_w3'
+-	option interface 'wan6'
+-	option metric '2'
+-	option weight '3'
+-
+-config member 'wanb6_m1_w2'
+-	option interface 'wanb6'
+-	option metric '1'
+-	option weight '2'
+-
+-config member 'wanb6_m2_w2'
+-	option interface 'wanb6'
+-	option metric '2'
+-	option weight '2'
+-
+-config policy 'wan_only'
+-	list use_member 'wan_m1_w3'
+-	list use_member 'wan6_m1_w3'
+-
+-config policy 'wanb_only'
+-	list use_member 'wanb_m1_w2'
+-	list use_member 'wanb6_m1_w2'
+-
+-config policy 'balanced'
+-	list use_member 'wan_m1_w3'
+-	list use_member 'wanb_m1_w2'
+-	list use_member 'wan6_m1_w3'
+-	list use_member 'wanb6_m1_w2'
+-
+-config policy 'wan_wanb'
+-	list use_member 'wan_m1_w3'
+-	list use_member 'wanb_m2_w2'
+-	list use_member 'wan6_m1_w3'
+-	list use_member 'wanb6_m2_w2'
+-
+-config policy 'wanb_wan'
+-	list use_member 'wan_m2_w3'
+-	list use_member 'wanb_m1_w2'
+-	list use_member 'wan6_m2_w3'
+-	list use_member 'wanb6_m1_w2'
+-
+-config rule 'https'
+-	option sticky '1'
+-	option dest_port '443'
+-	option proto 'tcp'
+-	option use_policy 'balanced'
+-
+-config rule 'default_rule'
+-	option dest_ip '0.0.0.0/0'
+-	option use_policy 'balanced'
++	option weight '1'
+ 
++config interface 'wan'
++	option enabled '1'
++	option count '2'
++	option timeout '2'
++	option interval '5'
++	option up '1'
++	option down '4'
++	list track_ip 'www.qq.com'
++	list track_ip 'www.baidu.com'
++	list track_ip 'www.taobao.com'
++	list track_ip '119.29.29.29'
++	list track_ip '114.114.114.114'
++	list track_ip '1.2.4.8'
++	option reliability '1'
++	option initial_state 'online'
++	option family 'ipv4'
++	option track_method 'ping'
++	option size '56'
++	option failure_interval '5'
++	option recovery_interval '5'
++	option flush_conntrack 'never'
++
++config mpolicy 'base'
++	option unicom 'none'
++	option cernet 'none'
++	option cnn 'none'
++	option foreign 'none'
++	option telecom 'wan'
++	option mobile 'wan2'
++	option reset '0'
++	option enable '0'
+diff -urN a/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3 b/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3
+--- a/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3	2018-10-28 11:35:13.347231900 +0800
++++ b/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3	2018-11-11 21:43:13.433927600 +0800
+@@ -95,4 +95,4 @@
+ 		;;
+ esac
+ 
+-exit 0
++exit 0
+\ No newline at end of file
+diff -urN a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh
+--- a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-10-28 11:35:13.357222600 +0800
++++ b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-11-11 21:43:45.362508000 +0800
+@@ -860,6 +860,7 @@
+ 
+ 	rule="$1"
+ 
++	config_get enable $1 enable 0
+ 	config_get sticky $1 sticky 0
+ 	config_get timeout $1 timeout 600
+ 	config_get ipset $1 ipset
+@@ -945,7 +946,7 @@
+ 			for IPT in "$IPT4" "$IPT6"; do
+ 				case $proto in
+ 					tcp|udp)
+-					$IPT -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -956,7 +957,7 @@
+ 						-j $policy &> /dev/null
+ 					;;
+ 					*)
+-					$IPT -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -971,7 +972,7 @@
+ 
+ 			case $proto in
+ 				tcp|udp)
+-				$IPT4 -A mwan3_rules \
++				[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
+ 					-p $proto \
+ 					-s $src_ip \
+ 					-d $dest_ip $ipset \
+@@ -982,7 +983,7 @@
+ 					-j $policy &> /dev/null
+ 				;;
+ 				*)
+-				$IPT4 -A mwan3_rules \
++				[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
+ 					-p $proto \
+ 					-s $src_ip \
+ 					-d $dest_ip $ipset \
+@@ -996,7 +997,7 @@
+ 
+ 			case $proto in
+ 				tcp|udp)
+-				$IPT6 -A mwan3_rules \
++				[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
+ 					-p $proto \
+ 					-s $src_ip \
+ 					-d $dest_ip $ipset \
+@@ -1007,7 +1008,7 @@
+ 					-j $policy &> /dev/null
+ 				;;
+ 				*)
+-				$IPT6 -A mwan3_rules \
++				[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
+ 					-p $proto \
+ 					-s $src_ip \
+ 					-d $dest_ip $ipset \
+diff -urN a/feeds/packages/net/mwan3/files/usr/sbin/mwan3 b/feeds/packages/net/mwan3/files/usr/sbin/mwan3
+--- a/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-10-28 11:35:13.360218600 +0800
++++ b/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-11-11 21:45:09.111548600 +0800
+@@ -52,7 +52,7 @@
+ 		echo "Please execute \"/etc/init.d/mwan3 start\" first."
+ 		exit 1
+ 	}
+-
++	
+ 	if [ -z "$1" ]; then
+ 		echo "Expecting interface. Usage: mwan3 ifup <interface>" && exit 0
+ 	fi
+@@ -72,7 +72,7 @@
+ 		json_load $status
+ 		json_get_vars up l3_device 
+ 	}
+-
++	
+ 	config_get enabled "$1" enabled 0
+ 
+ 
+@@ -135,25 +135,25 @@
+ 	local enabled src_ip local_source
+ 
+ 	uci_toggle_state mwan3 globals enabled "1"
+-
++	
+ 	config_get local_source globals local_source 'none'
+ 	[ "${local_source}" = "none" ] || {
+-		src_ip=$(uci_get_state mwan3 globals src_ip)
+-		[ "${src_ip}" != "" ] && {
+-			ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
+-			ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
+-		}
+-
+-		network_get_ipaddr src_ip "${local_source}"
+-		if [ "${src_ip}" = "" ]; then
+-			$LOG warn "Unable to set source ip for own initiated traffic (${local_source})"
+-		else
+-			ip addr add "${src_ip}/32" dev lo
+-			ip route add default via "${src_ip}" dev lo
+-			uci_toggle_state mwan3 globals src_ip "${src_ip}"
+-		fi
++			src_ip=$(uci_get_state mwan3 globals src_ip)
++			[ "${src_ip}" != "" ] && {
++					ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
++					ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
++			}
++	
++			network_get_ipaddr src_ip "${local_source}"
++			if [ "${src_ip}" = "" ]; then
++					$LOG warn "Unable to set source ip for own initiated traffic (${local_source})"
++			else
++					ip addr add "${src_ip}/32" dev lo
++					ip route add default via "${src_ip}" dev lo
++					uci_toggle_state mwan3 globals src_ip "${src_ip}"
++			fi
+ 	}
+-
++	
+ 	config_foreach ifup interface
+ }
+ 
+@@ -212,11 +212,11 @@
+ 
+ 	mwan3_lock_clean
+ 	rm -rf $MWAN3_STATUS_DIR $MWAN3TRACK_STATUS_DIR
+-
++	
+ 	src_ip=$(uci_get_state mwan3 globals src_ip)
+ 	[ "${src_ip}" = "" ] || {
+-		ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
+-		ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
++			ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
++			ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
+ 	}
+ 
+ 	uci_toggle_state mwan3 globals enabled "0"
