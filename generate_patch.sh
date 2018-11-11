@@ -18,9 +18,9 @@ get_new_patch(){
 		cp -f $file $file-new
 		git checkout $file
 
-		if [ "$file" == "modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm" ]; then
+		if [ "$file" = "modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm" ]; then
 			new_patch="$new_for_k3"
-		elif [ "$file" == "modules/luci-mod-status/luasrc/view/admin_status/index.htm" ]; then
+		elif [ "$file" = "modules/luci-mod-status/luasrc/view/admin_status/index.htm" ]; then
 			if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
 				new_patch="$new_for_x64"
 			else
