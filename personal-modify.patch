@@ -1226,9 +1226,9 @@
  go = s:option(Flag, "guest_ok", translate("Allow guests"))
  go.enabled = "yes"
  go.disabled = "no"
-diff -urN luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua
---- luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-29 21:58:26.903693400 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-13 12:11:39.905831500 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-29 21:58:26.903693400 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-13 12:11:39.905831500 +0800
 @@ -125,7 +125,7 @@
  		if not dump then
  			dump = require("luci.util").ubus("network.interface.%s" % interface, "status", {})
@@ -1261,9 +1261,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua luci/appl
  			end
  		elseif task == "hotplug_ifup" then
  			os.execute(string.format("/usr/sbin/mwan3 ifup %s", ut.shellquote(interface)))
-diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua
---- luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-10-29 21:58:26.906690300 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-11-11 21:14:17.206738300 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-10-29 21:58:26.906690300 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-11-11 21:14:17.206738300 +0800
 @@ -8,38 +8,39 @@
  
  function interfaceWarnings(overview, count, iface_max)
@@ -1328,9 +1328,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua l
  	"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />" ..
  	"Interfaces may not share the same name as configured members, policies or rules"))
  mwan_interface.addremove = true
-diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua
---- luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-10-29 21:58:26.911685200 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-11-11 21:15:58.525393900 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-10-29 21:58:26.911685200 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-11-11 21:15:58.525393900 +0800
 @@ -25,7 +25,8 @@
  	local warnings = ""
  	for i, k in pairs(policy_error) do
@@ -1341,9 +1341,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua luci
  				translatef("WARNING: Policy %s has exceeding the maximum name of 15 characters", i)
  				)
  		end
-diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua
---- luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-10-29 21:58:26.913683200 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-11-11 21:16:45.800012100 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-10-29 21:58:26.913683200 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-11-11 21:16:45.800012100 +0800
 @@ -29,7 +29,8 @@
  	local warnings = ""
  	for i, k in pairs(rule_error) do
@@ -1364,9 +1364,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua luci/a
  src_ip = mwan_rule:option(DummyValue, "src_ip", translate("Source address"))
  src_ip.rawhtml = true
  function src_ip.cfgvalue(self, s)
-diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua
---- luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-10-29 21:58:26.914682200 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-11-11 21:16:55.988580300 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-10-29 21:58:26.914682200 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-11-11 21:16:55.988580300 +0800
 @@ -13,6 +13,9 @@
  mwan_rule.addremove = false
  mwan_rule.dynamic = false
@@ -1377,9 +1377,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua 
  src_ip = mwan_rule:option(Value, "src_ip", translate("Source address"),
  	translate("Supports CIDR notation (eg \"192.168.100.0/24\") without quotes"))
  src_ip.datatype = ipaddr
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm
---- luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-10-29 21:58:26.917679100 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-05-14 20:57:01.000000000 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-10-29 21:58:26.917679100 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-05-14 20:57:01.000000000 +0800
 @@ -1,3 +1,3 @@
 -<%if require("luci.sys").init.enabled("mwan3") then%>
 -<%+mwan/overview_status_interface%>
@@ -1387,9 +1387,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.h
 +<%if require("luci.sys").init.enabled("mwan3") then%>
 +<%+mwan/overview_status_interface%>
 +<%end%>
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm
---- luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-10-29 21:58:26.918678100 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-11-11 21:17:51.673224800 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-10-29 21:58:26.918678100 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-11-11 21:17:51.673224800 +0800
 @@ -15,7 +15,7 @@
  				for ( var iface in status.interfaces)
  				{
@@ -1434,9 +1434,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_inte
  	<div id="mwan_status_text">
  		<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" />
  		<%:Collecting data...%>
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm
---- luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-10-29 21:58:26.919677100 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-11-11 21:17:55.166648400 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-10-29 21:58:26.919677100 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-11-11 21:17:55.166648400 +0800
 @@ -13,6 +13,7 @@
  	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
  </ul>
@@ -1445,9 +1445,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm lu
  <script type="text/javascript">//<![CDATA[
  	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "detailed_status")%>', null,
  		function(x)
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm
---- luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-10-29 21:58:26.920676000 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-11-11 21:17:58.161582200 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-10-29 21:58:26.920676000 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-11-11 21:17:58.161582200 +0800
 @@ -25,6 +25,7 @@
  	)
  %>
@@ -1473,9 +1473,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.h
  				<select name="task" style="width:auto">
  					<option value="ping_gateway"><%:Ping default gateway%></option>
  					<option value="ping_trackips"><%:Ping tracking IP%></option>
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
---- luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-10-29 21:58:26.921675000 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-11-11 21:18:00.873805500 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-10-29 21:58:26.921675000 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-11-11 21:18:00.873805500 +0800
 @@ -13,6 +13,7 @@
  	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
  </ul>
@@ -1484,9 +1484,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
  
  <div class="cbi-map">
  	<%+mwan/overview_status_interface%>
-diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
---- luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-10-29 21:58:26.922674000 +0800
-+++ luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-11-11 21:18:03.953652900 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-10-29 21:58:26.922674000 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-11-11 21:18:03.953652900 +0800
 @@ -13,6 +13,7 @@
  	<li class="cbi-tab"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
  </ul>
@@ -1495,9 +1495,9 @@ diff -urN luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooti
  <script type="text/javascript">//<![CDATA[
  	XHR.poll(15, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "troubleshooting_display")%>', null,
  		function(x)
-diff -urN luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po
---- luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:07:56.023463900 +0800
-+++ luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:06:13.636463900 +0800
+diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po
+--- a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:07:56.023463900 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:06:13.636463900 +0800
 @@ -316,6 +316,9 @@
  msgstr "MWAN 规则配置 - %s"
  
