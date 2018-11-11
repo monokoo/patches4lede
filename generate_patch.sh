@@ -1,6 +1,9 @@
 #!/bin/sh
 date=$(date +%Y%m%d%H%M%S)
 new_generate_patch=/home/lede/patches4lede/new_generate_patch_$date.patch
+new_for_k3=/home/lede/patches4lede/new_for_k3_$date.patch
+new_for_other_arch=/home/lede/patches4lede/new_for_other_arch_$date.patch
+new_for_x64=/home/lede/patches4lede/new_for_x64_$date.patch
 source_file=/tmp/files_source
 source_package=/tmp/files_package
 source_luci=/tmp/files_luci
@@ -14,7 +17,20 @@ get_new_patch(){
 	do
 		cp -f $file $file-new
 		git checkout $file
-		diff -uN $file $file-new >> $new_generate_patch
+
+		if [ "$file" == "modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm" ]; then
+			new_patch="$new_for_k3"
+		elif [ "$file" == "modules/luci-mod-status/luasrc/view/admin_status/index.htm" ]; then
+			if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
+				new_patch="$new_for_x64"
+			else
+				new_patch="$new_for_other_arch"
+			fi
+		else
+			new_patch="$new_generate_patch"
+		fi
+
+		diff -uN $file $file-new >> $new_patch
 		if [ -n "$2" ]; then
 			sed -i "s#--- $file#--- a/$2/$file#g" $new_generate_patch
 			sed -i "s#+++ $file-new#+++ b/$2/$file#g" $new_generate_patch

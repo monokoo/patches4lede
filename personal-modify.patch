@@ -948,6 +948,15 @@
  
  #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:136
  msgid "Configuration has been applied."
+@@ -2155,7 +2155,7 @@
+ 
+ #: protocols/luci-proto-ncm/luasrc/model/cbi/admin_network/proto_ncm.lua:40
+ msgid "IP Protocol"
+-msgstr ""
++msgstr "IP 协议"
+ 
+ #: modules/luci-mod-network/luasrc/model/cbi/admin_network/hosts.lua:19
+ msgid "IP address"
 @@ -4585,7 +4585,7 @@
  msgstr "启动优先级"
  
