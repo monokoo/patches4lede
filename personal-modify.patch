@@ -1,5 +1,5 @@
---- a/package/network/services/odhcpd/files/odhcpd-update	2018-10-28 20:31:29.980317611 +0800
-+++ b/package/network/services/odhcpd/files/odhcpd-update	2018-10-28 20:31:29.976317684 +0800
+--- a/package/network/services/odhcpd/files/odhcpd-update	2018-11-11 20:40:27.405789978 +0800
++++ b/package/network/services/odhcpd/files/odhcpd-update	2018-11-11 20:40:27.393790381 +0800
 @@ -1,6 +1,8 @@
  #!/bin/sh
  # Make dnsmasq reread hostfile by sending SIGHUP signal
@@ -9,8 +9,8 @@
  . $IPKG_INSTROOT/lib/functions/procd.sh
  
  procd_send_signal dnsmasq
---- a/package/network/services/hostapd/files/wps-hotplug.sh	2018-10-28 20:31:29.996317320 +0800
-+++ b/package/network/services/hostapd/files/wps-hotplug.sh	2018-10-28 20:31:29.992317393 +0800
+--- a/package/network/services/hostapd/files/wps-hotplug.sh	2018-11-11 20:40:27.437788900 +0800
++++ b/package/network/services/hostapd/files/wps-hotplug.sh	2018-11-11 20:40:27.429789169 +0800
 @@ -1,11 +1,16 @@
  #!/bin/sh
  
@@ -28,8 +28,8 @@
  fi
  
  return 0
---- a/package/network/services/hostapd/files/hostapd.sh	2018-10-28 20:31:30.016316956 +0800
-+++ b/package/network/services/hostapd/files/hostapd.sh	2018-10-28 20:31:30.012317029 +0800
+--- a/package/network/services/hostapd/files/hostapd.sh	2018-11-11 20:40:27.469787823 +0800
++++ b/package/network/services/hostapd/files/hostapd.sh	2018-11-11 20:40:27.461788092 +0800
 @@ -431,6 +431,11 @@
  		set_default wps_manufacturer "www.openwrt.org"
  		set_default wps_independent 1
@@ -42,8 +42,8 @@
  		wps_state=2
  		[ -n "$wps_configured" ] && wps_state=1
  
---- a/package/network/ipv6/6in4/files/6in4.sh	2018-10-28 20:31:30.032316664 +0800
-+++ b/package/network/ipv6/6in4/files/6in4.sh	2018-10-28 20:31:30.028316737 +0800
+--- a/package/network/ipv6/6in4/files/6in4.sh	2018-11-11 20:40:27.501786746 +0800
++++ b/package/network/ipv6/6in4/files/6in4.sh	2018-11-11 20:40:27.489787150 +0800
 @@ -11,7 +11,7 @@
  
  proto_6in4_update() {
@@ -53,8 +53,8 @@
  
  		(while [ $((timeout--)) -gt 0 ]; do
  			sleep 1
---- a/package/base-files/files/etc/rc.button/reset	2018-10-28 20:31:30.044316446 +0800
-+++ b/package/base-files/files/etc/rc.button/reset	2018-10-28 20:31:30.040316519 +0800
+--- a/package/base-files/files/etc/rc.button/reset	2018-11-11 20:40:27.529785804 +0800
++++ b/package/base-files/files/etc/rc.button/reset	2018-11-11 20:40:27.521786073 +0800
 @@ -15,16 +15,8 @@
  	set_state failsafe
  ;;
@@ -72,8 +72,8 @@
  ;;
  esac
  
---- a/target/linux/x86/64/config-default	2018-10-28 20:31:30.092315571 +0800
-+++ b/target/linux/x86/64/config-default	2018-10-28 20:31:30.088315644 +0800
+--- a/target/linux/x86/64/config-default	2018-11-11 20:40:27.625782573 +0800
++++ b/target/linux/x86/64/config-default	2018-11-11 20:40:27.613782977 +0800
 @@ -166,6 +166,13 @@
  CONFIG_HAVE_FENTRY=y
  # CONFIG_HAVE_GENERIC_DMA_COHERENT is not set
@@ -104,8 +104,8 @@
  # CONFIG_LCD_CLASS_DEVICE is not set
  CONFIG_LEDS_GPIO=y
  # CONFIG_LEGACY_VSYSCALL_EMULATE is not set
---- a/feeds/packages/net/aria2/files/aria2.conf	2018-10-28 20:31:30.108315280 +0800
-+++ b/feeds/packages/net/aria2/files/aria2.conf	2018-10-28 20:31:30.104315353 +0800
+--- a/feeds/packages/net/aria2/files/aria2.conf	2018-11-11 20:40:27.653781631 +0800
++++ b/feeds/packages/net/aria2/files/aria2.conf	2018-11-11 20:40:27.649781765 +0800
 @@ -8,15 +8,30 @@
  # You can also add new config sections to define multi instance.
  #
@@ -143,8 +143,8 @@
  
  	# Add addition Headers here.
  	# eg. list header 'Content-Encoding: gzip'
---- a/feeds/packages/net/aria2/files/aria2.init	2018-10-28 20:31:30.116315134 +0800
-+++ b/feeds/packages/net/aria2/files/aria2.init	2018-10-28 20:31:30.116315134 +0800
+--- a/feeds/packages/net/aria2/files/aria2.init	2018-11-11 20:40:27.677780823 +0800
++++ b/feeds/packages/net/aria2/files/aria2.init	2018-11-11 20:40:27.673780958 +0800
 @@ -152,13 +152,38 @@
  		'user_agent:string'
  }
@@ -206,8 +206,8 @@
  				fi
  		else
  			_info "Set run user to '${user}' failed, default user will be used."
---- a/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-10-28 20:31:30.128314916 +0800
-+++ b/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-10-28 20:31:30.128314916 +0800
+--- a/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-11-11 20:40:27.701780016 +0800
++++ b/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-11-11 20:40:27.697780150 +0800
 @@ -1,6 +1,6 @@
  #!/bin/sh /etc/rc.common
  
@@ -226,9 +226,9 @@
  	config_get dir "$cfg" database_directory /var/lib/nlbwmon
  
  	mkdir -p "$dir"
---- a/feeds/packages/net/haproxy/Makefile	2018-10-28 20:31:30.140314697 +0800
-+++ b/feeds/packages/net/haproxy/Makefile	2018-10-28 20:31:30.136314770 +0800
-@@ -164,14 +164,8 @@
+--- a/feeds/packages/net/haproxy/Makefile	2018-11-11 20:40:27.725779207 +0800
++++ b/feeds/packages/net/haproxy/Makefile	2018-11-11 20:40:27.721779342 +0800
+@@ -163,14 +163,8 @@
  endef
  
  define Package/haproxy/install
@@ -245,8 +245,8 @@
  endef
  
  Package/haproxy-nossl/install = $(Package/haproxy/install)
---- a/feeds/packages/net/nginx/Makefile	2018-10-28 20:31:30.152314479 +0800
-+++ b/feeds/packages/net/nginx/Makefile	2018-10-28 20:31:30.148314552 +0800
+--- a/feeds/packages/net/nginx/Makefile	2018-11-11 20:40:27.753778265 +0800
++++ b/feeds/packages/net/nginx/Makefile	2018-11-11 20:40:27.745778534 +0800
 @@ -126,6 +126,7 @@
  config_files=nginx.conf mime.types
  
@@ -273,8 +273,8 @@
  	$(INSTALL_BIN) ./files-luci-support/luci_nginx_ssl.conf $(1)/etc/nginx/luci_nginx_ssl.conf
  	$(INSTALL_DIR) $(1)/etc/uci-defaults
  	$(INSTALL_BIN) ./files-luci-support/70_nginx-luci-support-ssl $(1)/etc/uci-defaults/70_nginx-luci-support-ssl
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-10-28 20:31:30.164314260 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-10-28 20:31:30.160314333 +0800
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-11-11 20:40:27.777777457 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-11-11 20:40:27.769777727 +0800
 @@ -1,64 +1,94 @@
  
 -user  root;
@@ -397,8 +397,8 @@
 +	}
 +	include vhost/*.conf;
 +}
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-10-28 20:31:30.176314041 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-10-28 20:31:30.172314114 +0800
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-11-11 20:40:27.801776650 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-11-11 20:40:27.797776784 +0800
 @@ -2,9 +2,9 @@
  user nobody nogroup;
  worker_processes  1;
@@ -420,8 +420,8 @@
 \ No newline at end of file
 +    include vhost/*.conf;
 +}
---- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-10-28 20:31:30.188313823 +0800
-+++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-10-28 20:31:30.184313896 +0800
+--- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-11-11 20:40:27.829775708 +0800
++++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-11-11 20:40:27.821775977 +0800
 @@ -8,7 +8,7 @@
  buffer-size	= 10000
  reload-mercy	= 8
@@ -438,8 +438,8 @@
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
---- a/feeds/packages/net/samba4/files/samba.init	2018-10-28 20:31:30.200313604 +0800
-+++ b/feeds/packages/net/samba4/files/samba.init	2018-10-28 20:31:30.196313677 +0800
+--- a/feeds/packages/net/samba4/files/samba.init	2018-11-11 20:40:27.857774765 +0800
++++ b/feeds/packages/net/samba4/files/samba.init	2018-11-11 20:40:27.849775035 +0800
 @@ -18,11 +18,19 @@
  			echo -n "${device:-$net} "
  		done
@@ -527,8 +527,8 @@
  }
  
  service_triggers() {
---- a/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-10-28 20:31:30.212313385 +0800
-+++ b/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-10-28 20:31:30.208313458 +0800
+--- a/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-11-11 20:40:27.885773823 +0800
++++ b/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-11-11 20:40:27.877774092 +0800
 @@ -305,7 +305,7 @@
  ###############################################################################
  LOGGING=$(_get_uci_value ${GLOBAL}.logging) || _exit 1
@@ -538,8 +538,8 @@
  
  case "$1" in
      cron) check_cron_status ;;
---- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-10-28 20:31:30.468308725 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-10-28 20:31:30.464308798 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-11-11 20:40:27.941771938 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-11-11 20:40:27.933772207 +0800
 @@ -17,11 +17,15 @@
  		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
  	end
@@ -577,8 +577,8 @@
  function action_clock_status()
  	local set = tonumber(luci.http.formvalue("set"))
  	if set ~= nil and set > 0 then
---- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-10-28 20:31:30.488308360 +0800
-+++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-10-28 20:31:30.484308433 +0800
+--- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-11-11 20:40:27.965771130 +0800
++++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-11-11 20:40:27.961771265 +0800
 @@ -255,6 +255,16 @@
  	s:taboption("advanced", Flag, "noscan", translate("Force 40MHz mode"),
  		translate("Always use 40MHz channels even if the secondary channel overlaps. Using this option does not comply with IEEE 802.11n-2009!")).optional = true
@@ -596,8 +596,8 @@
  	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
  	beacon_int.optional = true
  	beacon_int.placeholder = 100
---- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-28 20:31:30.524307704 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-10-28 20:31:30.524307704 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-11-11 20:40:28.017769381 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-11-11 20:40:28.013769515 +0800
 @@ -39,13 +39,13 @@
  			end
  		%></li>
@@ -615,8 +615,8 @@
  		</li>
  		<% end %>
  	</ul>
---- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-10-28 20:31:30.548307267 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-10-28 20:31:30.548307267 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-11-11 20:40:28.049768304 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-11-11 20:40:28.041768573 +0800
 @@ -33,7 +33,7 @@
  
  block:close()
@@ -680,8 +680,8 @@
 +end
 +
  return m
---- a/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-10-28 20:31:30.564306975 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-10-28 20:31:30.560307048 +0800
+--- a/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-11-11 20:40:28.073767496 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-11-11 20:40:28.069767631 +0800
 @@ -6,7 +6,7 @@
  
  <%+header%>
@@ -708,8 +708,8 @@
  		var url = 'https://' + window.location.hostname + ':' + '<%=https_port%>' + window.location.pathname;
  		var img=new Image;
  		img.onload=function(){window.location = url};
---- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-10-28 20:31:30.576306756 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-10-28 20:31:30.576306756 +0800
+--- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-11-11 20:40:28.101766554 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-11-11 20:40:28.093766823 +0800
 @@ -57,6 +57,24 @@
  	page.index = true
  	toplevel_page(page, false, false)
@@ -735,8 +735,8 @@
  	-- Even for mod-admin-full network just uses first submenu item as landing
  	page = node("admin", "network")
  	page.title = _("Network")
---- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-10-28 20:31:30.592306465 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-10-28 20:31:30.588306538 +0800
+--- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.129765612 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.121765881 +0800
 @@ -176,7 +176,7 @@
  	function uci_apply(checked) {
  		uci_status_message('notice',
@@ -746,8 +746,8 @@
  
  		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r, tok) {
  			if (r.status === (checked ? 200 : 204)) {
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-10-28 20:31:30.604306246 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-10-28 20:31:30.604306246 +0800
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-11-11 20:40:28.157764670 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-11-11 20:40:28.153764805 +0800
 @@ -131,15 +131,21 @@
  				}
  
@@ -858,8 +858,8 @@
 -<%+footer%>
 +<%+footer%>
 \ No newline at end of file
---- a/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-10-28 20:31:30.636305663 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-10-28 20:31:30.632305736 +0800
+--- a/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-11-11 20:40:28.209762921 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-11-11 20:40:28.201763190 +0800
 @@ -70,6 +70,29 @@
  	return data
  end
@@ -923,8 +923,8 @@
  				elseif val then
  					entry[key] = val
  				end
---- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-10-28 20:31:30.652305372 +0800
-+++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-10-28 20:31:30.648305444 +0800
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.237761978 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.229762247 +0800
 @@ -855,11 +855,11 @@
  
  #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:44
@@ -966,8 +966,8 @@
  msgstr "开始应用配置…"
  
  #: modules/luci-mod-network/luasrc/view/admin_network/wifi_join.htm:128
---- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-10-28 20:31:30.664305153 +0800
-+++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-10-28 20:31:30.664305153 +0800
+--- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-11-11 20:40:28.269760901 +0800
++++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-11-11 20:40:28.261761170 +0800
 @@ -1,6 +1,6 @@
  config core main
 -	option lang auto
@@ -988,8 +988,8 @@
  
  config internal apply
  	option rollback 30
---- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-10-28 20:31:30.680304862 +0800
-+++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-10-28 20:31:30.680304862 +0800
+--- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-11-11 20:40:28.301759825 +0800
++++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-11-11 20:40:28.297759959 +0800
 @@ -129,6 +129,8 @@
  demand.placeholder = "0"
  demand.datatype    = "uinteger"
@@ -999,8 +999,8 @@
  
  mtu = section:taboption("advanced", Value, "mtu", translate("Override MTU"))
  mtu.placeholder = "1500"
---- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-10-28 20:31:30.696304570 +0800
-+++ b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-10-28 20:31:30.696304570 +0800
+--- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-11-11 20:40:28.333758748 +0800
++++ b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-11-11 20:40:28.329758883 +0800
 @@ -71,7 +71,7 @@
  			local iface = luci.http.formvalue("cbid.wol.1.iface")
  			local broadcast = luci.http.formvalue("cbid.wol.1.broadcast")
@@ -1010,8 +1010,8 @@
  				(broadcast == "1" and " -b" or ""), mac
  			}
  		else
---- a/feeds/luci/applications/luci-app-minidlna/Makefile	2018-10-28 20:31:30.740303769 +0800
-+++ b/feeds/luci/applications/luci-app-minidlna/Makefile	2018-10-28 20:31:30.736303842 +0800
+--- a/feeds/luci/applications/luci-app-minidlna/Makefile	2018-11-11 20:40:28.369757537 +0800
++++ b/feeds/luci/applications/luci-app-minidlna/Makefile	2018-11-11 20:40:28.365757671 +0800
 @@ -7,7 +7,7 @@
  include $(TOPDIR)/rules.mk
  
@@ -1021,8 +1021,8 @@
  
  include ../../luci.mk
  
---- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-10-28 20:31:30.776303113 +0800
-+++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-10-28 20:31:30.772303186 +0800
+--- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-11-11 20:40:28.405756325 +0800
++++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-11-11 20:40:28.401756460 +0800
 @@ -23,7 +23,7 @@
  s2.addremove = false
  
@@ -1032,8 +1032,8 @@
  freq.rmempty = true
  
  s3 = m:section(TypedSection, "ntpserver", translate("Time Servers"))
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-10-28 20:31:30.792302822 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-10-28 20:31:30.788302895 +0800
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-11-11 20:40:28.441755114 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-11-11 20:40:28.433755384 +0800
 @@ -4,16 +4,16 @@
  module("luci.controller.nlbw", package.seeall)
  
@@ -1069,8 +1069,8 @@
 +	http.redirect(disp.build_url("admin/status/nlbw/display"))
  	exec("/usr/sbin/nlbw", { "-c", "commit" })
  end
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-10-28 20:31:30.808302530 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-10-28 20:31:30.804302603 +0800
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-11-11 20:40:28.477753903 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-11-11 20:40:28.469754172 +0800
 @@ -12,6 +12,11 @@
  m = Map("nlbwmon", translate("Netlink Bandwidth Monitor - Configuration"),
  	translate("The Netlink Bandwidth Monitor (nlbwmon) is a lightweight, efficient traffic accounting program keeping track of bandwidth usage per host and protocol."))
@@ -1111,8 +1111,8 @@
  end
  
  
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-10-28 20:31:30.824302239 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-10-28 20:31:30.824302239 +0800
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-11-11 20:40:28.509752827 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-11-11 20:40:28.505752961 +0800
 @@ -11,7 +11,7 @@
  <fieldset class="cbi-section">
  	<legend><%:Restore Database Backup%></legend>
@@ -1131,8 +1131,8 @@
  			<input type="submit" value="<%:Generate Backup%>" class="cbi-button cbi-button-link" />
  		</form>
  	</p>
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-10-28 20:31:30.840301947 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-10-28 20:31:30.840301947 +0800
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-11-11 20:40:28.545751615 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-11-11 20:40:28.541751749 +0800
 @@ -394,7 +394,7 @@
  
  function fetchData(period)
@@ -1202,8 +1202,8 @@
  
  		if (res !== null && typeof(res) === 'object' && res.length > 0) {
  			trafficPeriods = res;
---- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-10-28 20:31:30.856301656 +0800
-+++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-10-28 20:31:30.856301656 +0800
+--- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-11-11 20:40:28.581750404 +0800
++++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-11-11 20:40:28.577750539 +0800
 @@ -37,7 +37,8 @@
  
  -- BEGIN Map
@@ -1214,8 +1214,8 @@
      sys.exec("/usr/bin/wifi_schedule.sh cron")
  end
  -- END Map
---- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-10-28 20:31:30.876301292 +0800
-+++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-10-28 20:31:30.872301364 +0800
+--- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-11-11 20:40:28.613749327 +0800
++++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-11-11 20:40:28.609749461 +0800
 @@ -75,6 +75,9 @@
  au = s:option(Value, "users", translate("Allowed users"))
  au.rmempty = true

@@ -1,5 +1,5 @@
---- a/feeds/luci/modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm	2018-05-19 15:08:06.744702770 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm	2018-06-18 23:34:15.833220930 +0800
+--- a/feeds/luci/modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm	2018-11-11 20:40:28.185763728 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm	2018-11-11 20:40:28.181763862 +0800
 @@ -7,10 +7,10 @@
  
  	var channels = {
