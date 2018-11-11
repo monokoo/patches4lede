@@ -32,11 +32,11 @@ get_new_patch(){
 
 		diff -uN $file $file-new >> $new_patch
 		if [ -n "$2" ]; then
-			sed -i "s#--- $file#--- a/$2/$file#g" $new_generate_patch
-			sed -i "s#+++ $file-new#+++ b/$2/$file#g" $new_generate_patch
+			sed -i "s#--- $file#--- a/$2/$file#g" $new_patch
+			sed -i "s#+++ $file-new#+++ b/$2/$file#g" $new_patch
 		else
-			sed -i "s#--- $file#--- a/$file#g" $new_generate_patch
-			sed -i "s#+++ $file-new#+++ b/$file#g" $new_generate_patch
+			sed -i "s#--- $file#--- a/$file#g" $new_patch
+			sed -i "s#+++ $file-new#+++ b/$file#g" $new_patch
 		fi
 		rm -f $file-new
 		rm -f $file.orig
