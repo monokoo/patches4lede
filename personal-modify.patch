@@ -1508,7 +1508,25 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
  msgid "MWAN Status - Detail"
  msgstr "MWAN 状态 - 详细"
  
-@@ -524,11 +527,11 @@
+@@ -329,12 +332,11 @@
+ 
+ #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua:141
+ msgid ""
+-"MWAN supports up to 252 physical and/or logical interfaces<br />MWAN "
+-"requires that all interfaces have a unique metric configured in /etc/config/"
+-"network<br />Names must match the interface name found in /etc/config/"
+-"network<br />Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br /"
+-">Interfaces may not share the same name as configured members, policies or "
+-"rules"
++"MWAN supports up to 252 physical and/or logical interfaces<br />"
++"MWAN requires that all interfaces have a unique metric configured in /etc/config/network<br />"
++"Names must match the interface name found in /etc/config/network (see advanced tab)<br />"
++"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />"
++"Interfaces may not share the same name as configured members, policies or rules"
+ msgstr ""
+ "MWAN 支持最多 252 个物理或逻辑接口。<br />MWAN 要求所有接口必须在 /etc/"
+ "config/network 中设定唯一的网关跃点。<br />名称必须与 /etc/config/network 中"
+@@ -524,11 +526,11 @@
  
  #: applications/luci-app-mwan3/luasrc/controller/mwan3.lua:196
  msgid "Routing table %s for interface %s found"
