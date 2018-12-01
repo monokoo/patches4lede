@@ -557,9 +557,14 @@
  	option family 'ipv4'
  	option reliability '2'
  	option count '1'
-@@ -21,109 +23,13 @@
- 	option down '3'
- 	option up '8'
+@@ -18,120 +20,27 @@
+ 	option failure_loss '20'
+ 	option recovery_loss '5'
+ 	option interval '5'
+-	option down '3'
+-	option up '8'
++	option down '4'
++	option up '1'
  
 -config interface 'wan6'
 -	option enabled '0'
@@ -670,7 +675,11 @@
  
  config rule 'https'
  	option sticky '1'
-@@ -134,4 +40,6 @@
+ 	option dest_port '443'
+ 	option proto 'tcp'
+ 	option use_policy 'balanced'
++	option enable '1'
+ 
  config rule 'default_rule'
  	option dest_ip '0.0.0.0/0'
  	option use_policy 'balanced'
