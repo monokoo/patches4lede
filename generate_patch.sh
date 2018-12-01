@@ -40,6 +40,7 @@ get_new_patch(){
 		fi
 		rm -f $file-new
 		rm -f $file.orig
+		rm -f $file.rej
 	done
 }
 
