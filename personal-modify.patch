@@ -1215,6 +1215,15 @@
  msgstr "开始应用配置…"
  
  #: modules/luci-mod-network/luasrc/view/admin_network/wifi_join.htm:128
+  @@ -1059,7 +1059,7 @@
+ msgstr "配置失败"
+ 
+ #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:42
+-msgid "Configuration files will be kept"
++msgid "Configuration files will be kept."
+ msgstr "将保留配置文件"
+ 
+ #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:85
 --- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-12-01 20:10:28.236170990 +0800
 +++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-12-01 20:10:28.232171166 +0800
 @@ -1,6 +1,6 @@
