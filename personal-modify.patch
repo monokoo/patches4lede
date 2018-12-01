@@ -737,12 +737,12 @@
  	page.title = _("Network")
 --- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.129765612 +0800
 +++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.121765881 +0800
-@@ -176,7 +176,7 @@
+@@ -122,7 +122,7 @@
+ 	}
+ 
  	function uci_apply(checked) {
- 		uci_status_message('notice',
- 			'<img src="<%=resource%>/icons/loading.gif" alt="" style="vertical-align:middle" /> ' +
--			'<%:Starting configuration apply…%>');
-+			'<%:Starting configuration apply...%>');
+-		uci_status_message('notice spinning', '<p><%:Starting configuration apply…%></p>');
++		uci_status_message('notice spinning', '<p><%:Starting configuration apply...%></p>');
  
  		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r, tok) {
  			if (r.status === (checked ? 200 : 204)) {
@@ -925,42 +925,10 @@
  				end
 --- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.237761978 +0800
 +++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.229762247 +0800
-@@ -855,11 +855,11 @@
- 
- #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:44
- msgid "Caution: Configuration files will be erased"
--msgstr ""
-+msgstr "注意：配置文件将被删除。"
- 
- #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:48
- msgid "Caution: System upgrade will be forced"
--msgstr ""
-+msgstr "注意：系统将会强制升级。"
- 
- #: modules/luci-mod-status/luasrc/view/admin_status/iptables.htm:87
- #: modules/luci-mod-status/luasrc/view/admin_status/iptables.htm:89
-@@ -1037,7 +1037,7 @@
- 
- #: modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm:42
- msgid "Configuration files will be kept"
--msgstr ""
-+msgstr "配置文件将被保留。"
- 
- #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:136
- msgid "Configuration has been applied."
-@@ -2155,7 +2155,7 @@
- 
- #: protocols/luci-proto-ncm/luasrc/model/cbi/admin_network/proto_ncm.lua:40
- msgid "IP Protocol"
--msgstr ""
-+msgstr "IP 协议"
- 
- #: modules/luci-mod-network/luasrc/model/cbi/admin_network/hosts.lua:19
- msgid "IP address"
-@@ -4585,7 +4585,7 @@
+@@ -4576,7 +4576,7 @@
  msgstr "启动优先级"
  
- #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:179
+ #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:125
 -msgid "Starting configuration apply…"
 +msgid "Starting configuration apply..."
  msgstr "开始应用配置…"
@@ -1543,32 +1511,27 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
  diff -urN a/feeds/packages/net/mwan3/files/etc/config/mwan3 b/feeds/packages/net/mwan3/files/etc/config/mwan3
 --- a/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-10-28 11:35:13.346232900 +0800
 +++ b/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-09-01 21:22:05.000000000 +0800
-@@ -1,138 +1,53 @@
+@@ -5,10 +5,12 @@
  
- config globals 'globals'
- 	option mmx_mask '0x3F00'
--	option local_source 'none'
-+	option local_source 'lan'
- 	option rtmon_interval '5'
- 
--config interface 'wan'
--	option enabled '1'
+ config interface 'wan'
+ 	option enabled '1'
 -	list track_ip '8.8.4.4'
 -	list track_ip '8.8.8.8'
 -	list track_ip '208.67.222.222'
 -	list track_ip '208.67.220.220'
--	option family 'ipv4'
--	option reliability '2'
--	option count '1'
--	option timeout '2'
--	option failure_latency '1000'
--	option recovery_latency '500'
--	option failure_loss '20'
--	option recovery_loss '5'
--	option interval '5'
--	option down '3'
--	option up '8'
--
++	list track_ip 'www.qq.com'
++	list track_ip 'www.baidu.com'
++	list track_ip 'www.taobao.com'
++	list track_ip '119.29.29.29'
++	list track_ip '114.114.114.114'
++	list track_ip '1.2.4.8'
+ 	option family 'ipv4'
+ 	option reliability '2'
+ 	option count '1'
+@@ -21,109 +23,13 @@
+ 	option down '3'
+ 	option up '8'
+ 
 -config interface 'wan6'
 -	option enabled '0'
 -	list track_ip '2001:4860:4860::8844'
@@ -1606,21 +1569,12 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
 -	option interval '5'
 -	option down '3'
 -	option up '8'
-+config rule 'default_rule'
-+	option dest_ip '0.0.0.0/0'
-+	option proto 'all'
-+	option sticky '0'
-+	option use_policy 'balanced'
-+	option enable '1'
- 
+-
 -config member 'wan_m1_w3'
 -	option interface 'wan'
 -	option metric '1'
 -	option weight '3'
-+config policy 'balanced'
-+	list use_member 'wan_m1_w1'
-+	option last_resort 'default'
- 
+-
 -config member 'wan_m2_w3'
 +config member 'wan_m1_w1'
  	option interface 'wan'
@@ -1664,8 +1618,9 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
 -config policy 'wanb_only'
 -	list use_member 'wanb_m1_w2'
 -	list use_member 'wanb6_m1_w2'
--
--config policy 'balanced'
++	option weight '1'
+ 
+ config policy 'balanced'
 -	list use_member 'wan_m1_w3'
 -	list use_member 'wanb_m1_w2'
 -	list use_member 'wan6_m1_w3'
@@ -1682,59 +1637,18 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
 -	list use_member 'wanb_m1_w2'
 -	list use_member 'wan6_m2_w3'
 -	list use_member 'wanb6_m1_w2'
--
--config rule 'https'
--	option sticky '1'
--	option dest_port '443'
--	option proto 'tcp'
--	option use_policy 'balanced'
--
--config rule 'default_rule'
--	option dest_ip '0.0.0.0/0'
--	option use_policy 'balanced'
-+	option weight '1'
++	list use_member 'wan_m1_w1'
  
-+config interface 'wan'
-+	option enabled '1'
-+	option count '2'
-+	option timeout '2'
-+	option interval '5'
-+	option up '1'
-+	option down '4'
-+	list track_ip 'www.qq.com'
-+	list track_ip 'www.baidu.com'
-+	list track_ip 'www.taobao.com'
-+	list track_ip '119.29.29.29'
-+	list track_ip '114.114.114.114'
-+	list track_ip '1.2.4.8'
-+	option reliability '1'
-+	option initial_state 'online'
-+	option family 'ipv4'
-+	option track_method 'ping'
-+	option size '56'
-+	option failure_interval '5'
-+	option recovery_interval '5'
-+	option flush_conntrack 'never'
-+
-+config mpolicy 'base'
-+	option unicom 'none'
-+	option cernet 'none'
-+	option cnn 'none'
-+	option foreign 'none'
-+	option telecom 'wan'
-+	option mobile 'wan2'
-+	option reset '0'
-+	option enable '0'
-diff -urN a/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3 b/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3
---- a/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3	2018-10-28 11:35:13.347231900 +0800
-+++ b/feeds/packages/net/mwan3/files/etc/hotplug.d/iface/13-mwan3	2018-11-11 21:43:13.433927600 +0800
-@@ -95,4 +95,4 @@
- 		;;
- esac
- 
--exit 0
-+exit 0
-\ No newline at end of file
+ config rule 'https'
+ 	option sticky '1'
+@@ -134,4 +40,6 @@
+ config rule 'default_rule'
+ 	option dest_ip '0.0.0.0/0'
+ 	option use_policy 'balanced'
+-
++	option enable '1'
++	option sticky '0'
++	option proto 'all'
 diff -urN a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh
 --- a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-10-28 11:35:13.357222600 +0800
 +++ b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-11-11 21:43:45.362508000 +0800
