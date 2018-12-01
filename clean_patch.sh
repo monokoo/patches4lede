@@ -28,7 +28,6 @@ git checkout -- net/samba4/files/samba.init
 git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh
 git checkout -- net/miniupnpd/files/miniupnpd.init
 git checkout -- net/mwan3/files/etc/config/mwan3
-git checkout -- net/mwan3/files/etc/hotplug.d/iface/13-mwan3
 git checkout -- net/mwan3/files/lib/mwan3/mwan3.sh
 git checkout -- net/mwan3/files/usr/sbin/mwan3
 

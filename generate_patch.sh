@@ -75,7 +75,6 @@ net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
 net/miniupnpd/files/miniupnpd.init
 net/mwan3/files/etc/config/mwan3
-net/mwan3/files/etc/hotplug.d/iface/13-mwan3
 net/mwan3/files/lib/mwan3/mwan3.sh
 net/mwan3/files/usr/sbin/mwan3"
 
