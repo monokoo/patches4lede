@@ -1,45 +1,37 @@
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-06-30 21:40:49.329839320 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2018-07-02 21:22:54.057940711 +0800
-@@ -352,32 +352,32 @@
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-06-30 21:40:49.329839320 +0800
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-07-02 21:22:54.057940711 +0800
+@@ -189,24 +189,24 @@
+ 			);
  
- 			if (e = document.getElementById('memtotal'))
- 				e.innerHTML = progressbar(
--					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor((info.memory.free + info.memory.buffered) / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
+ 		progressbar('#memtotal',
+-			((info.memory.free + info.memory.buffered) / 1024) + ' ' + _('kB'),
+-			(info.memory.total / 1024) + ' ' + _('kB'));
++			((info.memory.free + info.memory.buffered) / 1048576) + ' ' + _('MB'),
++			(info.memory.total / 1048576) + ' ' + _('MB'));
  
- 			if (e = document.getElementById('memfree'))
- 				e.innerHTML = progressbar(
--					(info.memory.free / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor(info.memory.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
+ 		progressbar('#memfree',
+-			(info.memory.free / 1024) + ' ' + _('kB'),
+-			(info.memory.total / 1024) + ' ' + _('kB'));
++			(info.memory.free / 1048576) + ' ' + _('MB'),
++			(info.memory.total / 1048576) + ' ' + _('MB'));
  
- 			if (e = document.getElementById('membuff'))
- 				e.innerHTML = progressbar(
--					(info.memory.buffered / 1024) + " <%:kB%>",
--					(info.memory.total / 1024) + " <%:kB%>"
-+					Math.floor(info.memory.buffered / 1048576) + " <%:MB%>",
-+					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
- 				);
+ 		progressbar('#membuff',
+-			(info.memory.buffered / 1024) + ' ' + _('kB'),
+-			(info.memory.total / 1024) + ' ' + _('kB'));
++			(info.memory.buffered / 1048576) + ' ' + _('MB'),
++			(info.memory.total / 1048576) + ' ' + _('MB'));
  
- 			if (e = document.getElementById('swaptotal'))
- 				e.innerHTML = progressbar(
--					(info.swap.free / 1024) + " <%:kB%>",
--					(info.swap.total / 1024) + " <%:kB%>"
-+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
- 				);
+ 		progressbar('#swaptotal',
+-			(info.swap.free / 1024) + ' ' + _('kB'),
+-			(info.swap.total / 1024) + ' ' + _('kB'));
++			(info.swap.free / 1048576) + ' ' + _('MB'),
++			(info.swap.total / 1048576) + ' ' + _('MB'));
  
- 			if (e = document.getElementById('swapfree'))
- 				e.innerHTML = progressbar(
--					(info.swap.free / 1024) + " <%:kB%>",
--					(info.swap.total / 1024) + " <%:kB%>"
-+					Math.floor(info.swap.free / 1048576) + " <%:MB%>",
-+					Math.floor(info.swap.total / 1048576) + " <%:MB%>"
- 				);
+ 		progressbar('#swapfree',
+-			(info.swap.free / 1024) + ' ' + _('kB'),
+-			(info.swap.total / 1024) + ' ' + _('kB'));
++			(info.swap.free / 1048576) + ' ' + _('MB'),
++			(info.swap.total / 1048576) + ' ' + _('MB'));
  
- 			if (e = document.getElementById('conns'))
+ 		progressbar('#conns',
+ 			info.conncount, info.connmax);
