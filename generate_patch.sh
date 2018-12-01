@@ -126,5 +126,7 @@ applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua"
 echo $files_luci > $source_luci
 get_new_patch $source_luci "feeds/luci"
 
+[ ! -s "$new_for_k3" ] && rm -rf $new_for_k3
+
 echo "New patch has been generated!"
 
