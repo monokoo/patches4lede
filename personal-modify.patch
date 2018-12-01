@@ -1,5 +1,5 @@
---- a/package/network/services/odhcpd/files/odhcpd-update	2018-11-11 20:40:27.405789978 +0800
-+++ b/package/network/services/odhcpd/files/odhcpd-update	2018-11-11 20:40:27.393790381 +0800
+--- a/package/network/services/odhcpd/files/odhcpd-update	2018-12-01 19:41:59.837781581 +0800
++++ b/package/network/services/odhcpd/files/odhcpd-update	2018-12-01 19:41:59.825783669 +0800
 @@ -1,6 +1,8 @@
  #!/bin/sh
  # Make dnsmasq reread hostfile by sending SIGHUP signal
@@ -9,8 +9,8 @@
  . $IPKG_INSTROOT/lib/functions/procd.sh
  
  procd_send_signal dnsmasq
---- a/package/network/services/hostapd/files/wps-hotplug.sh	2018-11-11 20:40:27.437788900 +0800
-+++ b/package/network/services/hostapd/files/wps-hotplug.sh	2018-11-11 20:40:27.429789169 +0800
+--- a/package/network/services/hostapd/files/wps-hotplug.sh	2018-12-01 19:41:59.869776012 +0800
++++ b/package/network/services/hostapd/files/wps-hotplug.sh	2018-12-01 19:41:59.857778100 +0800
 @@ -1,11 +1,16 @@
  #!/bin/sh
  
@@ -28,9 +28,9 @@
  fi
  
  return 0
---- a/package/network/services/hostapd/files/hostapd.sh	2018-11-11 20:40:27.469787823 +0800
-+++ b/package/network/services/hostapd/files/hostapd.sh	2018-11-11 20:40:27.461788092 +0800
-@@ -431,6 +431,11 @@
+--- a/package/network/services/hostapd/files/hostapd.sh	2018-12-01 19:41:59.893771835 +0800
++++ b/package/network/services/hostapd/files/hostapd.sh	2018-12-01 19:41:59.889772531 +0800
+@@ -433,6 +433,11 @@
  		set_default wps_manufacturer "www.openwrt.org"
  		set_default wps_independent 1
  
@@ -42,8 +42,8 @@
  		wps_state=2
  		[ -n "$wps_configured" ] && wps_state=1
  
---- a/package/network/ipv6/6in4/files/6in4.sh	2018-11-11 20:40:27.501786746 +0800
-+++ b/package/network/ipv6/6in4/files/6in4.sh	2018-11-11 20:40:27.489787150 +0800
+--- a/package/network/ipv6/6in4/files/6in4.sh	2018-12-01 19:41:59.921766962 +0800
++++ b/package/network/ipv6/6in4/files/6in4.sh	2018-12-01 19:41:59.917767658 +0800
 @@ -11,7 +11,7 @@
  
  proto_6in4_update() {
@@ -53,8 +53,8 @@
  
  		(while [ $((timeout--)) -gt 0 ]; do
  			sleep 1
---- a/package/base-files/files/etc/rc.button/reset	2018-11-11 20:40:27.529785804 +0800
-+++ b/package/base-files/files/etc/rc.button/reset	2018-11-11 20:40:27.521786073 +0800
+--- a/package/base-files/files/etc/rc.button/reset	2018-12-01 19:41:59.953761392 +0800
++++ b/package/base-files/files/etc/rc.button/reset	2018-12-01 19:41:59.949762088 +0800
 @@ -15,16 +15,8 @@
  	set_state failsafe
  ;;
@@ -72,8 +72,8 @@
  ;;
  esac
  
---- a/target/linux/x86/64/config-default	2018-11-11 20:40:27.625782573 +0800
-+++ b/target/linux/x86/64/config-default	2018-11-11 20:40:27.613782977 +0800
+--- a/target/linux/x86/64/config-default	2018-12-01 19:42:00.149727319 +0800
++++ b/target/linux/x86/64/config-default	2018-12-01 19:42:00.137729405 +0800
 @@ -166,6 +166,13 @@
  CONFIG_HAVE_FENTRY=y
  # CONFIG_HAVE_GENERIC_DMA_COHERENT is not set
@@ -104,8 +104,8 @@
  # CONFIG_LCD_CLASS_DEVICE is not set
  CONFIG_LEDS_GPIO=y
  # CONFIG_LEGACY_VSYSCALL_EMULATE is not set
---- a/feeds/packages/net/aria2/files/aria2.conf	2018-11-11 20:40:27.653781631 +0800
-+++ b/feeds/packages/net/aria2/files/aria2.conf	2018-11-11 20:40:27.649781765 +0800
+--- a/feeds/packages/net/aria2/files/aria2.conf	2018-12-01 19:42:00.181721758 +0800
++++ b/feeds/packages/net/aria2/files/aria2.conf	2018-12-01 19:42:00.173723149 +0800
 @@ -8,15 +8,30 @@
  # You can also add new config sections to define multi instance.
  #
@@ -143,8 +143,8 @@
  
  	# Add addition Headers here.
  	# eg. list header 'Content-Encoding: gzip'
---- a/feeds/packages/net/aria2/files/aria2.init	2018-11-11 20:40:27.677780823 +0800
-+++ b/feeds/packages/net/aria2/files/aria2.init	2018-11-11 20:40:27.673780958 +0800
+--- a/feeds/packages/net/aria2/files/aria2.init	2018-12-01 19:42:00.201718283 +0800
++++ b/feeds/packages/net/aria2/files/aria2.init	2018-12-01 19:42:00.197718978 +0800
 @@ -152,13 +152,38 @@
  		'user_agent:string'
  }
@@ -206,8 +206,8 @@
  				fi
  		else
  			_info "Set run user to '${user}' failed, default user will be used."
---- a/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-11-11 20:40:27.701780016 +0800
-+++ b/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-11-11 20:40:27.697780150 +0800
+--- a/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-12-01 19:42:00.225714112 +0800
++++ b/feeds/packages/net/nlbwmon/files/nlbwmon.init	2018-12-01 19:42:00.221714807 +0800
 @@ -1,6 +1,6 @@
  #!/bin/sh /etc/rc.common
  
@@ -226,8 +226,8 @@
  	config_get dir "$cfg" database_directory /var/lib/nlbwmon
  
  	mkdir -p "$dir"
---- a/feeds/packages/net/haproxy/Makefile	2018-11-11 20:40:27.725779207 +0800
-+++ b/feeds/packages/net/haproxy/Makefile	2018-11-11 20:40:27.721779342 +0800
+--- a/feeds/packages/net/haproxy/Makefile	2018-12-01 19:42:00.249709942 +0800
++++ b/feeds/packages/net/haproxy/Makefile	2018-12-01 19:42:00.241711332 +0800
 @@ -163,14 +163,8 @@
  endef
  
@@ -245,8 +245,8 @@
  endef
  
  Package/haproxy-nossl/install = $(Package/haproxy/install)
---- a/feeds/packages/net/nginx/Makefile	2018-11-11 20:40:27.753778265 +0800
-+++ b/feeds/packages/net/nginx/Makefile	2018-11-11 20:40:27.745778534 +0800
+--- a/feeds/packages/net/nginx/Makefile	2018-12-01 19:42:00.273705771 +0800
++++ b/feeds/packages/net/nginx/Makefile	2018-12-01 19:42:00.269706466 +0800
 @@ -126,6 +126,7 @@
  config_files=nginx.conf mime.types
  
@@ -273,8 +273,8 @@
  	$(INSTALL_BIN) ./files-luci-support/luci_nginx_ssl.conf $(1)/etc/nginx/luci_nginx_ssl.conf
  	$(INSTALL_DIR) $(1)/etc/uci-defaults
  	$(INSTALL_BIN) ./files-luci-support/70_nginx-luci-support-ssl $(1)/etc/uci-defaults/70_nginx-luci-support-ssl
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-11-11 20:40:27.777777457 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-11-11 20:40:27.769777727 +0800
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-12-01 19:42:00.297701600 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx_ssl.conf	2018-12-01 19:42:00.293702295 +0800
 @@ -1,64 +1,94 @@
  
 -user  root;
@@ -397,8 +397,8 @@
 +	}
 +	include vhost/*.conf;
 +}
---- a/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-11-11 20:40:27.801776650 +0800
-+++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-11-11 20:40:27.797776784 +0800
+--- a/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-12-01 19:42:00.321697429 +0800
++++ b/feeds/packages/net/nginx/files-luci-support/luci_nginx.conf	2018-12-01 19:42:00.317698125 +0800
 @@ -2,9 +2,9 @@
  user nobody nogroup;
  worker_processes  1;
@@ -420,8 +420,8 @@
 \ No newline at end of file
 +    include vhost/*.conf;
 +}
---- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-11-11 20:40:27.829775708 +0800
-+++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-11-11 20:40:27.821775977 +0800
+--- a/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-12-01 19:42:00.349692564 +0800
++++ b/feeds/packages/net/uwsgi-cgi/files-luci-support/uwsgi.conf	2018-12-01 19:42:00.341693954 +0800
 @@ -8,7 +8,7 @@
  buffer-size	= 10000
  reload-mercy	= 8
@@ -438,8 +438,8 @@
 +ignore-sigpipe=True
 +ignore-write-errors=True
 +disable-write-exception=True
---- a/feeds/packages/net/samba4/files/samba.init	2018-11-11 20:40:27.857774765 +0800
-+++ b/feeds/packages/net/samba4/files/samba.init	2018-11-11 20:40:27.849775035 +0800
+--- a/feeds/packages/net/samba4/files/samba.init	2018-12-01 19:42:00.373688393 +0800
++++ b/feeds/packages/net/samba4/files/samba.init	2018-12-01 19:42:00.369689088 +0800
 @@ -18,11 +18,19 @@
  			echo -n "${device:-$net} "
  		done
@@ -527,8 +527,8 @@
  }
  
  service_triggers() {
---- a/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-11-11 20:40:27.885773823 +0800
-+++ b/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-11-11 20:40:27.877774092 +0800
+--- a/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-12-01 19:42:00.397684222 +0800
++++ b/feeds/packages/net/wifischedule/net/usr/bin/wifi_schedule.sh	2018-12-01 19:42:00.393684917 +0800
 @@ -305,7 +305,7 @@
  ###############################################################################
  LOGGING=$(_get_uci_value ${GLOBAL}.logging) || _exit 1
@@ -538,979 +538,8 @@
  
  case "$1" in
      cron) check_cron_status ;;
---- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-11-11 20:40:27.941771938 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-11-11 20:40:27.933772207 +0800
-@@ -17,11 +17,15 @@
- 		entry({"admin", "system", "packages", "ipkg"}, form("admin_system/ipkg"))
- 	end
- 
-+	if fs.access("/usr/sbin/shellinaboxd")then
-+		entry({"admin","system","WebShell"},template("admin_system/webshell"),_("WebShell"),11)
-+	end
-+
- 	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
- 	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
- 
- 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
--		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points"), 50)
-+		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points / SCSI Devices"), 50)
- 		entry({"admin", "system", "fstab", "mount"}, cbi("admin_system/fstab/mount"), nil).leaf = true
- 		entry({"admin", "system", "fstab", "swap"},  cbi("admin_system/fstab/swap"),  nil).leaf = true
- 	end
-@@ -31,6 +35,7 @@
- 		entry({"admin", "system", "leds"}, cbi("admin_system/leds"), _("<abbr title=\"Light Emitting Diode\">LED</abbr> Configuration"), 60)
- 	end
- 
-+	entry({"admin", "system", "Free_Memory"},call("Free_Memory"),_("Free Memory"),65)
- 	entry({"admin", "system", "flashops"}, call("action_flashops"), _("Backup / Flash Firmware"), 70)
- 	entry({"admin", "system", "flashops", "reset"}, post("action_reset"))
- 	entry({"admin", "system", "flashops", "backup"}, post("action_backup"))
-@@ -45,6 +50,11 @@
- 	entry({"admin", "system", "reboot", "call"}, post("action_reboot"))
- end
- 
-+function Free_Memory()
-+	luci.util.exec("echo 3 > /proc/sys/vm/drop_caches")
-+	luci.http.redirect(luci.dispatcher.build_url("admin","status","overview"))
-+end
-+
- function action_clock_status()
- 	local set = tonumber(luci.http.formvalue("set"))
- 	if set ~= nil and set > 0 then
---- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-11-11 20:40:27.965771130 +0800
-+++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-11-11 20:40:27.961771265 +0800
-@@ -255,6 +255,16 @@
- 	s:taboption("advanced", Flag, "noscan", translate("Force 40MHz mode"),
- 		translate("Always use 40MHz channels even if the secondary channel overlaps. Using this option does not comply with IEEE 802.11n-2009!")).optional = true
- 
-+
-+	log_level = s:taboption("advanced", ListValue, "log_level", translate("Logging Level"))
-+	log_level.default = "2"
-+	log_level.optional = true
-+	log_level:value("2", translate("Informational Message"))
-+	log_level:value("0", translate("Verbose Debugging"))
-+	log_level:value("1", translate("Debugging"))
-+	log_level:value("3", translate("Notification"))
-+	log_level:value("4", translate("Warning"))
-+
- 	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
- 	beacon_int.optional = true
- 	beacon_int.placeholder = 100
---- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-11-11 20:40:28.017769381 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-11-11 20:40:28.013769515 +0800
-@@ -39,13 +39,13 @@
- 			end
- 		%></li>
- 		<li><% if keep then %>
--			<%:Configuration files will be kept%>
-+			<%:Configuration files will be kept.%>
- 		<% else %>
--			<%:Caution: Configuration files will be erased%>
-+			<%:Caution: Configuration files will be erased.%>
- 		<% end %></li>
- 		<% if force then %>
- 		<li>
--			<%:Caution: System upgrade will be forced%>
-+			<%:Caution: System upgrade will be forced.%>
- 		</li>
- 		<% end %>
- 	</ul>
---- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-11-11 20:40:28.049768304 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-11-11 20:40:28.041768573 +0800
-@@ -33,7 +33,7 @@
- 
- block:close()
- 
--m = Map("fstab", translate("Mount Points"))
-+m = Map("fstab", translate("Mount Points / SCSI Devices"))
- s = m:section(TypedSection, "global", translate("Global Settings"))
- s.addremove = false
- s.anonymous = true
-@@ -95,7 +95,7 @@
- 
- v = m:section(Table, non_system_mounts, translate("Mounted file systems"))
- 
--fs = v:option(DummyValue, "fs", translate("Filesystem"))
-+f = v:option(DummyValue, "fs", translate("Filesystem"))
- 
- mp = v:option(DummyValue, "mountpoint", translate("Mount Point"))
- 
-@@ -196,8 +196,8 @@
- 	end
- end
- 
--fs = mount:option(DummyValue, "fstype", translate("Filesystem"))
--fs.cfgvalue = function(self, section)
-+f = mount:option(DummyValue, "fstype", translate("Filesystem"))
-+f.cfgvalue = function(self, section)
- 	local v, e
- 
- 	v = m.uci:get("fstab", section, "uuid")
-@@ -269,4 +269,33 @@
- 	end
- end
- 
-+if fs.access("/usr/bin/lsblk") and fs.access("/usr/bin/eject") then
-+
-+	local scsis = luci.sys.scsis()
-+
-+	if #scsis > 0 then
-+		v = m:section(Table, scsis, translate("SCSI Devices"))
-+
-+		n = v:option(DummyValue, "name", translate("Name"))
-+		t = v:option(DummyValue, "type", translate("Type"))
-+		vr = v:option(DummyValue, "vendor", translate("Vendor"))
-+		mo = v:option(DummyValue, "model", translate("Model"))
-+		r = v:option(DummyValue, "rev", translate("Rev"))
-+		tr = v:option(DummyValue, "tran", translate("Tran"))
-+		s = v:option(DummyValue, "size", translate("Size"))
-+
-+		eject = v:option(Button, "eject", translate("Eject"))
-+		eject.render = function(self, section, scope)
-+			self.title = translate("Eject")
-+			self.inputstyle = "remove"
-+			Button.render(self, section, scope)
-+		end
-+
-+		eject.write = function(self, section)
-+			luci.sys.call("/usr/bin/eject -p -s /dev/'%s'" % luci.util.shellstartsqescape(scsis[section].name))
-+			return luci.http.redirect(luci.dispatcher.build_url("admin/system", "fstab"))
-+		end
-+	end
-+end
-+
- return m
---- a/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-11-11 20:40:28.073767496 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-11-11 20:40:28.069767631 +0800
-@@ -6,7 +6,7 @@
- 
- <%+header%>
- 
--<form method="post" action="<%=pcdata(FULL_REQUEST_URI)%>">
-+<form method="post" action="<%=pcdata(luci.http.getenv("REQUEST_URI"))%>">
- 	<%- if fuser then %>
- 		<div class="alert-message warning">
- 			<p><%:Invalid username and/or password! Please try again.%></p>
-@@ -50,6 +50,7 @@
- local fs  = require "nixio.fs"
- local https_key = uci:get("uhttpd", "main", "key")
- local https_port = uci:get("uhttpd", "main", "listen_https")
-+local https_redirect = uci:get("uhttpd", "main", "redirect_https") or '0'	
- if type(https_port) == "table" then
- 	https_port = https_port[1]
- end
-@@ -59,7 +60,7 @@
- %>
- 
- <script type="text/javascript">//<![CDATA[
--	if (document.location.protocol != 'https:') {
-+	if (document.location.protocol != 'https:' && '<%=https_redirect%>' == '1') {
- 		var url = 'https://' + window.location.hostname + ':' + '<%=https_port%>' + window.location.pathname;
- 		var img=new Image;
- 		img.onload=function(){window.location = url};
---- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-11-11 20:40:28.101766554 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-11-11 20:40:28.093766823 +0800
-@@ -57,6 +57,24 @@
- 	page.index = true
- 	toplevel_page(page, false, false)
- 
-+        page = node("admin", "qos")
-+        page.title = _("QOS")
-+        page.order = 41
-+        page.index = true
-+        toplevel_page(page, false, false)
-+        
-+        page = node("admin", "vpn")
-+        page.title = _("VPN")
-+        page.order = 42
-+        page.index = true
-+        toplevel_page(page, false, false)
-+        
-+        page = node("admin", "control")
-+        page.title = _("Control")
-+        page.order = 43
-+        page.index = true
-+        toplevel_page(page, false, false)
-+
- 	-- Even for mod-admin-full network just uses first submenu item as landing
- 	page = node("admin", "network")
- 	page.title = _("Network")
---- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.129765612 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-11-11 20:40:28.121765881 +0800
-@@ -122,7 +122,7 @@
- 	}
- 
- 	function uci_apply(checked) {
--		uci_status_message('notice spinning', '<p><%:Starting configuration apply…%></p>');
-+		uci_status_message('notice spinning', '<p><%:Starting configuration apply...%></p>');
- 
- 		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r, tok) {
- 			if (r.status === (checked ? 200 : 204)) {
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-11-11 20:40:28.157764670 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-11-11 20:40:28.153764805 +0800
-@@ -131,15 +131,21 @@
- 				}
- 
- 				label_scale.innerHTML = String.format('<%:(%d minute window, %d second interval)%>', data_wanted / 60, 3);
-+				
-+				var recheck_lookup_queue = {};
- 
- 				/* render datasets, start update interval */
- 				XHR.poll(3, '<%=build_url("admin/status/realtime/connections_status")%>', null,
- 					function(x, json)
- 					{
--						var rows = [];
-+
-+						if (!json.connections)
-+							return;
-+
- 						var conn = json.connections;
- 
- 						var lookup_queue = [ ];
-+						var rows = [];
- 
- 						conn.sort(function(a, b) {
- 							return b.bytes - a.bytes;
-@@ -153,10 +159,10 @@
- 							    (c.src == '::1'       && c.dst == '::1'))
- 								continue;
- 
--							if (!dns_cache[c.src])
-+							if (!dns_cache[c.src] && lookup_queue.indexOf(c.src) == -1)
- 								lookup_queue.push(c.src);
- 
--							if (!dns_cache[c.dst])
-+							if (!dns_cache[c.dst] && lookup_queue.indexOf(c.dst) == -1)
- 								lookup_queue.push(c.dst);
- 
- 							var src = dns_cache[c.src] || (c.layer3 == 'ipv6' ? '[' + c.src + ']' : c.src);
-@@ -165,22 +171,49 @@
- 							rows.push([
- 								c.layer3.toUpperCase(),
- 								c.layer4.toUpperCase(),
--								src + ':' + c.sport,
--								dst + ':' + c.dport,
-+								c.ptype,
-+								[ src, c.sport ? ':' + c.sport : '' ],
-+								[ dst, c.dport ? ':' + c.dport : '' ],
- 								'%1024.2mB (%d <%:Pkts.%>)'.format(c.bytes, c.packets)
- 							]);
- 						}
- 
- 						cbi_update_table(conn_table, rows, '<em><%:No information available%></em>');
- 
--						if (lookup_queue.length > 0)
--							XHR.get('<%=build_url("admin/status/nameinfo")%>/' + lookup_queue.slice(0, 100).join('/'), null,
--								function(x, json)
--								{
--									for (var addr in json)
--										dns_cache[addr] = json[addr];
-+						if (lookup_queue.length > 0) {
-+						  var reduced_lookup_queue = lookup_queue;
-+						
-+						  if (lookup_queue.length > 100)
-+						  	reduced_lookup_queue = lookup_queue.slice(0, 100);							
-+
-+						  XHR.get('<%=build_url("admin/status/nameinfo")%>/' + reduced_lookup_queue.join('/'), null,
-+						  	function(x, json)
-+						  	{
-+							  if (!json)
-+								return;
-+							
-+							  for (var index in reduced_lookup_queue) {
-+								var address = reduced_lookup_queue[index];
-+								
-+								if (!address)
-+								  continue;
-+								
-+						  	    if (json[address]) {
-+						  	      dns_cache[address] = json[address];
-+						  	      lookup_queue.splice(reduced_lookup_queue.indexOf(address),1);
-+								  continue;
- 								}
--							);
-+
-+						  	    if(recheck_lookup_queue[address] > 2) {
-+						  	      dns_cache[address] = (address.match(/:/)) ? '[' + address + ']' : address;
-+						  	      lookup_queue.splice(index,1);
-+						  	    } else {
-+						  	      recheck_lookup_queue[address] != null ? recheck_lookup_queue[address]++ : recheck_lookup_queue[address] = 0;
-+								}
-+						  	  }
-+						  	}
-+						  );
-+						}
- 
- 
- 						var data = json.statistics;
-@@ -359,6 +392,7 @@
- 			<div class="tr table-titles">
- 				<div class="th col-2 hide-xs"><%:Network%></div>
- 				<div class="th col-2"><%:Protocol%></div>
-+				<div class="th col-2"><%:Type%></div>
- 				<div class="th col-7"><%:Source%></div>
- 				<div class="th col-7"><%:Destination%></div>
- 				<div class="th col-4"><%:Transfer%></div>
-@@ -373,4 +407,4 @@
- 	</div>
- </fieldset>
- 
--<%+footer%>
-+<%+footer%>
-\ No newline at end of file
---- a/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-11-11 20:40:28.209762921 +0800
-+++ b/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-11-11 20:40:28.201763190 +0800
-@@ -70,6 +70,29 @@
- 	return data
- end
- 
-+function scsis()
-+	local data = {}
-+	local ps = luci.util.execi("lsblk -d -n -P -S -o NAME,TYPE,VENDOR,MODEL,REV,TRAN,SIZE")
-+ 	if not ps then
-+		return
-+	end
-+ 	for line in ps do
-+		local n, t, v, m, r, tr, s = line:match('^NAME="([^"]+)"%s+TYPE="([^"]+)"%s+VENDOR="([^"]+)"%s+MODEL="([^"]+)"%s+REV="([^"]+)"%s+TRAN="([^"]+)"%s+SIZE="([^"]+)"')
-+		if n and s then
-+			local row = {}
-+			row.name = n
-+			row.type = t
-+			row.vendor = v
-+			row.model = m
-+			row.rev = r
-+			row.tran = tr
-+			row.size = s
-+			table.insert(data, row)
-+		end
-+	end
-+ 	return data
-+end
-+
- function mtds()
- 	local data = {}
- 
-@@ -358,6 +381,32 @@
- 					if entry[key] == nil then
- 						entry[key] = val
- 					end
-+					if entry["ptype"] == nil then
-+						val = tonumber(val)
-+						if key == "sport" then
-+							if (val == 443) then
-+								entry["ptype"] = "Https / SSL"
-+							elseif val == 80 then
-+								entry["ptype"] = "Http"
-+							elseif val == 53 then
-+								entry["ptype"] = "Dns"
-+							elseif val == 22 then
-+								entry["ptype"] = "SSH"
-+							elseif val == 1900 then
-+								entry["ptype"] = "UPnP"
-+							elseif val == 123 then
-+								entry["ptype"] = "NTP"
-+							elseif val == 137 then
-+								entry["ptype"] = "NetBIOS"
-+							elseif val == 139 or val == 445 then
-+								entry["ptype"] = "Samba"	
-+							elseif val == 993 then
-+								entry["ptype"] = "IMAP-SSL"
-+							end
-+						elseif (val >= 6902) and (val <= 6968) then
-+								entry["ptype"] = "Torrent"
-+						end
-+					end
- 				elseif val then
- 					entry[key] = val
- 				end
---- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.237761978 +0800
-+++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-11-11 20:40:28.229762247 +0800
-@@ -4576,7 +4576,7 @@
- msgstr "启动优先级"
- 
- #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:125
--msgid "Starting configuration apply…"
-+msgid "Starting configuration apply..."
- msgstr "开始应用配置…"
- 
- #: modules/luci-mod-network/luasrc/view/admin_network/wifi_join.htm:128
---- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-11-11 20:40:28.269760901 +0800
-+++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-11-11 20:40:28.261761170 +0800
-@@ -1,6 +1,6 @@
- config core main
--	option lang auto
--	option mediaurlbase /luci-static/bootstrap
-+	option lang zh_cn
-+	option mediaurlbase /luci-static/atmaterial
- 	option resourcebase /luci-static/resources
- 	
- config extern flash_keep
-@@ -22,6 +22,10 @@
- 	option enable 1
- 		
- config internal themes
-+	option Bootstrap '/luci-static/bootstrap'
-+	option Material '/luci-static/material'
-+	option ADVancedtomato '/luci-static/advancedtomato'
-+	option ATMaterial '/luci-static/atmaterial'
- 
- config internal apply
- 	option rollback 30
---- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-11-11 20:40:28.301759825 +0800
-+++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-11-11 20:40:28.297759959 +0800
-@@ -129,6 +129,8 @@
- demand.placeholder = "0"
- demand.datatype    = "uinteger"
- 
-+local u=net:get_interface()
-+luci.tools.proto.opt_macaddr(section,u,translate("Override MAC address"))
- 
- mtu = section:taboption("advanced", Value, "mtu", translate("Override MTU"))
- mtu.placeholder = "1500"
---- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-11-11 20:40:28.333758748 +0800
-+++ b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-11-11 20:40:28.329758883 +0800
-@@ -71,7 +71,7 @@
- 			local iface = luci.http.formvalue("cbid.wol.1.iface")
- 			local broadcast = luci.http.formvalue("cbid.wol.1.broadcast")
- 			cmd = "%s -D%s %s %q 2>&1" %{
--				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or ""),
-+				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or " -i br-lan"),
- 				(broadcast == "1" and " -b" or ""), mac
- 			}
- 		else
---- a/feeds/luci/applications/luci-app-minidlna/Makefile	2018-11-11 20:40:28.369757537 +0800
-+++ b/feeds/luci/applications/luci-app-minidlna/Makefile	2018-11-11 20:40:28.365757671 +0800
-@@ -7,7 +7,7 @@
- include $(TOPDIR)/rules.mk
- 
- LUCI_TITLE:=LuCI Support for miniDLNA
--LUCI_DEPENDS:=+minidlna
-+LUCI_DEPENDS:=+minidlna-dsd
- 
- include ../../luci.mk
- 
---- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-11-11 20:40:28.405756325 +0800
-+++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-11-11 20:40:28.401756460 +0800
-@@ -23,7 +23,7 @@
- s2.addremove = false
- 
- freq = s2:option(Value, "freq", translate("Offset frequency"))
--freq.datatype = "integer"
-+freq.datatype = "uinteger"
- freq.rmempty = true
- 
- s3 = m:section(TypedSection, "ntpserver", translate("Time Servers"))
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-11-11 20:40:28.441755114 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-11-11 20:40:28.433755384 +0800
-@@ -4,16 +4,16 @@
- module("luci.controller.nlbw", package.seeall)
- 
- function index()
--	entry({"admin", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
--	entry({"admin", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
--	entry({"admin", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
--	entry({"admin", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
--	entry({"admin", "nlbw", "data"}, call("action_data"), nil, 4)
--	entry({"admin", "nlbw", "list"}, call("action_list"), nil, 5)
--	entry({"admin", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
--	entry({"admin", "nlbw", "download"}, call("action_download"), nil, 7)
--	entry({"admin", "nlbw", "restore"}, post("action_restore"), nil, 8)
--	entry({"admin", "nlbw", "commit"}, call("action_commit"), nil, 9)
-+	entry({"admin", "status", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
-+	entry({"admin", "status", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
-+	entry({"admin", "status", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
-+	entry({"admin", "status", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
-+	entry({"admin", "status", "nlbw", "data"}, call("action_data"), nil, 4)
-+	entry({"admin", "status", "nlbw", "list"}, call("action_list"), nil, 5)
-+	entry({"admin", "status", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
-+	entry({"admin", "status", "nlbw", "download"}, call("action_download"), nil, 7)
-+	entry({"admin", "status", "nlbw", "restore"}, post("action_restore"), nil, 8)
-+	entry({"admin", "status", "nlbw", "commit"}, call("action_commit"), nil, 9)
- end
- 
- local function exec(cmd, args, writer)
-@@ -222,6 +222,6 @@
- 	local http = require "luci.http"
- 	local disp = require "luci.dispatcher"
- 
--	http.redirect(disp.build_url("admin/nlbw/display"))
-+	http.redirect(disp.build_url("admin/status/nlbw/display"))
- 	exec("/usr/sbin/nlbw", { "-c", "commit" })
- end
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-11-11 20:40:28.477753903 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-11-11 20:40:28.469754172 +0800
-@@ -12,6 +12,11 @@
- m = Map("nlbwmon", translate("Netlink Bandwidth Monitor - Configuration"),
- 	translate("The Netlink Bandwidth Monitor (nlbwmon) is a lightweight, efficient traffic accounting program keeping track of bandwidth usage per host and protocol."))
- 
-+m.apply_on_parse=true
-+function m.on_apply(self)
-+luci.sys.call("/etc/init.d/nlbwmon restart> /dev/null 2>&1")
-+end
-+
- nw.init(luci.model.uci.cursor_state())
- 
- s = m:section(TypedSection, "nlbwmon")
-@@ -22,6 +27,9 @@
- s:tab("protocol", translate("Protocol Mapping"),
- 	translate("Protocol mappings to distinguish traffic types per host, one mapping per line. The first value specifies the IP protocol, the second value the port number and the third column is the name of the mapped protocol."))
- 
-+enable=s:taboption("general",Flag,"enable",translate("启用"))
-+enable.default=0
-+enable.rmempty=false
- period = s:taboption("general", ListValue, "_period", translate("Accounting period"),
- 	translate("Choose \"Day of month\" to restart the accounting period monthly on a specific date, e.g. every 3rd. Choose \"Fixed interval\" to restart the accounting period exactly every N days, beginning at a given date."))
- 
-@@ -49,7 +57,7 @@
- 
- 
- warning = s:taboption("general", DummyValue, "_warning", translate("Warning"))
--warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/nlbw/backup"))
-+warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/status/nlbw/backup"))
- warning.rawhtml = true
- 
- if (m.uci:get_first("nlbwmon", "nlbwmon", "database_interval") or ""):match("^%d%d%d%d-%d%d-%d%d/%d+$") then
-@@ -127,7 +135,7 @@
- 	for item in utl.imatch(ifaces:formvalue(cfg)) do
- 		items[#items+1] = item
- 	end
--	m:set(cfg, "local_network", items)
-+	--m:set(cfg, "local_network", items)
- end
- 
- 
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-11-11 20:40:28.509752827 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-11-11 20:40:28.505752961 +0800
-@@ -11,7 +11,7 @@
- <fieldset class="cbi-section">
- 	<legend><%:Restore Database Backup%></legend>
- 	<p>
--		<form method="POST" action="<%=url("admin/nlbw/restore")%>" enctype="multipart/form-data">
-+		<form method="POST" action="<%=url("admin/status/nlbw/restore")%>" enctype="multipart/form-data">
- 			<input type="hidden" name="token" value="<%=token%>" />
- 			<input type="file" name="archive" accept="application/gzip,.gz" />
- 			<input type="submit" value="<%:Restore%>" class="cbi-button cbi-button-apply" />
-@@ -24,7 +24,7 @@
- 
- 	<legend><%:Download Database Backup%></legend>
- 	<p>
--		<form method="GET" action="<%=url("admin/nlbw/download")%>">
-+		<form method="GET" action="<%=url("admin/status/nlbw/download")%>">
- 			<input type="submit" value="<%:Generate Backup%>" class="cbi-button cbi-button-link" />
- 		</form>
- 	</p>
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-11-11 20:40:28.545751615 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-11-11 20:40:28.541751749 +0800
-@@ -394,7 +394,7 @@
- 
- function fetchData(period)
- {
--	XHR.get('<%=url("admin/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
-+	XHR.get('<%=url("admin/status/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
- 		if (res !== null && typeof(res) === 'object' && typeof(res.columns) === 'object' && typeof(res.data) === 'object')
- 			trafficData = res;
- 
-@@ -409,7 +409,7 @@
- 		renderLayer7Data();
- 		renderIPv6Data();
- 
--		XHR.get('<%=url("admin/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
-+		XHR.get('<%=url("admin/status/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
- 			if (res !== null && typeof(res) === 'object')
- 				hostNames = res;
- 		});
-@@ -633,7 +633,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 6);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	pie('traf-pie', trafData);
-@@ -693,7 +693,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 6);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	pie('layer7-rx-pie', rxData);
-@@ -811,7 +811,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 7);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	var shareData = [], hostsData = [];
-@@ -1012,10 +1012,10 @@
- 
- <div class="cbi-section" id="container.nlbw.export" style="display:none">
- 	<ul>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
- 	</ul>
- </div>
- 
-@@ -1025,7 +1025,7 @@
- 	cbi_t_add('nlbw', 'ipv6');
- 	cbi_t_add('nlbw', 'export');
- 
--	XHR.get('<%=url("admin/nlbw/list")%>', null, function(xhr, res) {
-+	XHR.get('<%=url("admin/status/nlbw/list")%>', null, function(xhr, res) {
- 
- 		if (res !== null && typeof(res) === 'object' && res.length > 0) {
- 			trafficPeriods = res;
---- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-11-11 20:40:28.581750404 +0800
-+++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-11-11 20:40:28.577750539 +0800
-@@ -37,7 +37,8 @@
- 
- -- BEGIN Map
- m = Map("wifi_schedule", translate("Wifi Schedule"), translate("Defines a schedule when to turn on and off wifi."))
--function m.on_commit(self)
-+m.apply_on_parse=true
-+function m.on_apply(self)
-     sys.exec("/usr/bin/wifi_schedule.sh cron")
- end
- -- END Map
---- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-11-11 20:40:28.613749327 +0800
-+++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-11-11 20:40:28.609749461 +0800
-@@ -75,6 +75,9 @@
- au = s:option(Value, "users", translate("Allowed users"))
- au.rmempty = true
- 
-+sp = s:option(Value, "sharepasswd", translate("Share Password"))
-+sp.rmempty = true
-+
- go = s:option(Flag, "guest_ok", translate("Allow guests"))
- go.enabled = "yes"
- go.disabled = "no"
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-29 21:58:26.903693400 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-10-13 12:11:39.905831500 +0800
-@@ -125,7 +125,7 @@
- 		if not dump then
- 			dump = require("luci.util").ubus("network.interface.%s" % interface, "status", {})
- 		end
--
-+		
- 		if dump and dump.route then
- 			local _, route
- 			for _, route in ipairs(dump.route) do
-@@ -160,7 +160,7 @@
- 			end
- 		elseif task == "ping_trackips" then
- 			local trackips = uci:get("mwan3", interface, "track_ip")
--			if #trackips > 0 then
-+			if trackips and #trackips > 0 then
- 				for i in pairs(trackips) do
- 					diag_command("ping -I %s -c 5 -W 1 %s 2>&1", device, trackips[i])
- 				end
-@@ -193,11 +193,11 @@
- 			local number = getInterfaceNumber(interface)
- 			local routeTable = sys.exec(string.format("ip route list table %s", number))
- 			if routeTable ~= "" then
--				luci.http.write(i18n.translatef("Routing table %s for interface %s found", number, interface))
-+				luci.http.write(i18n.translatef("Routing table %s for interface %s found", interface, number))
- 				luci.http.write("\n")
- 				luci.http.write(routeTable)
- 			else
--				luci.http.write(i18n.translatef("Routing table %s for interface %s not found", number, interface))
-+				luci.http.write(i18n.translatef("Routing table %s for interface %s not found", interface, number))
- 			end
- 		elseif task == "hotplug_ifup" then
- 			os.execute(string.format("/usr/sbin/mwan3 ifup %s", ut.shellquote(interface)))
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-10-29 21:58:26.906690300 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-11-11 21:14:17.206738300 +0800
-@@ -8,38 +8,39 @@
- 
- function interfaceWarnings(overview, count, iface_max)
- 	local warnings = ""
-+	local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
- 	if count <= iface_max then
--		warnings = string.format("<strong>%s</strong><br />",
-+		warnings = string.format("<strong>%s</strong></br>",
- 			translatef("There are currently %d of %d supported interfaces configured", count, iface_max)
- 			)
- 	else
--		warnings = string.format("<strong>%s</strong><br />",
-+		warnings = string.format(s_format,
- 			translatef("WARNING: %d interfaces are configured exceeding the maximum of %d!", count, iface_max)
- 			)
- 	end
- 
- 	for i, k in pairs(overview) do
- 		if overview[i]["network"] == false then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			warnings = warnings .. string.format(s_format,
- 					translatef("WARNING: Interface %s are not found in /etc/config/network", i)
- 					)
- 		end
- 
- 		if overview[i]["default_route"] == false then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			warnings = warnings .. string.format(s_format,
- 				translatef("WARNING: Interface %s has no default route in the main routing table", i)
- 				)
- 		end
- 
- 		if overview[i]["reliability"] == false then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			warnings = warnings .. string.format(s_format,
- 				translatef("WARNING: Interface %s has a higher reliability " ..
- 				"requirement than tracking hosts (%d)", i, overview[i]["tracking"])
- 				)
- 		end
- 
- 		if overview[i]["duplicate_metric"] == true then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			warnings = warnings .. string.format(s_format,
- 				translatef("WARNING: Interface %s has a duplicate metric %s configured", i, overview[i]["metric"])
- 				)
- 		end
-@@ -104,7 +105,7 @@
- 			end
- 		end
- 	)
--
-+	
- 	-- calculate iface_max usage from firewall mmx_mask
- 	function bit(p)
- 		return 2 ^ (p - 1)
-@@ -140,7 +141,7 @@
- mwan_interface = m5:section(TypedSection, "interface", nil,
- 	translate("MWAN supports up to 252 physical and/or logical interfaces<br />" ..
- 	"MWAN requires that all interfaces have a unique metric configured in /etc/config/network<br />" ..
--	"Names must match the interface name found in /etc/config/network<br />" ..
-+	"Names must match the interface name found in /etc/config/network (see advanced tab)<br />" ..
- 	"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />" ..
- 	"Interfaces may not share the same name as configured members, policies or rules"))
- mwan_interface.addremove = true
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-10-29 21:58:26.911685200 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-11-11 21:15:58.525393900 +0800
-@@ -25,7 +25,8 @@
- 	local warnings = ""
- 	for i, k in pairs(policy_error) do
- 		if policy_error[i] == true then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
-+			warnings = warnings .. string.format(s_format,
- 				translatef("WARNING: Policy %s has exceeding the maximum name of 15 characters", i)
- 				)
- 		end
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-10-29 21:58:26.913683200 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-11-11 21:16:45.800012100 +0800
-@@ -29,7 +29,8 @@
- 	local warnings = ""
- 	for i, k in pairs(rule_error) do
- 		if rule_error[i] == true then
--			warnings = warnings .. string.format("<strong>%s</strong><br />",
-+			local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
-+			warnings = warnings .. string.format(s_format,
- 				translatef("WARNING: Rule %s have a port configured with no or improper protocol specified!", i)
- 				)
- 		end
-@@ -65,6 +66,9 @@
- 	luci.http.redirect(dsp.build_url("admin", "network", "mwan", "rule", section))
- end
- 
-+enable = mwan_rule:option(Flag,"enable",translate("enable"))
-+	enable.rmempty = false
-+
- src_ip = mwan_rule:option(DummyValue, "src_ip", translate("Source address"))
- src_ip.rawhtml = true
- function src_ip.cfgvalue(self, s)
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-10-29 21:58:26.914682200 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-11-11 21:16:55.988580300 +0800
-@@ -13,6 +13,9 @@
- mwan_rule.addremove = false
- mwan_rule.dynamic = false
- 
-+enable = mwan_rule:option(Flag,"enable",translate("enable"))
-+	enable.rmempty = false
-+
- src_ip = mwan_rule:option(Value, "src_ip", translate("Source address"),
- 	translate("Supports CIDR notation (eg \"192.168.100.0/24\") without quotes"))
- src_ip.datatype = ipaddr
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-10-29 21:58:26.917679100 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/admin_status/index/mwan.htm	2018-05-14 20:57:01.000000000 +0800
-@@ -1,3 +1,3 @@
--<%if require("luci.sys").init.enabled("mwan3") then%>
--<%+mwan/overview_status_interface%>
--<%end%>
-+<%if require("luci.sys").init.enabled("mwan3") then%>
-+<%+mwan/overview_status_interface%>
-+<%end%>
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-10-29 21:58:26.918678100 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-11-11 21:17:51.673224800 +0800
-@@ -15,7 +15,7 @@
- 				for ( var iface in status.interfaces)
- 				{
- 					var state = '';
--					var css = ''
-+					var css = '';
- 					switch (status.interfaces[iface].status)
- 					{
- 						case 'online':
-@@ -36,11 +36,11 @@
- 						css
- 					);
- 					statusview += String.format(
--						'<div><strong>Interface: </strong>%s</div>',
-+						'<div><strong><%:Interface%>: </strong>%s</div>',
- 						iface
- 					);
- 					statusview += String.format(
--						'<div><strong>Status: </strong>%s</div>',
-+						'<div><strong><%:Status%>: </strong>%s</div>',
- 						state
- 					);
- 					statusview += '</div>'
-@@ -64,10 +64,19 @@
- 		float: left;
- 		line-height: 125%;
- 	}
-+	.success {
-+		background-color: rgb(144, 240, 144);
-+	}
-+	.danger {
-+		background-color: rgb(240, 144, 144);
-+	}
-+	.warning {
-+		background-color: rgb(255, 229, 153);
-+	}
- </style>
- 
- <fieldset id="interface_field" class="cbi-section">
--	<legend><%:MWAN Interfaces%></legend>
-+	<legend><%:MWAN Interfaces - Live Status%></legend>
- 	<div id="mwan_status_text">
- 		<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" />
- 		<%:Collecting data...%>
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-10-29 21:58:26.919677100 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-11-11 21:17:55.166648400 +0800
-@@ -13,6 +13,7 @@
- 	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
- </ul>
- 
-+<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
- <script type="text/javascript">//<![CDATA[
- 	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "detailed_status")%>', null,
- 		function(x)
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-10-29 21:58:26.920676000 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-11-11 21:17:58.161582200 +0800
-@@ -25,6 +25,7 @@
- 	)
- %>
- 
-+<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
- <script type="text/javascript">//<![CDATA[
- 	var stxhr = new XHR();
- 
-@@ -59,14 +60,14 @@
- 			<br />
- 
- 			<div style="width:30%; float:left">
--				<label class="cbi-value-title"><%:Interface%></label>
-+				<label class="cbi-value-title" style="width:auto"><%:Interface%></label>
- 				<select name="iface" style="width:auto">
- 					<% for _, z in ipairs(iface) do -%><option value="<%=z%>"><%=z%></option><%- end %>
- 				</select>
- 			</div>
- 
- 			<div style="width:30%; float:left">
--				<label class="cbi-value-title"><%:Task%></label>
-+				<label class="cbi-value-title" style="width:auto"><%:Task%></label>
- 				<select name="task" style="width:auto">
- 					<option value="ping_gateway"><%:Ping default gateway%></option>
- 					<option value="ping_trackips"><%:Ping tracking IP%></option>
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-10-29 21:58:26.921675000 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-11-11 21:18:00.873805500 +0800
-@@ -13,6 +13,7 @@
- 	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
- </ul>
- 
-+<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
- 
- <div class="cbi-map">
- 	<%+mwan/overview_status_interface%>
-diff -urN a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm
---- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-10-29 21:58:26.922674000 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-11-11 21:18:03.953652900 +0800
-@@ -13,6 +13,7 @@
- 	<li class="cbi-tab"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
- </ul>
- 
-+<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
- <script type="text/javascript">//<![CDATA[
- 	XHR.poll(15, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "troubleshooting_display")%>', null,
- 		function(x)
-diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po
---- a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:07:56.023463900 +0800
-+++ b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-11-11 21:06:13.636463900 +0800
-@@ -316,6 +316,9 @@
- msgstr "MWAN 规则配置 - %s"
- 
- #: applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm:27
-+msgid "MWAN Interfaces - Live Status"
-+msgstr "MWAN 状态 - 接口实时状态"
-+
- msgid "MWAN Status - Detail"
- msgstr "MWAN 状态 - 详细"
- 
-@@ -329,12 +332,11 @@
- 
- #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua:141
- msgid ""
--"MWAN supports up to 252 physical and/or logical interfaces<br />MWAN "
--"requires that all interfaces have a unique metric configured in /etc/config/"
--"network<br />Names must match the interface name found in /etc/config/"
--"network<br />Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br /"
--">Interfaces may not share the same name as configured members, policies or "
--"rules"
-+"MWAN supports up to 252 physical and/or logical interfaces<br />"
-+"MWAN requires that all interfaces have a unique metric configured in /etc/config/network<br />"
-+"Names must match the interface name found in /etc/config/network (see advanced tab)<br />"
-+"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />"
-+"Interfaces may not share the same name as configured members, policies or rules"
- msgstr ""
- "MWAN 支持最多 252 个物理或逻辑接口。<br />MWAN 要求所有接口必须在 /etc/"
- "config/network 中设定唯一的网关跃点。<br />名称必须与 /etc/config/network 中"
-@@ -524,11 +526,11 @@
- 
- #: applications/luci-app-mwan3/luasrc/controller/mwan3.lua:196
- msgid "Routing table %s for interface %s found"
--msgstr "找到路由表 %s，为接口 %s"
-+msgstr "找到接口 %s 所在路由表 %s 的信息"
- 
- #: applications/luci-app-mwan3/luasrc/controller/mwan3.lua:200
- msgid "Routing table %s for interface %s not found"
--msgstr "没有找到路由表 %s，为接口 %s"
-+msgstr "未找到接口 %s 所在路由表 %s 的信息"
- 
- #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua:58
- msgid "Rule"
- diff -urN a/feeds/packages/net/mwan3/files/etc/config/mwan3 b/feeds/packages/net/mwan3/files/etc/config/mwan3
---- a/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-10-28 11:35:13.346232900 +0800
-+++ b/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-09-01 21:22:05.000000000 +0800
+--- a/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-12-01 19:42:00.505665454 +0800
++++ b/feeds/packages/net/mwan3/files/etc/config/mwan3	2018-12-01 19:42:00.497666845 +0800
 @@ -5,10 +5,12 @@
  
  config interface 'wan'
@@ -1649,9 +678,8 @@ diff -urN a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po b/feeds/luc
 +	option enable '1'
 +	option sticky '0'
 +	option proto 'all'
-diff -urN a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh
---- a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-10-28 11:35:13.357222600 +0800
-+++ b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-11-11 21:43:45.362508000 +0800
+--- a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-12-01 19:42:00.533660589 +0800
++++ b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-12-01 19:42:00.525661979 +0800
 @@ -860,6 +860,7 @@
  
  	rule="$1"
@@ -1714,9 +742,8 @@ diff -urN a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh b/feeds/packages/n
  					-p $proto \
  					-s $src_ip \
  					-d $dest_ip $ipset \
-diff -urN a/feeds/packages/net/mwan3/files/usr/sbin/mwan3 b/feeds/packages/net/mwan3/files/usr/sbin/mwan3
---- a/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-10-28 11:35:13.360218600 +0800
-+++ b/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-11-11 21:45:09.111548600 +0800
+--- a/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-12-01 19:42:00.557656418 +0800
++++ b/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-12-01 19:42:00.553657113 +0800
 @@ -52,7 +52,7 @@
  		echo "Please execute \"/etc/init.d/mwan3 start\" first."
  		exit 1
@@ -1777,7 +804,7 @@ diff -urN a/feeds/packages/net/mwan3/files/usr/sbin/mwan3 b/feeds/packages/net/m
  	config_foreach ifup interface
  }
  
-@@ -212,11 +212,11 @@
+@@ -211,11 +211,11 @@
  
  	mwan3_lock_clean
  	rm -rf $MWAN3_STATUS_DIR $MWAN3TRACK_STATUS_DIR
@@ -1792,9 +819,957 @@ diff -urN a/feeds/packages/net/mwan3/files/usr/sbin/mwan3 b/feeds/packages/net/m
  	}
  
  	uci_toggle_state mwan3 globals enabled "0"
-diff -urN a/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua b/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua
---- a/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-11-11 20:54:24.823683900 +0800
-+++ b/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-11-11 22:18:11.205760300 +0800
+--- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-12-01 19:42:00.589650857 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-12-01 19:42:00.585651552 +0800
+@@ -20,11 +20,15 @@
+ 		entry({"admin", "system", "admin", "sshkeys", "json"}, post_on({ keys = true }, "action_sshkeys"))
+ 	end
+ 
++	if fs.access("/usr/sbin/shellinaboxd")then
++		entry({"admin","system","WebShell"},template("admin_system/webshell"),_("WebShell"),11)
++	end
++
+ 	entry({"admin", "system", "startup"}, form("admin_system/startup"), _("Startup"), 45)
+ 	entry({"admin", "system", "crontab"}, form("admin_system/crontab"), _("Scheduled Tasks"), 46)
+ 
+ 	if fs.access("/sbin/block") and fs.access("/etc/config/fstab") then
+-		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points"), 50)
++		entry({"admin", "system", "fstab"}, cbi("admin_system/fstab"), _("Mount Points / SCSI Devices"), 50)
+ 		entry({"admin", "system", "fstab", "mount"}, cbi("admin_system/fstab/mount"), nil).leaf = true
+ 		entry({"admin", "system", "fstab", "swap"},  cbi("admin_system/fstab/swap"),  nil).leaf = true
+ 	end
+@@ -34,6 +38,7 @@
+ 		entry({"admin", "system", "leds"}, cbi("admin_system/leds"), _("<abbr title=\"Light Emitting Diode\">LED</abbr> Configuration"), 60)
+ 	end
+ 
++	entry({"admin", "system", "Free_Memory"},call("Free_Memory"),_("Free Memory"),65)
+ 	entry({"admin", "system", "flashops"}, call("action_flashops"), _("Backup / Flash Firmware"), 70)
+ 	entry({"admin", "system", "flashops", "reset"}, post("action_reset"))
+ 	entry({"admin", "system", "flashops", "backup"}, post("action_backup"))
+@@ -48,6 +53,11 @@
+ 	entry({"admin", "system", "reboot", "call"}, post("action_reboot"))
+ end
+ 
++function Free_Memory()
++	luci.util.exec("echo 3 > /proc/sys/vm/drop_caches")
++	luci.http.redirect(luci.dispatcher.build_url("admin","status","overview"))
++end
++
+ function action_clock_status()
+ 	local set = tonumber(luci.http.formvalue("set"))
+ 	if set ~= nil and set > 0 then
+--- a/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-12-01 19:42:00.617645991 +0800
++++ b/feeds/luci/modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua	2018-12-01 19:42:00.609647381 +0800
+@@ -255,6 +255,16 @@
+ 	s:taboption("advanced", Flag, "noscan", translate("Force 40MHz mode"),
+ 		translate("Always use 40MHz channels even if the secondary channel overlaps. Using this option does not comply with IEEE 802.11n-2009!")).optional = true
+ 
++
++	log_level = s:taboption("advanced", ListValue, "log_level", translate("Logging Level"))
++	log_level.default = "2"
++	log_level.optional = true
++	log_level:value("2", translate("Informational Message"))
++	log_level:value("0", translate("Verbose Debugging"))
++	log_level:value("1", translate("Debugging"))
++	log_level:value("3", translate("Notification"))
++	log_level:value("4", translate("Warning"))
++
+ 	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
+ 	beacon_int.optional = true
+ 	beacon_int.placeholder = 100
+--- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-12-01 19:42:00.669636955 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2018-12-01 19:42:00.665637650 +0800
+@@ -39,13 +39,13 @@
+ 			end
+ 		%></li>
+ 		<li><% if keep then %>
+-			<%:Configuration files will be kept%>
++			<%:Configuration files will be kept.%>
+ 		<% else %>
+-			<%:Caution: Configuration files will be erased%>
++			<%:Caution: Configuration files will be erased.%>
+ 		<% end %></li>
+ 		<% if force then %>
+ 		<li>
+-			<%:Caution: System upgrade will be forced%>
++			<%:Caution: System upgrade will be forced.%>
+ 		</li>
+ 		<% end %>
+ 	</ul>
+--- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-12-01 19:42:00.697632089 +0800
++++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2018-12-01 19:42:00.693632784 +0800
+@@ -33,7 +33,7 @@
+ 
+ block:close()
+ 
+-m = Map("fstab", translate("Mount Points"))
++m = Map("fstab", translate("Mount Points / SCSI Devices"))
+ s = m:section(TypedSection, "global", translate("Global Settings"))
+ s.addremove = false
+ s.anonymous = true
+@@ -95,7 +95,7 @@
+ 
+ v = m:section(Table, non_system_mounts, translate("Mounted file systems"))
+ 
+-fs = v:option(DummyValue, "fs", translate("Filesystem"))
++f = v:option(DummyValue, "fs", translate("Filesystem"))
+ 
+ mp = v:option(DummyValue, "mountpoint", translate("Mount Point"))
+ 
+@@ -196,8 +196,8 @@
+ 	end
+ end
+ 
+-fs = mount:option(DummyValue, "fstype", translate("Filesystem"))
+-fs.cfgvalue = function(self, section)
++f = mount:option(DummyValue, "fstype", translate("Filesystem"))
++f.cfgvalue = function(self, section)
+ 	local v, e
+ 
+ 	v = m.uci:get("fstab", section, "uuid")
+@@ -269,4 +269,33 @@
+ 	end
+ end
+ 
++if fs.access("/usr/bin/lsblk") and fs.access("/usr/bin/eject") then
++
++	local scsis = luci.sys.scsis()
++
++	if #scsis > 0 then
++		v = m:section(Table, scsis, translate("SCSI Devices"))
++
++		n = v:option(DummyValue, "name", translate("Name"))
++		t = v:option(DummyValue, "type", translate("Type"))
++		vr = v:option(DummyValue, "vendor", translate("Vendor"))
++		mo = v:option(DummyValue, "model", translate("Model"))
++		r = v:option(DummyValue, "rev", translate("Rev"))
++		tr = v:option(DummyValue, "tran", translate("Tran"))
++		s = v:option(DummyValue, "size", translate("Size"))
++
++		eject = v:option(Button, "eject", translate("Eject"))
++		eject.render = function(self, section, scope)
++			self.title = translate("Eject")
++			self.inputstyle = "remove"
++			Button.render(self, section, scope)
++		end
++
++		eject.write = function(self, section)
++			luci.sys.call("/usr/bin/eject -p -s /dev/'%s'" % luci.util.shellstartsqescape(scsis[section].name))
++			return luci.http.redirect(luci.dispatcher.build_url("admin/system", "fstab"))
++		end
++	end
++end
++
+ return m
+--- a/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-12-01 19:42:00.725627223 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/sysauth.htm	2018-12-01 19:42:00.721627918 +0800
+@@ -6,7 +6,7 @@
+ 
+ <%+header%>
+ 
+-<form method="post" action="<%=pcdata(FULL_REQUEST_URI)%>">
++<form method="post" action="<%=pcdata(luci.http.getenv("REQUEST_URI"))%>">
+ 	<%- if fuser then %>
+ 		<div class="alert-message warning">
+ 			<p><%:Invalid username and/or password! Please try again.%></p>
+@@ -50,6 +50,7 @@
+ local fs  = require "nixio.fs"
+ local https_key = uci:get("uhttpd", "main", "key")
+ local https_port = uci:get("uhttpd", "main", "listen_https")
++local https_redirect = uci:get("uhttpd", "main", "redirect_https") or '0'	
+ if type(https_port) == "table" then
+ 	https_port = https_port[1]
+ end
+@@ -59,7 +60,7 @@
+ %>
+ 
+ <script type="text/javascript">//<![CDATA[
+-	if (document.location.protocol != 'https:') {
++	if (document.location.protocol != 'https:' && '<%=https_redirect%>' == '1') {
+ 		var url = 'https://' + window.location.hostname + ':' + '<%=https_port%>' + window.location.pathname;
+ 		var img=new Image;
+ 		img.onload=function(){window.location = url};
+--- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-12-01 19:42:00.753622357 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua	2018-12-01 19:42:00.749623053 +0800
+@@ -57,6 +57,24 @@
+ 	page.index = true
+ 	toplevel_page(page, false, false)
+ 
++        page = node("admin", "qos")
++        page.title = _("QOS")
++        page.order = 41
++        page.index = true
++        toplevel_page(page, false, false)
++        
++        page = node("admin", "vpn")
++        page.title = _("VPN")
++        page.order = 42
++        page.index = true
++        toplevel_page(page, false, false)
++        
++        page = node("admin", "control")
++        page.title = _("Control")
++        page.order = 43
++        page.index = true
++        toplevel_page(page, false, false)
++
+ 	-- Even for mod-admin-full network just uses first submenu item as landing
+ 	page = node("admin", "network")
+ 	page.title = _("Network")
+--- a/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-12-01 19:42:00.785616796 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/view/cbi/apply_widget.htm	2018-12-01 19:42:00.777618187 +0800
+@@ -122,7 +122,7 @@
+ 	}
+ 
+ 	function uci_apply(checked) {
+-		uci_status_message('notice spinning', '<p><%:Starting configuration apply…%></p>');
++		uci_status_message('notice spinning', '<p><%:Starting configuration apply...%></p>');
+ 
+ 		xhr.post('<%=url("admin/uci")%>/' + (checked ? 'apply_rollback' : 'apply_unchecked'), uci_apply_auth, function(r, tok) {
+ 			if (r.status === (checked ? 200 : 204)) {
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-12-01 19:42:00.813611931 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/connections.htm	2018-12-01 19:42:00.809612626 +0800
+@@ -131,15 +131,21 @@
+ 				}
+ 
+ 				label_scale.innerHTML = String.format('<%:(%d minute window, %d second interval)%>', data_wanted / 60, 3);
++				
++				var recheck_lookup_queue = {};
+ 
+ 				/* render datasets, start update interval */
+ 				XHR.poll(3, '<%=build_url("admin/status/realtime/connections_status")%>', null,
+ 					function(x, json)
+ 					{
+-						var rows = [];
++
++						if (!json.connections)
++							return;
++
+ 						var conn = json.connections;
+ 
+ 						var lookup_queue = [ ];
++						var rows = [];
+ 
+ 						conn.sort(function(a, b) {
+ 							return b.bytes - a.bytes;
+@@ -153,10 +159,10 @@
+ 							    (c.src == '::1'       && c.dst == '::1'))
+ 								continue;
+ 
+-							if (!dns_cache[c.src])
++							if (!dns_cache[c.src] && lookup_queue.indexOf(c.src) == -1)
+ 								lookup_queue.push(c.src);
+ 
+-							if (!dns_cache[c.dst])
++							if (!dns_cache[c.dst] && lookup_queue.indexOf(c.dst) == -1)
+ 								lookup_queue.push(c.dst);
+ 
+ 							var src = dns_cache[c.src] || (c.layer3 == 'ipv6' ? '[' + c.src + ']' : c.src);
+@@ -165,22 +171,49 @@
+ 							rows.push([
+ 								c.layer3.toUpperCase(),
+ 								c.layer4.toUpperCase(),
+-								src + ':' + c.sport,
+-								dst + ':' + c.dport,
++								c.ptype,
++								[ src, c.sport ? ':' + c.sport : '' ],
++								[ dst, c.dport ? ':' + c.dport : '' ],
+ 								'%1024.2mB (%d <%:Pkts.%>)'.format(c.bytes, c.packets)
+ 							]);
+ 						}
+ 
+ 						cbi_update_table(conn_table, rows, '<em><%:No information available%></em>');
+ 
+-						if (lookup_queue.length > 0)
+-							XHR.get('<%=build_url("admin/status/nameinfo")%>/' + lookup_queue.slice(0, 100).join('/'), null,
+-								function(x, json)
+-								{
+-									for (var addr in json)
+-										dns_cache[addr] = json[addr];
++						if (lookup_queue.length > 0) {
++						  var reduced_lookup_queue = lookup_queue;
++						
++						  if (lookup_queue.length > 100)
++						  	reduced_lookup_queue = lookup_queue.slice(0, 100);							
++
++						  XHR.get('<%=build_url("admin/status/nameinfo")%>/' + reduced_lookup_queue.join('/'), null,
++						  	function(x, json)
++						  	{
++							  if (!json)
++								return;
++							
++							  for (var index in reduced_lookup_queue) {
++								var address = reduced_lookup_queue[index];
++								
++								if (!address)
++								  continue;
++								
++						  	    if (json[address]) {
++						  	      dns_cache[address] = json[address];
++						  	      lookup_queue.splice(reduced_lookup_queue.indexOf(address),1);
++								  continue;
+ 								}
+-							);
++
++						  	    if(recheck_lookup_queue[address] > 2) {
++						  	      dns_cache[address] = (address.match(/:/)) ? '[' + address + ']' : address;
++						  	      lookup_queue.splice(index,1);
++						  	    } else {
++						  	      recheck_lookup_queue[address] != null ? recheck_lookup_queue[address]++ : recheck_lookup_queue[address] = 0;
++								}
++						  	  }
++						  	}
++						  );
++						}
+ 
+ 
+ 						var data = json.statistics;
+@@ -357,6 +390,7 @@
+ 			<div class="tr table-titles">
+ 				<div class="th col-2 hide-xs"><%:Network%></div>
+ 				<div class="th col-2"><%:Protocol%></div>
++				<div class="th col-2"><%:Type%></div>
+ 				<div class="th col-7"><%:Source%></div>
+ 				<div class="th col-7"><%:Destination%></div>
+ 				<div class="th col-4"><%:Transfer%></div>
+@@ -371,4 +405,4 @@
+ 	</div>
+ </fieldset>
+ 
+-<%+footer%>
++<%+footer%>
+\ No newline at end of file
+--- a/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-12-01 19:42:00.881600114 +0800
++++ b/feeds/luci/modules/luci-base/luasrc/sys.lua	2018-12-01 19:42:00.877600809 +0800
+@@ -70,6 +70,29 @@
+ 	return data
+ end
+ 
++function scsis()
++	local data = {}
++	local ps = luci.util.execi("lsblk -d -n -P -S -o NAME,TYPE,VENDOR,MODEL,REV,TRAN,SIZE")
++ 	if not ps then
++		return
++	end
++ 	for line in ps do
++		local n, t, v, m, r, tr, s = line:match('^NAME="([^"]+)"%s+TYPE="([^"]+)"%s+VENDOR="([^"]+)"%s+MODEL="([^"]+)"%s+REV="([^"]+)"%s+TRAN="([^"]+)"%s+SIZE="([^"]+)"')
++		if n and s then
++			local row = {}
++			row.name = n
++			row.type = t
++			row.vendor = v
++			row.model = m
++			row.rev = r
++			row.tran = tr
++			row.size = s
++			table.insert(data, row)
++		end
++	end
++ 	return data
++end
++
+ function mtds()
+ 	local data = {}
+ 
+@@ -358,6 +381,32 @@
+ 					if entry[key] == nil then
+ 						entry[key] = val
+ 					end
++					if entry["ptype"] == nil then
++						val = tonumber(val)
++						if key == "sport" then
++							if (val == 443) then
++								entry["ptype"] = "Https / SSL"
++							elseif val == 80 then
++								entry["ptype"] = "Http"
++							elseif val == 53 then
++								entry["ptype"] = "Dns"
++							elseif val == 22 then
++								entry["ptype"] = "SSH"
++							elseif val == 1900 then
++								entry["ptype"] = "UPnP"
++							elseif val == 123 then
++								entry["ptype"] = "NTP"
++							elseif val == 137 then
++								entry["ptype"] = "NetBIOS"
++							elseif val == 139 or val == 445 then
++								entry["ptype"] = "Samba"	
++							elseif val == 993 then
++								entry["ptype"] = "IMAP-SSL"
++							end
++						elseif (val >= 6902) and (val <= 6968) then
++								entry["ptype"] = "Torrent"
++						end
++					end
+ 				elseif val then
+ 					entry[key] = val
+ 				end
+--- a/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-12-01 19:42:00.917593858 +0800
++++ b/feeds/luci/modules/luci-base/po/zh-cn/base.po	2018-12-01 19:42:00.909595248 +0800
+@@ -4576,7 +4576,7 @@
+ msgstr "启动优先级"
+ 
+ #: modules/luci-base/luasrc/view/cbi/apply_widget.htm:125
+-msgid "Starting configuration apply…"
++msgid "Starting configuration apply..."
+ msgstr "开始应用配置…"
+ 
+ #: modules/luci-mod-network/luasrc/view/admin_network/wifi_join.htm:128
+--- a/feeds/luci/modules/luci-base/root/etc/config/luci	2018-12-01 19:42:00.953587602 +0800
++++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2018-12-01 19:42:00.941589687 +0800
+@@ -1,6 +1,6 @@
+ config core main
+-	option lang auto
+-	option mediaurlbase /luci-static/bootstrap
++	option lang zh_cn
++	option mediaurlbase /luci-static/atmaterial
+ 	option resourcebase /luci-static/resources
+ 	
+ config extern flash_keep
+@@ -22,6 +22,10 @@
+ 	option enable 1
+ 		
+ config internal themes
++	option Bootstrap '/luci-static/bootstrap'
++	option Material '/luci-static/material'
++	option ADVancedtomato '/luci-static/advancedtomato'
++	option ATMaterial '/luci-static/atmaterial'
+ 
+ config internal apply
+ 	option rollback 30
+--- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-12-01 19:42:00.985582041 +0800
++++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2018-12-01 19:42:00.981582736 +0800
+@@ -129,6 +129,8 @@
+ demand.placeholder = "0"
+ demand.datatype    = "uinteger"
+ 
++local u=net:get_interface()
++luci.tools.proto.opt_macaddr(section,u,translate("Override MAC address"))
+ 
+ mtu = section:taboption("advanced", Value, "mtu", translate("Override MTU"))
+ mtu.placeholder = "1500"
+--- a/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-12-01 19:42:01.025575096 +0800
++++ b/feeds/luci/applications/luci-app-wol/luasrc/model/cbi/wol.lua	2018-12-01 19:42:01.017576484 +0800
+@@ -71,7 +71,7 @@
+ 			local iface = luci.http.formvalue("cbid.wol.1.iface")
+ 			local broadcast = luci.http.formvalue("cbid.wol.1.broadcast")
+ 			cmd = "%s -D%s %s %q 2>&1" %{
+-				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or ""),
++				util, (iface ~= "" and " -i %s" % utl.shellquote(iface) or " -i br-lan"),
+ 				(broadcast == "1" and " -b" or ""), mac
+ 			}
+ 		else
+--- a/feeds/luci/applications/luci-app-minidlna/Makefile	2018-12-01 19:42:01.061568850 +0800
++++ b/feeds/luci/applications/luci-app-minidlna/Makefile	2018-12-01 19:42:01.053570238 +0800
+@@ -7,7 +7,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ LUCI_TITLE:=LuCI Support for miniDLNA
+-LUCI_DEPENDS:=+minidlna
++LUCI_DEPENDS:=+minidlna-dsd
+ 
+ include ../../luci.mk
+ 
+--- a/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-12-01 19:42:01.089563991 +0800
++++ b/feeds/luci/applications/luci-app-ntpc/luasrc/model/cbi/ntpc/ntpc.lua	2018-12-01 19:42:01.085564685 +0800
+@@ -23,7 +23,7 @@
+ s2.addremove = false
+ 
+ freq = s2:option(Value, "freq", translate("Offset frequency"))
+-freq.datatype = "integer"
++freq.datatype = "uinteger"
+ freq.rmempty = true
+ 
+ s3 = m:section(TypedSection, "ntpserver", translate("Time Servers"))
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-12-01 19:42:01.117559133 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-12-01 19:42:01.113559827 +0800
+@@ -4,16 +4,16 @@
+ module("luci.controller.nlbw", package.seeall)
+ 
+ function index()
+-	entry({"admin", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
+-	entry({"admin", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
+-	entry({"admin", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
+-	entry({"admin", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
+-	entry({"admin", "nlbw", "data"}, call("action_data"), nil, 4)
+-	entry({"admin", "nlbw", "list"}, call("action_list"), nil, 5)
+-	entry({"admin", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
+-	entry({"admin", "nlbw", "download"}, call("action_download"), nil, 7)
+-	entry({"admin", "nlbw", "restore"}, post("action_restore"), nil, 8)
+-	entry({"admin", "nlbw", "commit"}, call("action_commit"), nil, 9)
++	entry({"admin", "status", "nlbw"}, firstchild(), _("Bandwidth Monitor"), 80)
++	entry({"admin", "status", "nlbw", "display"}, template("nlbw/display"), _("Display"), 1)
++	entry({"admin", "status", "nlbw", "config"}, cbi("nlbw/config"), _("Configuration"), 2)
++	entry({"admin", "status", "nlbw", "backup"}, template("nlbw/backup"), _("Backup"), 3)
++	entry({"admin", "status", "nlbw", "data"}, call("action_data"), nil, 4)
++	entry({"admin", "status", "nlbw", "list"}, call("action_list"), nil, 5)
++	entry({"admin", "status", "nlbw", "ptr"}, call("action_ptr"), nil, 6).leaf = true
++	entry({"admin", "status", "nlbw", "download"}, call("action_download"), nil, 7)
++	entry({"admin", "status", "nlbw", "restore"}, post("action_restore"), nil, 8)
++	entry({"admin", "status", "nlbw", "commit"}, call("action_commit"), nil, 9)
+ end
+ 
+ local function exec(cmd, args, writer)
+@@ -222,6 +222,6 @@
+ 	local http = require "luci.http"
+ 	local disp = require "luci.dispatcher"
+ 
+-	http.redirect(disp.build_url("admin/nlbw/display"))
++	http.redirect(disp.build_url("admin/status/nlbw/display"))
+ 	exec("/usr/sbin/nlbw", { "-c", "commit" })
+ end
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-12-01 19:42:01.149553580 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua	2018-12-01 19:42:01.141554968 +0800
+@@ -12,6 +12,11 @@
+ m = Map("nlbwmon", translate("Netlink Bandwidth Monitor - Configuration"),
+ 	translate("The Netlink Bandwidth Monitor (nlbwmon) is a lightweight, efficient traffic accounting program keeping track of bandwidth usage per host and protocol."))
+ 
++m.apply_on_parse=true
++function m.on_apply(self)
++luci.sys.call("/etc/init.d/nlbwmon restart> /dev/null 2>&1")
++end
++
+ nw.init(luci.model.uci.cursor_state())
+ 
+ s = m:section(TypedSection, "nlbwmon")
+@@ -22,6 +27,9 @@
+ s:tab("protocol", translate("Protocol Mapping"),
+ 	translate("Protocol mappings to distinguish traffic types per host, one mapping per line. The first value specifies the IP protocol, the second value the port number and the third column is the name of the mapped protocol."))
+ 
++enable=s:taboption("general",Flag,"enable",translate("启用"))
++enable.default=0
++enable.rmempty=false
+ period = s:taboption("general", ListValue, "_period", translate("Accounting period"),
+ 	translate("Choose \"Day of month\" to restart the accounting period monthly on a specific date, e.g. every 3rd. Choose \"Fixed interval\" to restart the accounting period exactly every N days, beginning at a given date."))
+ 
+@@ -49,7 +57,7 @@
+ 
+ 
+ warning = s:taboption("general", DummyValue, "_warning", translate("Warning"))
+-warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/nlbw/backup"))
++warning.default = translatef("Changing the accounting interval type will invalidate existing databases!<br /><strong><a href=\"%s\">Download backup</a></strong>.", luci.dispatcher.build_url("admin/status/nlbw/backup"))
+ warning.rawhtml = true
+ 
+ if (m.uci:get_first("nlbwmon", "nlbwmon", "database_interval") or ""):match("^%d%d%d%d-%d%d-%d%d/%d+$") then
+@@ -127,7 +135,7 @@
+ 	for item in utl.imatch(ifaces:formvalue(cfg)) do
+ 		items[#items+1] = item
+ 	end
+-	m:set(cfg, "local_network", items)
++	--m:set(cfg, "local_network", items)
+ end
+ 
+ 
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-12-01 19:42:01.177548722 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-12-01 19:42:01.173549416 +0800
+@@ -11,7 +11,7 @@
+ <fieldset class="cbi-section">
+ 	<legend><%:Restore Database Backup%></legend>
+ 	<p>
+-		<form method="POST" action="<%=url("admin/nlbw/restore")%>" enctype="multipart/form-data">
++		<form method="POST" action="<%=url("admin/status/nlbw/restore")%>" enctype="multipart/form-data">
+ 			<input type="hidden" name="token" value="<%=token%>" />
+ 			<input type="file" name="archive" accept="application/gzip,.gz" />
+ 			<input type="submit" value="<%:Restore%>" class="cbi-button cbi-button-apply" />
+@@ -24,7 +24,7 @@
+ 
+ 	<legend><%:Download Database Backup%></legend>
+ 	<p>
+-		<form method="GET" action="<%=url("admin/nlbw/download")%>">
++		<form method="GET" action="<%=url("admin/status/nlbw/download")%>">
+ 			<input type="submit" value="<%:Generate Backup%>" class="cbi-button cbi-button-link" />
+ 		</form>
+ 	</p>
+--- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-12-01 19:42:01.209543169 +0800
++++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-12-01 19:42:01.201544557 +0800
+@@ -394,7 +394,7 @@
+ 
+ function fetchData(period)
+ {
+-	XHR.get('<%=url("admin/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
++	XHR.get('<%=url("admin/status/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
+ 		if (res !== null && typeof(res) === 'object' && typeof(res.columns) === 'object' && typeof(res.data) === 'object')
+ 			trafficData = res;
+ 
+@@ -409,7 +409,7 @@
+ 		renderLayer7Data();
+ 		renderIPv6Data();
+ 
+-		XHR.get('<%=url("admin/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
++		XHR.get('<%=url("admin/status/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
+ 			if (res !== null && typeof(res) === 'object')
+ 				hostNames = res;
+ 		});
+@@ -633,7 +633,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 6);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	pie('traf-pie', trafData);
+@@ -693,7 +693,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 6);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	pie('layer7-rx-pie', rxData);
+@@ -811,7 +811,7 @@
+ 		var cell = table.insertRow(-1).insertCell(-1);
+ 
+ 		cell.setAttribute('colspan', 7);
+-		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
++		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
+ 	}
+ 
+ 	var shareData = [], hostsData = [];
+@@ -1012,10 +1012,10 @@
+ 
+ <div class="cbi-section" id="container.nlbw.export" style="display:none">
+ 	<ul>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
+-		<li><a href="<%=url('admin/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
++		<li><a href="<%=url('admin/status/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
+ 	</ul>
+ </div>
+ 
+@@ -1025,7 +1025,7 @@
+ 	cbi_t_add('nlbw', 'ipv6');
+ 	cbi_t_add('nlbw', 'export');
+ 
+-	XHR.get('<%=url("admin/nlbw/list")%>', null, function(xhr, res) {
++	XHR.get('<%=url("admin/status/nlbw/list")%>', null, function(xhr, res) {
+ 
+ 		if (res !== null && typeof(res) === 'object' && res.length > 0) {
+ 			trafficPeriods = res;
+--- a/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-12-01 19:42:01.237538311 +0800
++++ b/feeds/luci/applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua	2018-12-01 19:42:01.233539005 +0800
+@@ -37,7 +37,8 @@
+ 
+ -- BEGIN Map
+ m = Map("wifi_schedule", translate("Wifi Schedule"), translate("Defines a schedule when to turn on and off wifi."))
+-function m.on_commit(self)
++m.apply_on_parse=true
++function m.on_apply(self)
+     sys.exec("/usr/bin/wifi_schedule.sh cron")
+ end
+ -- END Map
+--- a/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-12-01 19:42:01.269532758 +0800
++++ b/feeds/luci/applications/luci-app-samba4/luasrc/model/cbi/samba4.lua	2018-12-01 19:42:01.265533452 +0800
+@@ -75,6 +75,9 @@
+ au = s:option(Value, "users", translate("Allowed users"))
+ au.rmempty = true
+ 
++sp = s:option(Value, "sharepasswd", translate("Share Password"))
++sp.rmempty = true
++
+ go = s:option(Flag, "guest_ok", translate("Allow guests"))
+ go.enabled = "yes"
+ go.disabled = "no"
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-12-01 19:42:01.405509160 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/controller/mwan3.lua	2018-12-01 19:42:01.401509854 +0800
+@@ -125,7 +125,7 @@
+ 		if not dump then
+ 			dump = require("luci.util").ubus("network.interface.%s" % interface, "status", {})
+ 		end
+-
++		
+ 		if dump and dump.route then
+ 			local _, route
+ 			for _, route in ipairs(dump.route) do
+@@ -160,7 +160,7 @@
+ 			end
+ 		elseif task == "ping_trackips" then
+ 			local trackips = uci:get("mwan3", interface, "track_ip")
+-			if #trackips > 0 then
++			if trackips and #trackips > 0 then
+ 				for i in pairs(trackips) do
+ 					diag_command("ping -I %s -c 5 -W 1 %s 2>&1", device, trackips[i])
+ 				end
+@@ -193,11 +193,11 @@
+ 			local number = getInterfaceNumber(interface)
+ 			local routeTable = sys.exec(string.format("ip route list table %s", number))
+ 			if routeTable ~= "" then
+-				luci.http.write(i18n.translatef("Routing table %s for interface %s found", number, interface))
++				luci.http.write(i18n.translatef("Routing table %s for interface %s found", interface, number))
+ 				luci.http.write("\n")
+ 				luci.http.write(routeTable)
+ 			else
+-				luci.http.write(i18n.translatef("Routing table %s for interface %s not found", number, interface))
++				luci.http.write(i18n.translatef("Routing table %s for interface %s not found", interface, number))
+ 			end
+ 		elseif task == "hotplug_ifup" then
+ 			os.execute(string.format("/usr/sbin/mwan3 ifup %s", ut.shellquote(interface)))
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-12-01 19:42:01.437503608 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua	2018-12-01 19:42:01.433504302 +0800
+@@ -8,38 +8,39 @@
+ 
+ function interfaceWarnings(overview, count, iface_max)
+ 	local warnings = ""
++	local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
+ 	if count <= iface_max then
+-		warnings = string.format("<strong>%s</strong><br />",
++		warnings = string.format("<strong>%s</strong></br>",
+ 			translatef("There are currently %d of %d supported interfaces configured", count, iface_max)
+ 			)
+ 	else
+-		warnings = string.format("<strong>%s</strong><br />",
++		warnings = string.format(s_format,
+ 			translatef("WARNING: %d interfaces are configured exceeding the maximum of %d!", count, iface_max)
+ 			)
+ 	end
+ 
+ 	for i, k in pairs(overview) do
+ 		if overview[i]["network"] == false then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			warnings = warnings .. string.format(s_format,
+ 					translatef("WARNING: Interface %s are not found in /etc/config/network", i)
+ 					)
+ 		end
+ 
+ 		if overview[i]["default_route"] == false then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			warnings = warnings .. string.format(s_format,
+ 				translatef("WARNING: Interface %s has no default route in the main routing table", i)
+ 				)
+ 		end
+ 
+ 		if overview[i]["reliability"] == false then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			warnings = warnings .. string.format(s_format,
+ 				translatef("WARNING: Interface %s has a higher reliability " ..
+ 				"requirement than tracking hosts (%d)", i, overview[i]["tracking"])
+ 				)
+ 		end
+ 
+ 		if overview[i]["duplicate_metric"] == true then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			warnings = warnings .. string.format(s_format,
+ 				translatef("WARNING: Interface %s has a duplicate metric %s configured", i, overview[i]["metric"])
+ 				)
+ 		end
+@@ -104,7 +105,7 @@
+ 			end
+ 		end
+ 	)
+-
++	
+ 	-- calculate iface_max usage from firewall mmx_mask
+ 	function bit(p)
+ 		return 2 ^ (p - 1)
+@@ -140,7 +141,7 @@
+ mwan_interface = m5:section(TypedSection, "interface", nil,
+ 	translate("MWAN supports up to 252 physical and/or logical interfaces<br />" ..
+ 	"MWAN requires that all interfaces have a unique metric configured in /etc/config/network<br />" ..
+-	"Names must match the interface name found in /etc/config/network<br />" ..
++	"Names must match the interface name found in /etc/config/network (see advanced tab)<br />" ..
+ 	"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />" ..
+ 	"Interfaces may not share the same name as configured members, policies or rules"))
+ mwan_interface.addremove = true
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-12-01 19:42:01.473497361 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/policy.lua	2018-12-01 19:42:01.469498055 +0800
+@@ -25,7 +25,8 @@
+ 	local warnings = ""
+ 	for i, k in pairs(policy_error) do
+ 		if policy_error[i] == true then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
++			warnings = warnings .. string.format(s_format,
+ 				translatef("WARNING: Policy %s has exceeding the maximum name of 15 characters", i)
+ 				)
+ 		end
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-12-01 19:42:01.505491809 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/rule.lua	2018-12-01 19:42:01.501492503 +0800
+@@ -29,7 +29,8 @@
+ 	local warnings = ""
+ 	for i, k in pairs(rule_error) do
+ 		if rule_error[i] == true then
+-			warnings = warnings .. string.format("<strong>%s</strong><br />",
++			local s_format = "<font color=\"ff0000\"><strong>%s</strong></font></br>"
++			warnings = warnings .. string.format(s_format,
+ 				translatef("WARNING: Rule %s have a port configured with no or improper protocol specified!", i)
+ 				)
+ 		end
+@@ -65,6 +66,9 @@
+ 	luci.http.redirect(dsp.build_url("admin", "network", "mwan", "rule", section))
+ end
+ 
++enable = mwan_rule:option(Flag,"enable",translate("enable"))
++	enable.rmempty = false
++
+ src_ip = mwan_rule:option(DummyValue, "src_ip", translate("Source address"))
+ src_ip.rawhtml = true
+ function src_ip.cfgvalue(self, s)
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-12-01 19:42:01.537486256 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/model/cbi/mwan/ruleconfig.lua	2018-12-01 19:42:01.533486950 +0800
+@@ -13,6 +13,9 @@
+ mwan_rule.addremove = false
+ mwan_rule.dynamic = false
+ 
++enable = mwan_rule:option(Flag,"enable",translate("enable"))
++	enable.rmempty = false
++
+ src_ip = mwan_rule:option(Value, "src_ip", translate("Source address"),
+ 	translate("Supports CIDR notation (eg \"192.168.100.0/24\") without quotes"))
+ src_ip.datatype = ipaddr
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-12-01 19:42:01.605474457 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2018-12-01 19:42:01.597475845 +0800
+@@ -15,7 +15,7 @@
+ 				for ( var iface in status.interfaces)
+ 				{
+ 					var state = '';
+-					var css = ''
++					var css = '';
+ 					switch (status.interfaces[iface].status)
+ 					{
+ 						case 'online':
+@@ -36,11 +36,11 @@
+ 						css
+ 					);
+ 					statusview += String.format(
+-						'<div><strong>Interface: </strong>%s</div>',
++						'<div><strong><%:Interface%>: </strong>%s</div>',
+ 						iface
+ 					);
+ 					statusview += String.format(
+-						'<div><strong>Status: </strong>%s</div>',
++						'<div><strong><%:Status%>: </strong>%s</div>',
+ 						state
+ 					);
+ 					statusview += '</div>'
+@@ -64,10 +64,19 @@
+ 		float: left;
+ 		line-height: 125%;
+ 	}
++	.success {
++		background-color: rgb(144, 240, 144);
++	}
++	.danger {
++		background-color: rgb(240, 144, 144);
++	}
++	.warning {
++		background-color: rgb(255, 229, 153);
++	}
+ </style>
+ 
+ <fieldset id="interface_field" class="cbi-section">
+-	<legend><%:MWAN Interfaces%></legend>
++	<legend><%:MWAN Interfaces - Live Status%></legend>
+ 	<div id="mwan_status_text">
+ 		<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" />
+ 		<%:Collecting data...%>
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-12-01 19:42:01.637468905 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm	2018-12-01 19:42:01.633469599 +0800
+@@ -13,6 +13,7 @@
+ 	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
+ </ul>
+ 
++<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
+ <script type="text/javascript">//<![CDATA[
+ 	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "detailed_status")%>', null,
+ 		function(x)
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-12-01 19:42:01.669463352 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_diagnostics.htm	2018-12-01 19:42:01.665464046 +0800
+@@ -25,6 +25,7 @@
+ 	)
+ %>
+ 
++<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
+ <script type="text/javascript">//<![CDATA[
+ 	var stxhr = new XHR();
+ 
+@@ -59,14 +60,14 @@
+ 			<br />
+ 
+ 			<div style="width:30%; float:left">
+-				<label class="cbi-value-title"><%:Interface%></label>
++				<label class="cbi-value-title" style="width:auto"><%:Interface%></label>
+ 				<select name="iface" style="width:auto">
+ 					<% for _, z in ipairs(iface) do -%><option value="<%=z%>"><%=z%></option><%- end %>
+ 				</select>
+ 			</div>
+ 
+ 			<div style="width:30%; float:left">
+-				<label class="cbi-value-title"><%:Task%></label>
++				<label class="cbi-value-title" style="width:auto"><%:Task%></label>
+ 				<select name="task" style="width:auto">
+ 					<option value="ping_gateway"><%:Ping default gateway%></option>
+ 					<option value="ping_trackips"><%:Ping tracking IP%></option>
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-12-01 19:42:01.705457106 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_interface.htm	2018-12-01 19:42:01.701457800 +0800
+@@ -13,6 +13,7 @@
+ 	<li class="cbi-tab-disabled"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
+ </ul>
+ 
++<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
+ 
+ <div class="cbi-map">
+ 	<%+mwan/overview_status_interface%>
+--- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-12-01 19:42:01.737451553 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/status_troubleshooting.htm	2018-12-01 19:42:01.733452247 +0800
+@@ -13,6 +13,7 @@
+ 	<li class="cbi-tab"><a href="<%=luci.dispatcher.build_url("admin/status/mwan/troubleshooting")%>"><%:Troubleshooting%></a></li>
+ </ul>
+ 
++<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
+ <script type="text/javascript">//<![CDATA[
+ 	XHR.poll(15, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "troubleshooting_display")%>', null,
+ 		function(x)
+--- a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-12-01 19:42:01.773445307 +0800
++++ b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2018-12-01 19:42:01.769446001 +0800
+@@ -325,6 +325,9 @@
+ msgstr "MWAN 规则配置 - %s"
+ 
+ #: applications/luci-app-mwan3/luasrc/view/mwan/status_detail.htm:27
++msgid "MWAN Interfaces - Live Status"
++msgstr "MWAN 状态 - 接口实时状态"
++
+ msgid "MWAN Status - Detail"
+ msgstr "MWAN 状态 - 详细"
+ 
+@@ -338,12 +341,11 @@
+ 
+ #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/interface.lua:141
+ msgid ""
+-"MWAN supports up to 252 physical and/or logical interfaces<br />MWAN "
+-"requires that all interfaces have a unique metric configured in /etc/config/"
+-"network<br />Names must match the interface name found in /etc/config/"
+-"network<br />Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br /"
+-">Interfaces may not share the same name as configured members, policies or "
+-"rules"
++"MWAN supports up to 252 physical and/or logical interfaces<br />"
++"MWAN requires that all interfaces have a unique metric configured in /etc/config/network<br />"
++"Names must match the interface name found in /etc/config/network (see advanced tab)<br />"
++"Names may contain characters A-Z, a-z, 0-9, _ and no spaces<br />"
++"Interfaces may not share the same name as configured members, policies or rules"
+ msgstr ""
+ "MWAN 支持最多 252 个物理或逻辑接口。<br />MWAN 要求所有接口必须在 /etc/"
+ "config/network 中设定唯一的网关跃点。<br />名称必须与 /etc/config/network 中"
+@@ -539,11 +541,11 @@
+ 
+ #: applications/luci-app-mwan3/luasrc/controller/mwan3.lua:196
+ msgid "Routing table %s for interface %s found"
+-msgstr "找到路由表 %s，为接口 %s"
++msgstr "找到接口 %s 所在路由表 %s 的信息"
+ 
+ #: applications/luci-app-mwan3/luasrc/controller/mwan3.lua:200
+ msgid "Routing table %s for interface %s not found"
+-msgstr "没有找到路由表 %s，为接口 %s"
++msgstr "未找到接口 %s 所在路由表 %s 的信息"
+ 
+ #: applications/luci-app-mwan3/luasrc/model/cbi/mwan/globalsconfig.lua:35
+ msgid "Routing table lookup"
+--- a/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-12-01 19:42:01.809439060 +0800
++++ b/feeds/luci/applications/luci-app-nft-qos/luasrc/controller/nft-qos.lua	2018-12-01 19:42:01.801440448 +0800
 @@ -12,7 +12,7 @@
  		template("nft-qos/rate"), _("Rate"), 5).leaf = true
  	entry({"admin", "status", "realtime", "rate_status"},

@@ -1,5 +1,5 @@
---- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-06-30 21:40:49.329839320 +0800
-+++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-07-02 21:22:54.057940711 +0800
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-12-01 19:42:00.645641125 +0800
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-12-01 19:42:00.637642516 +0800
 @@ -189,24 +189,24 @@
  			);
  
