@@ -563,8 +563,8 @@
  	option interval '5'
 -	option down '3'
 -	option up '8'
-+	option down '4'
-+	option up '1'
++	option down '5'
++	option up '5'
  
 -config interface 'wan6'
 -	option enabled '0'
