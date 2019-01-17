@@ -19,9 +19,6 @@ git checkout -- net/aria2/files/aria2.init
 git checkout -- net/nlbwmon/files/nlbwmon.init
 #git checkout -- net/usbip/patches-2.0/100-musl-compat.patch
 git checkout -- net/haproxy/Makefile
-git checkout -- net/nginx/Makefile
-git checkout -- net/nginx/files-luci-support/luci_nginx_ssl.conf
-git checkout -- net/nginx/files-luci-support/luci_nginx.conf
 git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 git checkout -- net/samba4/files/samba.init
 git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh

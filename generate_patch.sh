@@ -67,9 +67,6 @@ net/aria2/files/aria2.conf
 net/aria2/files/aria2.init
 net/nlbwmon/files/nlbwmon.init
 net/haproxy/Makefile
-net/nginx/Makefile
-net/nginx/files-luci-support/luci_nginx_ssl.conf
-net/nginx/files-luci-support/luci_nginx.conf
 net/uwsgi-cgi/files-luci-support/uwsgi.conf
 net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
