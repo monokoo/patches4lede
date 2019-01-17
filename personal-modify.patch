@@ -1198,17 +1198,6 @@ diff -urN a/feeds/luci/applications/luci-app-nlbwmon/htdocs/luci-static/resource
  	]));
  
  	var shareData = [], hostsData = [];
-diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-10-29 21:58:26.940655600 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2019-01-17 20:38:40.076521100 +0800
-@@ -222,6 +222,6 @@
- 	local http = require "luci.http"
- 	local disp = require "luci.dispatcher"
- 
--	http.redirect(disp.build_url("admin/nlbw/display"))
-+	http.redirect(disp.build_url("admin/status/nlbw/display"))
- 	exec("/usr/sbin/nlbw", { "-c", "commit" })
- end
 diff -urN a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 --- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-10-29 21:58:26.944651500 +0800
 +++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2019-01-17 20:38:54.204272000 +0800
