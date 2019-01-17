@@ -9,25 +9,6 @@
  . $IPKG_INSTROOT/lib/functions/procd.sh
  
  procd_send_signal dnsmasq
---- a/package/network/services/hostapd/files/wps-hotplug.sh	2018-12-01 20:10:27.332210850 +0800
-+++ b/package/network/services/hostapd/files/wps-hotplug.sh	2018-12-01 20:10:27.324211203 +0800
-@@ -1,11 +1,16 @@
- #!/bin/sh
- 
- if [ "$ACTION" = "pressed" -a "$BUTTON" = "wps" ]; then
-+	logger "WPS button pressed, looking for active radios"
-+	echo "timer" > /sys/class/leds/r7800:white:wps/trigger
- 	cd /var/run/hostapd
- 	for socket in *; do
- 		[ -S "$socket" ] || continue
-+		logger "WPS activated for: $socket"
- 		hostapd_cli -i "$socket" wps_pbc
- 	done
-+	sleep 120
-+	echo "none" > /sys/class/leds/r7800:white:wps/trigger
- fi
- 
- return 0
 --- a/package/network/services/hostapd/files/hostapd.sh	2018-12-01 20:10:27.364209439 +0800
 +++ b/package/network/services/hostapd/files/hostapd.sh	2018-12-01 20:10:27.356209791 +0800
 @@ -433,6 +433,11 @@
@@ -72,8 +53,8 @@
  ;;
  esac
  
---- a/target/linux/x86/64/config-default	2018-12-01 20:10:27.516202737 +0800
-+++ b/target/linux/x86/64/config-default	2018-12-01 20:10:27.508203090 +0800
+--- a/target/linux/x86/64/config-4.14	2018-12-01 20:10:27.516202737 +0800
++++ b/target/linux/x86/64/config-4.14	2018-12-01 20:10:27.508203090 +0800
 @@ -166,6 +166,13 @@
  CONFIG_HAVE_FENTRY=y
  # CONFIG_HAVE_GENERIC_DMA_COHERENT is not set

@@ -1,14 +1,13 @@
 #!/bin/sh
 cd /home/lede/lede-source
 git checkout -- package/network/services/odhcpd/files/odhcpd-update
-git checkout -- package/network/services/hostapd/files/wps-hotplug.sh
 git checkout -- package/network/services/hostapd/files/hostapd.sh
 git checkout -- package/network/ipv6/6in4/files/6in4.sh
 git checkout -- package/base-files/files/etc/rc.button/reset
 git checkout -- package/network/config/firewall/files/firewall.init
 git checkout -- package/system/procd/files/procd.sh
 git checkout -- package/kernel/mac80211/patches/
-git checkout -- target/linux/x86/64/config-default
+git checkout -- target/linux/x86/64/config-4.14
 
 rm -f package/kernel/mac80211/patches/974-ath10k_add-LED-and-GPIO-controlling-support-for-various-chipsets-kcompat.patch
 

@@ -49,13 +49,12 @@ cd /home/lede/lede-source
 
 files_source="
 package/network/services/odhcpd/files/odhcpd-update
-package/network/services/hostapd/files/wps-hotplug.sh
 package/network/services/hostapd/files/hostapd.sh
 package/network/ipv6/6in4/files/6in4.sh
 package/base-files/files/etc/rc.button/reset
 package/network/config/firewall/files/firewall.init
 package/system/procd/files/procd.sh
-target/linux/x86/64/config-default"
+target/linux/x86/64/config-4.14"
 
 echo $files_source > $source_file
 get_new_patch $source_file 
