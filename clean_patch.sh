@@ -53,6 +53,7 @@ git checkout -- applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 git checkout -- applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
+git checkout -- applications/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js
 git checkout -- applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
 git checkout -- applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 git checkout -- applications/luci-app-upnp/po/zh-cn/upnp.po

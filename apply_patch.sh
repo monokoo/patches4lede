@@ -10,7 +10,7 @@ patch -p1 -i /home/lede/patches4lede/personal-modify.patch
 
 if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
 	echo "apply patches for x86_64..."
-	patch -p1 -i /home/lede/patches4lede/just_for_x64.patch
+	#patch -p1 -i /home/lede/patches4lede/just_for_x64.patch
 	#patch -p1 -i /home/lede/patches4lede/mac80211-patches-k3.patch
 else
 	echo "apply patches for other archs..."

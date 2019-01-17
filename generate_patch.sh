@@ -101,6 +101,7 @@ applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
 applications/luci-app-nlbwmon/luasrc/model/cbi/nlbw/config.lua
 applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
 applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
+applications/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js
 applications/luci-app-wifischedule/luasrc/model/cbi/wifischedule/wifi_schedule.lua
 applications/luci-app-samba4/luasrc/model/cbi/samba4.lua
 applications/luci-app-upnp/po/zh-cn/upnp.po
