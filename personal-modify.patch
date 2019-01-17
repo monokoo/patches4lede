@@ -1150,8 +1150,68 @@
  end
  
  
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-12-01 20:10:28.480160233 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-12-01 20:10:28.472160586 +0800
+diff -urN a/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js b/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js
+--- a/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js	2019-01-17 20:35:54.371076600 +0800
++++ b/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw.js	2019-01-17 20:38:33.763797000 +0800
+@@ -199,7 +199,7 @@
+ 
+ function fetchData(period)
+ {
+-	XHR.get(L.url('admin/nlbw/data'), { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
++	XHR.get(L.url('admin/status/nlbw/data'), { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
+ 		if (res !== null && typeof(res) === 'object' && typeof(res.columns) === 'object' && typeof(res.data) === 'object')
+ 			trafficData = res;
+ 
+@@ -214,7 +214,7 @@
+ 		renderLayer7Data();
+ 		renderIPv6Data();
+ 
+-		XHR.get(L.url('admin/nlbw/ptr', ipAddrs.join('/')), null, function(xhr, res) {
++		XHR.get(L.url('admin/status/nlbw/ptr', ipAddrs.join('/')), null, function(xhr, res) {
+ 			if (res !== null && typeof(res) === 'object')
+ 				hostNames = res;
+ 		});
+@@ -471,7 +471,7 @@
+ 
+ 	cbi_update_table('#host-data', rows, E('em', [
+ 		_('No data recorded yet.'), ' ',
+-		E('a', { 'href': L.url('admin/nlbw/commit') }, _('Force reload…'))
++		E('a', { 'href': L.url('admin/status/nlbw/commit') }, _('Force reload…'))
+ 	]));
+ 
+ 	pie('traf-pie', trafData);
+@@ -529,7 +529,7 @@
+ 
+ 	cbi_update_table('#layer7-data', rows, E('em', [
+ 		_('No data recorded yet.'), ' ',
+-		E('a', { 'href': L.url('admin/nlbw/commit') }, _('Force reload…'))
++		E('a', { 'href': L.url('admin/status/nlbw/commit') }, _('Force reload…'))
+ 	]));
+ 
+ 	pie('layer7-rx-pie', rxData);
+@@ -634,7 +634,7 @@
+ 
+ 	cbi_update_table('#ipv6-data', rows, E('em', [
+ 		_('No data recorded yet.'), ' ',
+-		E('a', { 'href': L.url('admin/nlbw/commit') }, _('Force reload…'))
++		E('a', { 'href': L.url('admin/status/nlbw/commit') }, _('Force reload…'))
+ 	]));
+ 
+ 	var shareData = [], hostsData = [];
+diff -urN a/luci-app-nlbwmon/luasrc/controller/nlbw.lua b/luci-app-nlbwmon/luasrc/controller/nlbw.lua
+--- a/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2018-10-29 21:58:26.940655600 +0800
++++ b/luci-app-nlbwmon/luasrc/controller/nlbw.lua	2019-01-17 20:38:40.076521100 +0800
+@@ -222,6 +222,6 @@
+ 	local http = require "luci.http"
+ 	local disp = require "luci.dispatcher"
+ 
+-	http.redirect(disp.build_url("admin/nlbw/display"))
++	http.redirect(disp.build_url("admin/status/nlbw/display"))
+ 	exec("/usr/sbin/nlbw", { "-c", "commit" })
+ end
+diff -urN a/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm b/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm
+--- a/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2018-10-29 21:58:26.944651500 +0800
++++ b/luci-app-nlbwmon/luasrc/view/nlbw/backup.htm	2019-01-17 20:38:54.204272000 +0800
 @@ -11,7 +11,7 @@
  <fieldset class="cbi-section">
  	<legend><%:Restore Database Backup%></legend>
@@ -1170,74 +1230,30 @@
  			<input type="submit" value="<%:Generate Backup%>" class="cbi-button cbi-button-link" />
  		</form>
  	</p>
---- a/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-12-01 20:10:28.516158646 +0800
-+++ b/feeds/luci/applications/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2018-12-01 20:10:28.512158822 +0800
-@@ -394,7 +394,7 @@
+diff -urN a/luci-app-nlbwmon/luasrc/view/nlbw/display.htm b/luci-app-nlbwmon/luasrc/view/nlbw/display.htm
+--- a/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2019-01-17 20:35:54.374073500 +0800
++++ b/luci-app-nlbwmon/luasrc/view/nlbw/display.htm	2019-01-17 20:39:08.309008000 +0800
+@@ -138,10 +138,10 @@
  
- function fetchData(period)
- {
--	XHR.get('<%=url("admin/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
-+	XHR.get('<%=url("admin/status/nlbw/data")%>', { period: period, group_by: 'family,mac,ip,layer7', order_by: '-rx_bytes,-tx_bytes' }, function(xhr, res) {
- 		if (res !== null && typeof(res) === 'object' && typeof(res.columns) === 'object' && typeof(res.data) === 'object')
- 			trafficData = res;
- 
-@@ -409,7 +409,7 @@
- 		renderLayer7Data();
- 		renderIPv6Data();
- 
--		XHR.get('<%=url("admin/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
-+		XHR.get('<%=url("admin/status/nlbw/ptr")%>/' + ipAddrs.join('/'), null, function(xhr, res) {
- 			if (res !== null && typeof(res) === 'object')
- 				hostNames = res;
- 		});
-@@ -633,7 +633,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 6);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	pie('traf-pie', trafData);
-@@ -693,7 +693,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 6);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	pie('layer7-rx-pie', rxData);
-@@ -811,7 +811,7 @@
- 		var cell = table.insertRow(-1).insertCell(-1);
- 
- 		cell.setAttribute('colspan', 7);
--		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/nlbw/commit")%>"><%:Force reload…%></a></em>';
-+		cell.innerHTML = '<em><%:No data recorded yet.%> <a href="<%=url("admin/status/nlbw/commit")%>"><%:Force reload…%></a></em>';
- 	}
- 
- 	var shareData = [], hostsData = [];
-@@ -1012,10 +1012,10 @@
- 
- <div class="cbi-section" id="container.nlbw.export" style="display:none">
- 	<ul>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
--		<li><a href="<%=url('admin/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
-+		<li><a href="<%=url('admin/status/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
- 	</ul>
+ 	<div class="cbi-section" data-tab="export" data-tab-title="<%:Export%>">
+ 		<ul>
+-			<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
+-			<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
+-			<li><a href="<%=url('admin/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
+-			<li><a href="<%=url('admin/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
++			<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=mac&#38;order_by=-rx,-tx"><%:CSV, grouped by MAC%></a></li>
++			<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=ip&#38;order_by=-rx,-tx"><%:CSV, grouped by IP%></a></li>
++			<li><a href="<%=url('admin/status/nlbw/data')%>?type=csv&#38;group_by=layer7&#38;order_by=-rx,-tx"><%:CSV, grouped by protocol%></a></li>
++			<li><a href="<%=url('admin/status/nlbw/data')%>?type=json"><%:JSON dump%></a></li>
+ 		</ul>
+ 	</div>
  </div>
+@@ -149,7 +149,7 @@
+ <script type="text/javascript">//<![CDATA[
+ 	var hostInfo = <%=luci.util.serialize_json(luci.sys.net.host_hints())%>;
  
-@@ -1025,7 +1025,7 @@
- 	cbi_t_add('nlbw', 'ipv6');
- 	cbi_t_add('nlbw', 'export');
- 
--	XHR.get('<%=url("admin/nlbw/list")%>', null, function(xhr, res) {
-+	XHR.get('<%=url("admin/status/nlbw/list")%>', null, function(xhr, res) {
+-	XHR.get(L.url('admin/nlbw/list'), null, function(xhr, res) {
++	XHR.get(L.url('admin/status/nlbw/list'), null, function(xhr, res) {
  
  		if (res !== null && typeof(res) === 'object' && res.length > 0) {
  			trafficPeriods = res;
