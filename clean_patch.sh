@@ -25,7 +25,6 @@ git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh
 git checkout -- net/miniupnpd/files/miniupnpd.init
 git checkout -- net/mwan3/files/etc/config/mwan3
 git checkout -- net/mwan3/files/lib/mwan3/mwan3.sh
-git checkout -- net/mwan3/files/usr/sbin/mwan3
 
 cd ../luci/
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/flashops.htm

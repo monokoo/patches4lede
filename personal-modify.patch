@@ -484,7 +484,7 @@
 +	option proto 'all'
 --- a/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-12-01 20:10:27.844188273 +0800
 +++ b/feeds/packages/net/mwan3/files/lib/mwan3/mwan3.sh	2018-12-01 20:10:27.840188449 +0800
-@@ -860,6 +860,7 @@
+@@ -862,6 +862,7 @@
  
  	rule="$1"
  
@@ -492,137 +492,114 @@
  	config_get sticky $1 sticky 0
  	config_get timeout $1 timeout 600
  	config_get ipset $1 ipset
-@@ -945,7 +946,7 @@
- 			for IPT in "$IPT4" "$IPT6"; do
+@@ -952,7 +953,7 @@
  				case $proto in
  					tcp|udp)
+ 					[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-						$IPT -A mwan3_rules \
++						[ "$enable" == "1" ] && $IPT -A mwan3_rules \
+ 							-p $proto \
+ 							-s $src_ip \
+ 							-d $dest_ip $ipset \
+@@ -962,7 +963,7 @@
+ 							-m comment --comment "$1" \
+ 							-j LOG --log-level "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 					}
 -					$IPT -A mwan3_rules \
 +					[ "$enable" == "1" ] && $IPT -A mwan3_rules \
  						-p $proto \
  						-s $src_ip \
  						-d $dest_ip $ipset \
-@@ -956,7 +957,7 @@
- 						-j $policy &> /dev/null
+@@ -974,7 +975,7 @@
  					;;
  					*)
+ 					[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-						$IPT -A mwan3_rules \
++						[ "$enable" == "1" ] && $IPT -A mwan3_rules \
+ 							-p $proto \
+ 							-s $src_ip \
+ 							-d $dest_ip $ipset \
+@@ -982,7 +983,7 @@
+ 							-m comment --comment "$1" \
+ 							-j LOG --log-level "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 					}
 -					$IPT -A mwan3_rules \
 +					[ "$enable" == "1" ] && $IPT -A mwan3_rules \
  						-p $proto \
  						-s $src_ip \
  						-d $dest_ip $ipset \
-@@ -971,7 +972,7 @@
- 
+@@ -998,7 +999,7 @@
  			case $proto in
  				tcp|udp)
+ 				[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-					$IPT -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -1008,7 +1009,7 @@
+ 						-m comment --comment "$1" \
+ 						-j LOG --log-level "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 				}
 -				$IPT4 -A mwan3_rules \
 +				[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
  					-p $proto \
  					-s $src_ip \
  					-d $dest_ip $ipset \
-@@ -982,7 +983,7 @@
- 					-j $policy &> /dev/null
+@@ -1020,7 +1021,7 @@
  				;;
  				*)
+ 				[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-					$IPT4 -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -1028,7 +1029,7 @@
+ 						-m comment --comment "$1" \
+ 						-j LOG --log-level "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 				}
 -				$IPT4 -A mwan3_rules \
 +				[ "$enable" == "1" ] && $IPT4 -A mwan3_rules \
  					-p $proto \
  					-s $src_ip \
  					-d $dest_ip $ipset \
-@@ -996,7 +997,7 @@
- 
+@@ -1043,7 +1044,7 @@
  			case $proto in
  				tcp|udp)
+ 				[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-					$IPT6 -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -1053,7 +1054,7 @@
+ 						-m comment --comment "$1" \
+ 						-j LOG --log-level "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 				}
 -				$IPT6 -A mwan3_rules \
 +				[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
  					-p $proto \
  					-s $src_ip \
  					-d $dest_ip $ipset \
-@@ -1007,7 +1008,7 @@
- 					-j $policy &> /dev/null
+@@ -1065,7 +1066,7 @@
  				;;
  				*)
+ 				[ "$global_logging" = "1" ] && [ "$rule_logging" = "1" ] && {
+-					$IPT6 -A mwan3_rules \
++					[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
+ 						-p $proto \
+ 						-s $src_ip \
+ 						-d $dest_ip $ipset \
+@@ -1073,7 +1074,7 @@
+ 						-m comment --comment "$1" \
+ 						-j LOG --log-level  "$loglevel" --log-prefix "MWAN3($1)" &> /dev/null
+ 				}
 -				$IPT6 -A mwan3_rules \
 +				[ "$enable" == "1" ] && $IPT6 -A mwan3_rules \
  					-p $proto \
  					-s $src_ip \
  					-d $dest_ip $ipset \
---- a/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-12-01 20:10:27.872187038 +0800
-+++ b/feeds/packages/net/mwan3/files/usr/sbin/mwan3	2018-12-01 20:10:27.868187215 +0800
-@@ -52,7 +52,7 @@
- 		echo "Please execute \"/etc/init.d/mwan3 start\" first."
- 		exit 1
- 	}
--
-+	
- 	if [ -z "$1" ]; then
- 		echo "Expecting interface. Usage: mwan3 ifup <interface>" && exit 0
- 	fi
-@@ -72,7 +72,7 @@
- 		json_load $status
- 		json_get_vars up l3_device 
- 	}
--
-+	
- 	config_get enabled "$1" enabled 0
- 
- 
-@@ -135,25 +135,25 @@
- 	local enabled src_ip local_source
- 
- 	uci_toggle_state mwan3 globals enabled "1"
--
-+	
- 	config_get local_source globals local_source 'none'
- 	[ "${local_source}" = "none" ] || {
--		src_ip=$(uci_get_state mwan3 globals src_ip)
--		[ "${src_ip}" != "" ] && {
--			ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
--			ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
--		}
--
--		network_get_ipaddr src_ip "${local_source}"
--		if [ "${src_ip}" = "" ]; then
--			$LOG warn "Unable to set source ip for own initiated traffic (${local_source})"
--		else
--			ip addr add "${src_ip}/32" dev lo
--			ip route add default via "${src_ip}" dev lo
--			uci_toggle_state mwan3 globals src_ip "${src_ip}"
--		fi
-+			src_ip=$(uci_get_state mwan3 globals src_ip)
-+			[ "${src_ip}" != "" ] && {
-+					ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
-+					ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
-+			}
-+	
-+			network_get_ipaddr src_ip "${local_source}"
-+			if [ "${src_ip}" = "" ]; then
-+					$LOG warn "Unable to set source ip for own initiated traffic (${local_source})"
-+			else
-+					ip addr add "${src_ip}/32" dev lo
-+					ip route add default via "${src_ip}" dev lo
-+					uci_toggle_state mwan3 globals src_ip "${src_ip}"
-+			fi
- 	}
--
-+	
- 	config_foreach ifup interface
- }
- 
-@@ -211,11 +211,11 @@
- 
- 	mwan3_lock_clean
- 	rm -rf $MWAN3_STATUS_DIR $MWAN3TRACK_STATUS_DIR
--
-+	
- 	src_ip=$(uci_get_state mwan3 globals src_ip)
- 	[ "${src_ip}" = "" ] || {
--		ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
--		ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
-+			ip route del default via "${src_ip}" dev lo 1>/dev/null 2>&1
-+			ip addr del "${src_ip}/32" dev lo 1>/dev/null 2>&1
- 	}
- 
- 	uci_toggle_state mwan3 globals enabled "0"
 --- a/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-12-01 20:10:27.904185627 +0800
 +++ b/feeds/luci/modules/luci-mod-system/luasrc/controller/admin/system.lua	2018-12-01 20:10:27.896185980 +0800
 @@ -20,11 +20,15 @@
