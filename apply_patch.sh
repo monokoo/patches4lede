@@ -14,7 +14,7 @@ if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
 	#patch -p1 -i /home/lede/patches4lede/mac80211-patches-k3.patch
 else
 	echo "apply patches for other archs..."
-	patch -p1 -i /home/lede/patches4lede/just_for_other_arch.patch
+#	patch -p1 -i /home/lede/patches4lede/just_for_other_arch.patch
 
 fi
 
