@@ -1009,7 +1009,7 @@
  config extern flash_keep
 @@ -22,9 +22,13 @@
  	option enable 1
- 
+		
  config internal themes
 +	option Bootstrap '/luci-static/bootstrap'
 +	option Material '/luci-static/material'
