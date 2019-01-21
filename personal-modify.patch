@@ -1022,8 +1022,8 @@
 -	option holdoff 4
 +	option rollback 60
 +	option holdoff 2
-	option timeout 5
-	option display 1.5
+ 	option timeout 5
+ 	option display 1.5
 --- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2019-01-20 21:14:28.878167139 +0800
 +++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2019-01-20 21:14:28.866167588 +0800
 @@ -129,6 +129,8 @@
