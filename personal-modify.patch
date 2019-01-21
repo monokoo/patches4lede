@@ -1015,7 +1015,6 @@
 +	option Material '/luci-static/material'
 +	option ADVancedtomato '/luci-static/advancedtomato'
 +	option ATMaterial '/luci-static/atmaterial'
-	
  
  config internal apply
 -	option rollback 30
