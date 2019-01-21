@@ -35,6 +35,7 @@ git checkout -- modules/luci-mod-status/htdocs/luci-static/resources/view/status
 git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
 git checkout -- modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/applyreboot.htm
+git checkout -- modules/luci-base/htdocs/luci-static/resources/cbi.js
 
 git checkout -- modules/luci-base/luasrc/view/sysauth.htm
 #git checkout -- modules/luci-base/luasrc/model/network.lua

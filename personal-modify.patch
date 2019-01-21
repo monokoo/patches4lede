@@ -1000,24 +1000,29 @@
 +++ b/feeds/luci/modules/luci-base/root/etc/config/luci	2019-01-20 21:14:28.826169086 +0800
 @@ -1,6 +1,6 @@
  config core main
--	option lang auto
--	option mediaurlbase /luci-static/bootstrap
-+	option lang zh_cn
-+	option mediaurlbase /luci-static/atmaterial
- 	option resourcebase /luci-static/resources
- 	
+-       option lang auto
+-       option mediaurlbase /luci-static/bootstrap
++       option lang zh_cn
++       option mediaurlbase /luci-static/atmaterial
+        option resourcebase /luci-static/resources
+ 
  config extern flash_keep
-@@ -22,6 +22,10 @@
- 	option enable 1
- 		
+@@ -22,9 +22,13 @@
+        option enable 1
+ 
  config internal themes
-+	option Bootstrap '/luci-static/bootstrap'
-+	option Material '/luci-static/material'
-+	option ADVancedtomato '/luci-static/advancedtomato'
-+	option ATMaterial '/luci-static/atmaterial'
++       option Bootstrap '/luci-static/bootstrap'
++       option Material '/luci-static/material'
++       option ADVancedtomato '/luci-static/advancedtomato'
++       option ATMaterial '/luci-static/atmaterial'
  
  config internal apply
- 	option rollback 30
+-       option rollback 30
+-       option holdoff 4
++       option rollback 60
++       option holdoff 2
+        option timeout 5
+        option display 1.5
 --- a/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2019-01-20 21:14:28.878167139 +0800
 +++ b/feeds/luci/protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua	2019-01-20 21:14:28.866167588 +0800
 @@ -129,6 +129,8 @@
@@ -1498,6 +1503,17 @@
  <script type="text/javascript">//<![CDATA[
  	XHR.poll(15, '<%=luci.dispatcher.build_url("admin", "status", "mwan", "troubleshooting_display")%>', null,
  		function(x)
+--- a/feeds/luci/modules/luci-base/htdocs/luci-static/resources/cbi.js  2019-01-17 17:09:33.587261089 +0800
++++ b/feeds/luci/modules/luci-base/htdocs/luci-static/resources/cbi.js  2019-01-21 20:24:44.787557172 +0800
+@@ -1455,7 +1455,7 @@
+                            start = null;
+ 
+                        ul.style.top = sb.offsetHeight + 'px';
+-                       ul.style.left = -rect.left + 'px';
++                       ul.style.left = (-rect.left + 100) + 'px';
+                        ul.style.right = (rect.right - vpWidth) + 'px';
+                        ul.style.maxHeight = (vpHeight * 0.5) + 'px';
+                        ul.style.WebkitOverflowScrolling = 'touch';
 --- a/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2019-01-20 21:14:29.802132556 +0800
 +++ b/feeds/luci/applications/luci-app-mwan3/po/zh-cn/mwan3.po	2019-01-20 21:14:29.798132706 +0800
 @@ -325,6 +325,9 @@
