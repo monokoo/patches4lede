@@ -658,25 +658,6 @@
  	beacon_int = s:taboption("advanced", Value, "beacon_int", translate("Beacon Interval"))
  	beacon_int.optional = true
  	beacon_int.placeholder = 100
---- a/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2019-01-20 21:14:28.530180174 +0800
-+++ b/feeds/luci/modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm	2019-01-20 21:14:28.522180473 +0800
-@@ -39,13 +39,13 @@
- 			end
- 		%></li>
- 		<li><% if keep then %>
--			<%:Configuration files will be kept%>
-+			<%:Configuration files will be kept.%>
- 		<% else %>
--			<%:Caution: Configuration files will be erased%>
-+			<%:Caution: Configuration files will be erased.%>
- 		<% end %></li>
- 		<% if force then %>
- 		<li>
--			<%:Caution: System upgrade will be forced%>
-+			<%:Caution: System upgrade will be forced.%>
- 		</li>
- 		<% end %>
- 	</ul>
 --- a/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2019-01-20 21:14:28.562178975 +0800
 +++ b/feeds/luci/modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua	2019-01-20 21:14:28.558179125 +0800
 @@ -33,7 +33,7 @@

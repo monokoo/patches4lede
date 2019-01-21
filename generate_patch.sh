@@ -83,7 +83,6 @@ files_luci="
 modules/luci-mod-system/luasrc/controller/admin/system.lua
 modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
 modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js
-modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
 modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua
 modules/luci-base/luasrc/view/sysauth.htm
 modules/luci-base/luasrc/controller/admin/index.lua

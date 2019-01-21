@@ -32,7 +32,7 @@ git checkout -- modules/luci-mod-system/luasrc/controller/admin/system.lua
 git checkout -- modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/reboot.htm
 git checkout -- modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js  ##just_for_x64
-git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
+#git checkout -- modules/luci-mod-system/luasrc/view/admin_system/upgrade.htm
 git checkout -- modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua
 #git checkout -- modules/luci-mod-system/luasrc/view/admin_system/applyreboot.htm
 git checkout -- modules/luci-base/htdocs/luci-static/resources/cbi.js
