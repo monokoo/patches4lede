@@ -8,21 +8,24 @@
  			wifinets   = stat.wifi_networks()
  		}
  
-@@ -350,6 +351,9 @@
- 					info.loadavg[2] / 65535.0
- 				);
- 
-+			if (e = document.getElementById('temperature'))
-+				e.innerHTML = String.format('%.2f\℃' ,info.temperature / 1000);
-+			
- 			if (e = document.getElementById('memtotal'))
- 				e.innerHTML = progressbar(
- 					((info.memory.free + info.memory.buffered) / 1024) + " <%:kB%>",
-@@ -401,6 +405,7 @@
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-17 17:09:33.651319596 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-22 21:10:19.243535381 +0800
+@@ -22,6 +22,7 @@
  			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
  		</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Kernel Version%></div><div class="td left"><%=unameinfo.release or "?"%></div></div>
-+		<div class="tr"><div class="td left" width="33%"><%:CPU Temperature%></div><div class="td left" id="temperature">-</div></div>
++                <div class="tr"><div class="td left" width="33%"><%:CPU Temperature%></div><div class="td left" id="temperature">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2018-12-06 21:19:18.944068667 +0800
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2019-01-22 21:15:38.333578231 +0800
+@@ -187,6 +187,8 @@
+ 				info.loadavg[1] / 65535.0,
+ 				info.loadavg[2] / 65535.0
+ 			);
++		if (e = document.getElementById('temperature'))
++			e.innerHTML = String.format('%.2f\℃' ,info.temperature / 1000);
+ 
+ 		progressbar('#memtotal',
+ 			((info.memory.free + info.memory.buffered) / 1024) + ' ' + _('kB'),
