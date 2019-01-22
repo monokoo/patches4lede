@@ -92,6 +92,9 @@ modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm
 modules/luci-base/luasrc/sys.lua
 modules/luci-base/po/zh-cn/base.po
 modules/luci-base/htdocs/luci-static/resources/cbi.js
+modules/luci-mod-status/luasrc/view/admin_status/index.htm
+modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm
+modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js
 modules/luci-base/root/etc/config/luci
 protocols/luci-proto-ppp/luasrc/model/cbi/admin_network/proto_pppoe.lua
 applications/luci-app-wol/luasrc/model/cbi/wol.lua
