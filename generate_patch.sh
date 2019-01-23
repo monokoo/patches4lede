@@ -71,6 +71,7 @@ net/uwsgi-cgi/files-luci-support/uwsgi.conf
 net/samba4/files/samba.init
 net/wifischedule/net/usr/bin/wifi_schedule.sh
 net/miniupnpd/files/miniupnpd.init
+net/sqm-scripts/Makefile
 net/mwan3/files/etc/config/mwan3
 net/mwan3/files/lib/mwan3/mwan3.sh"
 

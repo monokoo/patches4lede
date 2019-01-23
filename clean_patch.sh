@@ -23,6 +23,7 @@ git checkout -- net/uwsgi-cgi/files-luci-support/uwsgi.conf
 git checkout -- net/samba4/files/samba.init
 git checkout -- net/wifischedule/net/usr/bin/wifi_schedule.sh
 git checkout -- net/miniupnpd/files/miniupnpd.init
+git checkout -- net/sqm-scripts/Makefile
 git checkout -- net/mwan3/files/etc/config/mwan3
 git checkout -- net/mwan3/files/lib/mwan3/mwan3.sh
 
