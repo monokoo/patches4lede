@@ -21,11 +21,15 @@ get_new_patch(){
 		if [ "$file" = "modules/luci-base/luasrc/view/cbi/wireless_modefreq.htm" ]; then
 			new_patch="$new_for_k3"
 		elif [ "$file" = "modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js" ]; then
-			if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
-				new_patch="$new_for_x64"
-			else
+			#if [ -n "$(cat /home/lede/lede-source/.config | grep x86_64)" ]; then
+			#	new_patch="$new_for_x64"
+			#else
 				new_patch="$new_for_other_arch"
-			fi
+			#fi
+		elif [ "$file" = "modules/luci-mod-status/luasrc/view/admin_status/index.htm" ]; then
+			new_patch="$new_for_other_arch"
+		elif [ "$file" = "modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm" ]; then
+			new_patch="$new_for_other_arch"
 		else
 			new_patch="$new_generate_patch"
 		fi
@@ -83,7 +87,6 @@ cd ../luci/
 files_luci="
 modules/luci-mod-system/luasrc/controller/admin/system.lua
 modules/luci-mod-network/luasrc/model/cbi/admin_network/wifi.lua
-modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js
 modules/luci-mod-system/luasrc/model/cbi/admin_system/fstab.lua
 modules/luci-base/luasrc/view/sysauth.htm
 modules/luci-base/luasrc/controller/admin/index.lua
