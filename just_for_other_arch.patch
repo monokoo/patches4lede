@@ -1,5 +1,5 @@
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2019-01-23 10:08:09.799108100 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2019-01-23 10:08:09.795108171 +0800
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2019-01-26 12:04:17.506181244 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index.htm	2019-01-26 12:04:17.502176332 +0800
 @@ -48,6 +48,7 @@
  			swap       = swapinfo,
  			connmax    = conn_max,
@@ -8,8 +8,8 @@
  			wifinets   = stat.wifi_networks()
  		}
  
---- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-23 10:08:09.839107381 +0800
-+++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-23 10:08:09.831107525 +0800
+--- a/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-26 12:04:17.538220543 +0800
++++ b/feeds/luci/modules/luci-mod-status/luasrc/view/admin_status/index/10-system.htm	2019-01-26 12:04:17.534215630 +0800
 @@ -22,6 +22,7 @@
  			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
  		</div></div>
@@ -18,8 +18,8 @@
  		<div class="tr"><div class="td left" width="33%"><%:Local Time%></div><div class="td left" id="localtime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Uptime%></div><div class="td left" id="uptime">-</div></div>
  		<div class="tr"><div class="td left" width="33%"><%:Load Average%></div><div class="td left" id="loadavg">-</div></div>
---- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2019-01-23 10:08:09.871106806 +0800
-+++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2019-01-23 10:08:09.867106878 +0800
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2019-01-26 12:04:17.570259841 +0800
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/index.js	2019-01-26 12:04:17.566254929 +0800
 @@ -187,6 +187,8 @@
  				info.loadavg[1] / 65535.0,
  				info.loadavg[2] / 65535.0
