@@ -1420,6 +1420,14 @@
  src_ip = mwan_rule:option(Value, "src_ip", translate("Source address"),
  	translate("Supports CIDR notation (eg \"192.168.100.0/24\") without quotes"))
  src_ip.datatype = ipaddr
+@@ -55,6 +58,7 @@
+ 
+ ipset = mwan_rule:option(Value, "ipset", translate("IPset"),
+        translate("Name of IPset rule. Requires IPset rule in /etc/dnsmasq.conf (eg \"ipset=/youtube.com/youtube\")"))
++ipset:value("",translate("--------"))
+ for _, z in ipairs(ipsets) do
+        ipset:value(z)
+ end
 --- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2019-01-26 12:04:18.499393839 +0800
 +++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2019-01-26 12:04:18.491384106 +0800
 @@ -56,11 +56,11 @@
