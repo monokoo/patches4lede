@@ -1423,10 +1423,10 @@
 @@ -55,6 +58,7 @@
  
  ipset = mwan_rule:option(Value, "ipset", translate("IPset"),
-        translate("Name of IPset rule. Requires IPset rule in /etc/dnsmasq.conf (eg \"ipset=/youtube.com/youtube\")"))
+ 	translate("Name of IPset rule. Requires IPset rule in /etc/dnsmasq.conf (eg \"ipset=/youtube.com/youtube\")"))
 +ipset:value("",translate("--------"))
  for _, z in ipairs(ipsets) do
-        ipset:value(z)
+ 	ipset:value(z)
  end
 --- a/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2019-01-26 12:04:18.499393839 +0800
 +++ b/feeds/luci/applications/luci-app-mwan3/luasrc/view/mwan/overview_status_interface.htm	2019-01-26 12:04:18.491384106 +0800
