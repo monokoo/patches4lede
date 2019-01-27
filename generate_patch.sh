@@ -58,6 +58,7 @@ package/network/ipv6/6in4/files/6in4.sh
 package/base-files/files/etc/rc.button/reset
 package/network/config/firewall/files/firewall.init
 package/system/procd/files/procd.sh
+package/network/services/dnsmasq/files/dhcp.conf
 target/linux/x86/64/config-4.14"
 
 echo $files_source > $source_file

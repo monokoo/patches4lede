@@ -6,6 +6,7 @@ git checkout -- package/network/ipv6/6in4/files/6in4.sh
 git checkout -- package/base-files/files/etc/rc.button/reset
 git checkout -- package/network/config/firewall/files/firewall.init
 git checkout -- package/system/procd/files/procd.sh
+git checkout -- package/network/services/dnsmasq/files/dhcp.conf
 git checkout -- package/kernel/mac80211/patches/
 git checkout -- target/linux/x86/64/config-4.14
 
