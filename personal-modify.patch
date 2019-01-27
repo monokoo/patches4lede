@@ -1584,7 +1584,7 @@
  	option limit	150
  	option leasetime	12h
 +	list dns '2620:0:ccc::2'
-+	list dns '2620:0:ccd::2'
++	list dns '240c::6666'
 +	option ra 'server'
 +	option dhcpv6 'server'
 +	option ra_management '1'
