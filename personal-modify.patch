@@ -1585,9 +1585,9 @@
  	option leasetime	12h
 +	list dns '2620:0:ccc::2'
 +	list dns '2620:0:ccd::2'
-+	option ra 'hybrid'
-+	option dhcpv6 'hybrid'
-+	option ra_management '2'
++	option ra 'server'
++	option dhcpv6 'server'
++	option ra_management '1'
  
  config dhcp wan
  	option interface	wan
