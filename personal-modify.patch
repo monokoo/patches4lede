@@ -1569,3 +1569,17 @@
  		_("Qos over Nftables"), 60)
  end
  
+--- a/package/network/services/dnsmasq/files/dhcp.conf	2018-06-18 11:49:56.884555905 +0800
++++ b/package/network/services/dnsmasq/files/dhcp.conf	2019-01-27 15:56:22.778872550 +0800
+@@ -26,6 +26,11 @@
+ 	option start 	100
+ 	option limit	150
+ 	option leasetime	12h
++	list dns '2620:0:ccc::2'
++	list dns '2620:0:ccd::2'
++	option ra 'server'
++	option dhcpv6 'hybrid'
++	option ra_management '2'
+ 
+ config dhcp wan
+ 	option interface	wan
