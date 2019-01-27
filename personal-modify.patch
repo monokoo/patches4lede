@@ -1577,7 +1577,7 @@
  	option leasetime	12h
 +	list dns '2620:0:ccc::2'
 +	list dns '2620:0:ccd::2'
-+	option ra 'server'
++	option ra 'hybrid'
 +	option dhcpv6 'hybrid'
 +	option ra_management '2'
  
